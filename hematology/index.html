@@ -107,7 +107,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center }
 <body>
 <div class="wrap" id="app"></div>
 <script>
-const DECK = {"id":"hem","title":"Hematology","eyebrow":"Study cards for MLT students","sub":"Pick a chapter. Think of the answer first, then check yourself. Cards you mark Again come back in your review.","footer":"Hematology for MLT Students &middot; Dr. Tarek Faour &middot; 301 cards","chapters":[{
+const DECK = {"id":"hem","title":"Hematology","eyebrow":"Study cards for MLT students","sub":"Pick a chapter. Think of the answer first, then check yourself. Cards you mark Again come back in your review.","footer":"Hematology for MLT Students &middot; Dr. Tarek Faour &middot; 301 cards &middot; Anonymous usage statistics, no personal data","chapters":[{
 "key": "h1", "title": "Chapter 1: Cells and Composition of the Peripheral Blood", "short": "Ch 1 · Blood cells & smear",
 "cards": [
 {"type": "flip", "q": "Which anticoagulant does the ICSH recommend for blood counts?",
@@ -892,6 +892,8 @@ const KEY = 'studycards-' + DECK.id;
 let status = {};
 try { status = JSON.parse(localStorage.getItem(KEY) || '{}') || {} } catch (e) { status = {} }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(status)) } catch (e) {} }
+// Anonymous usage statistics (GoatCounter, no cookies, no personal data).
+function track(path, title, ev) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: DECK.id + '/' + path, title: String(title).replace(/<[^>]+>/g, '').slice(0, 120), event: !!ev }) } catch (e) {} }
 const app = document.getElementById('app');
 const esc = s => String(s);
 const plain = s => String(s).replace(/<[^>]+>/g, '');
@@ -921,9 +923,9 @@ function home() {
     }).join('') + '</div>' +
     '<div class="toolbar"><button class="btn" id="reset">Clear my progress</button></div><div id="confirm"></div>' +
     '<footer>' + DECK.footer + '</footer>';
-  app.querySelectorAll('.chap-btn').forEach(b => b.onclick = () => start(DECK.chapters[+b.dataset.k].cards, DECK.chapters[+b.dataset.k].title));
-  document.getElementById('mixed').onclick = () => start(shuffle(ALL).slice(0, 30), 'Mixed review · 30 random cards');
-  document.getElementById('again').onclick = () => start(ALL.filter(c => status[c._id] === 'again'), 'Cards marked “Again”');
+  app.querySelectorAll('.chap-btn').forEach(b => b.onclick = () => start(DECK.chapters[+b.dataset.k].cards, DECK.chapters[+b.dataset.k].title, 'chapter/' + DECK.chapters[+b.dataset.k].key));
+  document.getElementById('mixed').onclick = () => start(shuffle(ALL).slice(0, 30), 'Mixed review · 30 random cards', 'mixed-review');
+  document.getElementById('again').onclick = () => start(ALL.filter(c => status[c._id] === 'again'), 'Cards marked “Again”', 'again-review');
   document.getElementById('reset').onclick = () => {
     document.getElementById('confirm').innerHTML = '<div class="feedback no"><p class="ink">Clear all your progress for this book? This cannot be undone.</p><div class="row"><button class="btn warn" id="yes">Clear progress</button><button class="btn" id="no">Keep it</button></div></div>';
     document.getElementById('yes').onclick = () => { status = {}; save(); home() };
@@ -933,7 +935,7 @@ function home() {
 }
 
 let setTitle = '';
-function start(cards, title) { if (!cards.length) return; list = cards; idx = 0; setTitle = title; mode = 'study'; study() }
+function start(cards, title, path) { if (!cards.length) return; if (path) track(path, title, false); list = cards; idx = 0; setTitle = title; mode = 'study'; study() }
 
 function study() {
   app.innerHTML = '<div class="topline"><button class="btn" id="back">← Chapters</button><h2>' + setTitle + '</h2></div>' +
@@ -969,7 +971,7 @@ const LABEL = { flip: 'Flip', grid: 'Fill the grid', panel: 'Rule out', calc: 'C
 function head(c) { return '<div class="meta"><span class="chip">' + LABEL[c.type] + '</span><span class="chap">' + c._ch.short + '</span></div>' }
 function rate(box) {
   box.insertAdjacentHTML('beforeend', '<div class="row"><button class="btn good" data-r="done">Got it</button><button class="btn warn" data-r="again">Again</button></div>');
-  box.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { status[list[idx]._id] = b.dataset.r; save(); if (idx < list.length - 1) go(idx + 1); else drawStrip() });
+  box.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { const c = list[idx]; status[c._id] = b.dataset.r; save(); track((b.dataset.r === 'done' ? 'got-it/' : 'again/') + c._id, c._ch.short + ' · ' + (c.q || LABEL[c.type] + ' card'), true); if (idx < list.length - 1) go(idx + 1); else drawStrip() });
 }
 function paras(a) { return (Array.isArray(a) ? a : [a]).map(p => '<p>' + p + '</p>').join('') }
 function fb(el, ok, html) { const f = el.querySelector('.fb'); f.innerHTML = '<div class="feedback ' + (ok ? 'ok' : 'no') + '">' + html + '</div>'; if (ok !== null) rate(f) }
@@ -1163,5 +1165,6 @@ const CALC = {
 
 home();
 </script>
+<script data-goatcounter="https://drtarekfaour.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
