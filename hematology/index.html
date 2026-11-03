@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hematology Study Cards</title>
+<style>
+/* Layout: chapter list (home) and one study card at a time; accent colour comes from each book's cover. */
+:root {
+  --bg: #F3F6F6; --surface: #FFFFFF; --ink: #15282C; --muted: #5A6E72; --line: #D5E0E1;
+  --accent: #1F3864; --accent-soft: #E3E9F5; --red: #B8233A; --red-soft: #FBE7EA;
+  --good: #1E7A4C; --good-soft: #E2F3EA; --warn: #9A5B00; --warn-soft: #FDF1DC;
+  --f-display: "Segoe UI Variable Display", "SF Pro Display", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  --f-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", Consolas, "Roboto Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #8FA8E0; --accent-soft: #1C2740; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #8FA8E0; --accent-soft: #1C2740; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark }
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(20px, env(safe-area-inset-top, 0px)); padding-bottom: max(40px, env(safe-area-inset-bottom, 0px)) }
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 16px }
+header { display: grid; gap: 4px }
+.eyebrow { font: 700 12px/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent) }
+h1 { font: 700 clamp(26px, 6vw, 34px)/1.1 var(--f-display); margin: 0; text-wrap: balance }
+h2 { font: 700 20px/1.2 var(--f-display); margin: 0 }
+.sub { color: var(--muted); margin: 0 }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px }
+.chapters { display: grid; gap: 8px }
+.chap-btn { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; text-align: left; width: 100%;
+  padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit }
+.chap-btn:hover { border-color: var(--accent) }
+.chap-title { font-weight: 700; min-width: 0 }
+.chap-count { font: 500 13px var(--f-mono); color: var(--muted); white-space: nowrap }
+.bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; display: flex }
+.bar i { display: block; height: 100% } .bar .g { background: var(--good) } .bar .a { background: var(--warn) }
+.strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center }
+.dot { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  font: 700 12px var(--f-mono); cursor: pointer; display: grid; place-items: center; padding: 0 }
+.dot[aria-current="true"] { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent) }
+.dot.done { background: var(--good-soft); color: var(--good); border-color: transparent }
+.dot.again { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+.score { margin-left: auto; font: 500 13px var(--f-mono); color: var(--muted) }
+.topline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; min-width: 0 }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.chip { font: 700 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent) }
+.chap { font-size: 13px; color: var(--muted) }
+.q { font: 600 clamp(18px, 4.4vw, 22px)/1.35 var(--f-display); margin: 0; text-wrap: pretty }
+.hint { color: var(--muted); margin: 0; font-size: 15px }
+.answer { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 14px; border-radius: 0 8px 8px 0 }
+.answer p, .feedback p { margin: 0 0 6px } .answer p:last-child, .feedback p:last-child { margin: 0 }
+.answer ul, .feedback ul { margin: 4px 0 0; padding-left: 20px }
+.row { display: flex; gap: 10px; flex-wrap: wrap }
+button.btn { font: 700 15px var(--f-body); padding: 11px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer }
+button.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface) }
+button.btn.good { background: var(--good-soft); color: var(--good); border-color: transparent }
+button.btn.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+button.btn:disabled { opacity: .45; cursor: default }
+button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px }
+.nav { display: flex; justify-content: space-between; gap: 10px }
+.feedback { padding: 12px 14px; border-radius: 8px; font-size: 15px; display: grid; gap: 4px }
+.feedback.ok { background: var(--good-soft); color: var(--good) }
+.feedback.no { background: var(--red-soft); color: var(--red) }
+.feedback .ink { color: var(--ink) }
+.scroll { overflow-x: auto; min-width: 0 }
+table.grid { border-collapse: collapse; font: 500 14px var(--f-mono); width: 100% }
+.grid th, .grid td { border: 1px solid var(--line); padding: 0; text-align: center; min-width: 38px; height: 40px }
+.grid th { background: var(--bg); color: var(--muted); font-weight: 700; padding: 4px 6px; font-family: var(--f-body); font-size: 13px }
+.grid th.rowh { text-align: left; padding: 4px 10px; color: var(--ink) }
+.grid td.given { color: var(--ink); font-weight: 700; padding: 4px 6px }
+.grid td.rx { font-weight: 700; color: var(--red) }
+.tap { width: 100%; height: 100%; min-height: 40px; border: 0; background: transparent; color: var(--ink); font: 700 17px var(--f-mono); cursor: pointer; padding: 2px 6px }
+.tap.set { color: var(--red) }
+.tap.right { background: var(--good-soft) } .tap.wrong { background: var(--red-soft) }
+th.ag { cursor: pointer; user-select: none; color: var(--ink) }
+th.ag.out, td.out { text-decoration: line-through; color: var(--muted); background: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 7px) }
+th.ag.keep { background: var(--red-soft); color: var(--red) }
+.calc { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+.calc input { font: 700 18px var(--f-mono); width: 9ch; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink) }
+.facts { font: 500 15px var(--f-mono); background: var(--bg); border-radius: 8px; padding: 12px 14px; display: grid; gap: 2px }
+ol.steps { margin: 0; padding-left: 20px } ol.steps li { margin: 2px 0 }
+.items { display: grid; gap: 8px }
+.item { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; text-align: left;
+  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer }
+.item .tag { font: 700 12px/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); white-space: nowrap }
+.item .tag.set { background: var(--accent-soft); color: var(--accent) }
+.item.right { border-color: var(--good); background: var(--good-soft) } .item.wrong { border-color: var(--red); background: var(--red-soft) }
+.item .num { font: 700 13px var(--f-mono); min-width: 24px; height: 24px; border-radius: 12px; display: grid; place-items: center; background: var(--bg); color: var(--muted) }
+.item.picked .num { background: var(--accent); color: var(--surface) }
+.legend { display: flex; gap: 6px; flex-wrap: wrap; font-size: 13px; color: var(--muted) }
+.legend span { font: 700 12px var(--f-mono); padding: 4px 6px; border-radius: 6px; background: var(--bg); color: var(--ink) }
+footer { color: var(--muted); font-size: 13px; text-align: center }
+.empty { color: var(--muted); padding: 20px; text-align: center }
+@media (prefers-reduced-motion: no-preference) { .answer, .feedback { animation: in .18s ease-out } @keyframes in { from { opacity: .4; transform: translateY(3px) } } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const DECK = {"id":"hem","title":"Hematology","eyebrow":"Study cards for MLT students","sub":"Pick a chapter. Think of the answer first, then check yourself. Cards you mark Again come back in your review.","footer":"Hematology for MLT Students &middot; Dr. Tarek Faour &middot; 301 cards","chapters":[{
+"key": "h1", "title": "Chapter 1: Cells and Composition of the Peripheral Blood", "short": "Ch 1 · Blood cells & smear",
+"cards": [
+{"type": "flip", "q": "Which anticoagulant does the ICSH recommend for blood counts?",
+ "a": ["<b>K<sub>2</sub>EDTA</b>."]},
+{"type": "order", "q": "Anticoagulated blood left to settle separates into three layers. Order them from bottom to top.",
+ "steps": ["Erythrocytes", "Buffy coat (leukocytes and platelets)", "Plasma"]},
+{"type": "flip", "q": "Give the blood volume, pH and plasma composition of an adult.",
+ "a": ["About <b>5 L</b> (≈ 70 mL/kg); pH <b>7.35–7.45</b>.", "Plasma is about <b>55%</b> of blood volume and nearly <b>90% water</b>."]},
+{"type": "flip", "q": "How does serum differ from plasma?",
+ "a": ["Serum is the fluid left <b>after clotting</b>: essentially plasma without fibrinogen and some clotting factors."]},
+{"type": "flip", "q": "Give the size of a normal red cell and its central pallor. What normal cell is a good size reference?",
+ "a": ["Biconcave disc <b>6–8 µm</b> across, about 2 µm thick; central pallor about <b>one-third</b> of the diameter.", "The <b>nucleus of a small lymphocyte</b> is about the same diameter."]},
+{"type": "flip", "q": "What is the red cell life span, and how many red cells are made each day?",
+ "a": ["About <b>120 days</b>; about 1% replaced daily.", "About <b>2 million per second</b> (≈ 200 billion per day)."]},
+{"type": "flip", "q": "How are reticulocytes seen on a supravital stain and on a routine smear?",
+ "a": ["<b>Supravital</b> (new methylene blue, brilliant cresyl blue): residual RNA forms a blue reticulum or granules.", "<b>Routine stain</b>: slightly bluish cells, called <b>polychromasia</b>."]},
+{"type": "sort", "q": "What does each automated reticulocyte parameter show?",
+ "bins": ["Early sign of marrow recovery", "Early marker of iron-restricted erythropoiesis"],
+ "items": [{"t": "Immature reticulocyte fraction (IRF)", "b": 0}, {"t": "Reticulocyte hemoglobin content (Ret-He / CHr)", "b": 1}]},
+{"type": "grid", "q": "Fill in the normal adult percentages of each white cell.", "cols": ["% of WBCs"],
+ "rows": ["Segmented neutrophils", "Lymphocytes", "Monocytes", "Eosinophils", "Basophils", "Band neutrophils"],
+ "symbols": ["45–70%", "20–40%", "3–8%", "2–6%", "2–5%", "≤ 1%"],
+ "answer": [["45–70%"], ["20–40%"], ["3–8%"], ["2–6%"], ["≤ 1%"], ["2–5%"]]},
+{"type": "flip", "q": "What is the marginating pool of neutrophils, and why does it matter?",
+ "a": ["Neutrophils adherent to the vessel wall, about <b>55%</b> of the vascular pool.", "Stress, exercise, corticosteroids or infection mobilize them, so a high count does <b>not necessarily mean increased production</b>."]},
+{"type": "flip", "q": "How long do neutrophils circulate, and can they return to the blood?",
+ "a": ["About <b>6–10 hours</b> in the blood, then up to 1 week in tissues.", "<b>No</b>: their trip is one-way; they die by apoptosis after phagocytosis."]},
+{"type": "sort", "q": "Match each granule content to its cell.",
+ "bins": ["Eosinophil", "Basophil", "Monocyte"],
+ "items": [{"t": "Major basic protein", "b": 0}, {"t": "Eosinophil cationic protein", "b": 0}, {"t": "Charcot–Leyden protein", "b": 0}, {"t": "Histamine and heparin", "b": 1},
+  {"t": "Weak MPO, non-specific esterase, lysozyme", "b": 2}]},
+{"type": "flip", "q": "Which receptor and growth factor are typical of basophils, and how are mast cells identified in tissue?",
+ "a": ["Basophils express the <b>IL-3 receptor (CD123)</b>; IL-3 is their main growth factor; high-affinity IgE receptors.", "Mast cells: <b>c-Kit (CD117)</b>."]},
+{"type": "sort", "q": "Which lymphocyte type fits each description?",
+ "bins": ["Small resting lymphocyte", "Reactive lymphocyte", "Large granular lymphocyte"],
+ "items": [{"t": "7–10 µm, N/C ratio > 0.9", "b": 0}, {"t": "Abundant dark blue cytoplasm \"hugging\" red cells", "b": 1}, {"t": "Azurophilic granules; NK or cytotoxic T cells", "b": 2}, {"t": "Increased in infectious mononucleosis", "b": 1}],
+ "explain": ["ICSH prefers \"reactive\" for benign cells and \"abnormal\" for suspected neoplastic cells, instead of \"atypical\"."]},
+{"type": "grid", "q": "Fill in the share of blood lymphocytes.", "cols": ["% of lymphocytes"],
+ "rows": ["T cells", "B cells", "NK cells"], "symbols": ["70–80%", "10–15%"],
+ "answer": [["70–80%"], ["10–15%"], ["10–15%"]]},
+{"type": "flip", "q": "Which is the largest normal blood cell, and what does it become in tissues?",
+ "a": ["The <b>monocyte</b> (about 20 µm), 3–8% of WBCs; it circulates 1–3 days.", "It becomes a <b>tissue macrophage (histiocyte)</b>, living months to years."]},
+{"type": "flip", "q": "Which growth factor controls platelet production, and how is its level regulated?",
+ "a": ["<b>Thrombopoietin (TPO)</b>, made constitutively by the liver.", "It is removed by binding to <b>c-MPL</b> on platelets and megakaryocytes, so the platelet mass controls the TPO available."]},
+{"type": "sort", "q": "Dense bodies or alpha granules?",
+ "bins": ["Dense bodies", "Alpha granules"],
+ "items": [{"t": "ADP, ATP and serotonin", "b": 0}, {"t": "Calcium", "b": 0}, {"t": "VWF and fibrinogen", "b": 1}, {"t": "Factor V", "b": 1}, {"t": "Platelet factor 4 and PDGF", "b": 1}, {"t": "More numerous; give the granular look", "b": 1}]},
+{"type": "sort", "q": "Match each platelet glycoprotein complex to its ligand.",
+ "bins": ["VWF receptor (adhesion)", "Fibrinogen receptor (aggregation)"],
+ "items": [{"t": "GP Ib/IX/V", "b": 0}, {"t": "GP IIb/IIIa", "b": 1}]},
+{"type": "flip", "q": "Give the platelet life span, normal count, and the share kept in the spleen.",
+ "a": ["Life span <b>7–10 days</b>; normal <b>150–400 × 10<sup>9</sup>/L</b>.", "About <b>one third</b> is sequestered in the spleen and released by stress, exercise or adrenaline."]},
+{"type": "flip", "q": "How long are EDTA samples stable for the CBC and red cell indices?",
+ "a": ["Room temperature: counts about <b>24 hours</b>, indices only about <b>8 hours</b> (MCV rises).", "At 4 °C: CBC 48 hours, indices 24 hours."]},
+{"type": "grid", "q": "Fill in the reference ranges of the red cell indices.", "cols": ["Reference range"],
+ "rows": ["MCV", "MCH", "MCHC", "RDW-CV"], "symbols": ["80–100 fL", "27–33 pg", "32–36 g/dL", "11.5–14.5%"],
+ "answer": [["80–100 fL"], ["27–33 pg"], ["32–36 g/dL"], ["11.5–14.5%"]]},
+{"type": "calc", "kind": "indices"},
+{"type": "flip", "q": "What does the RDW measure, and why is it useful?",
+ "a": ["The <b>coefficient of variation of red cell volumes</b> (anisocytosis): RDW = SD ÷ MCV × 100.", "It often becomes abnormal <b>earlier than the MCV</b> (e.g. early iron deficiency). A low RDW has no clinical significance."]},
+{"type": "calc", "kind": "abs"},
+{"type": "flip", "q": "What is the difference between relative and absolute lymphocytosis?",
+ "a": ["<b>Absolute</b>: more lymphocytes in total.", "<b>Relative</b>: a higher percentage because other cells (mainly neutrophils) are decreased. Always think in absolute counts."]},
+{"type": "sort", "q": "Why has the MCV shifted? Real change or sample problem?",
+ "bins": ["Acceptable (real) explanation", "Specimen / preanalytical problem"],
+ "items": [{"t": "Transfusion (MCV moves toward donor cells)", "b": 0}, {"t": "Reticulocytosis", "b": 0}, {"t": "Hydroxyurea or methotrexate", "b": 0},
+  {"t": "Blood drawn through an IV line", "b": 1}, {"t": "Prolonged storage at room temperature", "b": 1}, {"t": "Hyperglycemic sample (hyperosmolar)", "b": 1}]},
+{"type": "flip", "q": "State the \"rule of three\" correlation check, and when it applies.",
+ "a": ["<b>Hb × 3 = Hct ± 3</b> and <b>RBC × 3 = Hb ± 0.5 g/dL</b>.", "Only for <b>normocytic normochromic</b> samples. Failure suggests a preanalytical or analytical error: review the smear."]},
+{"type": "flip", "q": "How do you estimate the WBC count and the platelet count from a smear?",
+ "a": ["<b>WBC</b>: average WBCs in 10 fields at 40× × <b>2,000</b> (verify for your microscope).", "<b>Platelets</b>: average per oil-immersion field (10 fields) × <b>20,000</b> (15,000–20,000)."]},
+{"type": "order", "q": "Put the systematic smear examination in order.",
+ "steps": ["Low power: check quality, rouleaux, agglutination; scan the feather edge", "Estimate the WBC count at 40×", "Oil immersion: find a well-spread area", "Examine red cells", "Examine white cells", "Examine platelets"]},
+{"type": "sort", "q": "Which phase of the testing process does each step belong to?",
+ "bins": ["Pre-analytical", "Analytical", "Post-analytical"],
+ "items": [{"t": "Patient identification and collection", "b": 0}, {"t": "Sample transport and storage", "b": 0}, {"t": "Internal quality control", "b": 1}, {"t": "Calibration", "b": 1},
+  {"t": "Delta check", "b": 2}, {"t": "Calling critical results", "b": 2}],
+ "explain": ["Most laboratory errors occur in the pre-analytical phase."]},
+{"type": "flip", "q": "Why does 1 in 20 healthy people fall outside the reference range for any test?",
+ "a": ["The reference range is the <b>central 95%</b> of healthy results; the top and bottom 2.5% are excluded."]},
+{"type": "sort", "q": "Match each red cell shape to its classic cause.",
+ "bins": ["Spherocyte", "Dacrocyte (tear drop)", "Target cell", "Bite cell", "Schistocyte", "Acanthocyte"],
+ "items": [{"t": "Hereditary spherocytosis", "b": 0}, {"t": "Primary myelofibrosis", "b": 1}, {"t": "Hemoglobin C disease", "b": 2}, {"t": "G6PD deficiency", "b": 3},
+  {"t": "TTP, HUS, DIC", "b": 4}, {"t": "Abetalipoproteinemia", "b": 5}]},
+{"type": "sort", "q": "Echinocyte or acanthocyte?",
+ "bins": ["Echinocyte (burr cell)", "Acanthocyte (spur cell)"],
+ "items": [{"t": "10–30 small, regular, evenly spaced projections", "b": 0}, {"t": "2–20 sharp, irregular projections", "b": 1}, {"t": "Storage artifact or uremia", "b": 0}, {"t": "Severe liver disease (spur cell anemia)", "b": 1}, {"t": "McLeod syndrome", "b": 1}, {"t": "Pyruvate kinase deficiency", "b": 0}]},
+{"type": "flip", "q": "What schistocyte percentage strongly suggests thrombotic microangiopathy (ICSH)?",
+ "a": ["Schistocytes <b>> 1%</b> of red cells."]},
+{"type": "sort", "q": "Match each red cell inclusion to what it is made of.",
+ "bins": ["Ribosomes (RNA)", "DNA", "Iron", "Denatured hemoglobin"],
+ "items": [{"t": "Basophilic stippling", "b": 0}, {"t": "Howell–Jolly body", "b": 1}, {"t": "Pappenheimer body", "b": 2}, {"t": "Heinz body", "b": 3}, {"t": "Hb H inclusions (golf ball)", "b": 3}]},
+{"type": "flip", "q": "Which inclusions need a supravital stain, and which special stain confirms Pappenheimer bodies?",
+ "a": ["<b>Heinz bodies</b> and <b>Hb H inclusions</b> (brilliant cresyl blue / new methylene blue).", "Pappenheimer bodies: <b>Perls' Prussian blue</b>."]},
+{"type": "flip", "q": "Which finding is the most sensitive sign of hyposplenism on a routine smear?",
+ "a": ["<b>Howell–Jolly bodies</b>. Target cells, acanthocytes, Pappenheimer bodies and nucleated red cells also appear after splenectomy, with higher platelet and lymphocyte counts."]},
+{"type": "flip", "q": "Why is the MCHC raised in hereditary spherocytosis?",
+ "a": ["The <b>surface/volume ratio is reduced</b>: the MCH is normal but the cells are hyperchromic, so the MCHC rises."]},
+{"type": "flip", "q": "What is a dimorphic blood picture, and when is it seen?",
+ "a": ["Hypochromic and normochromic cells together (anisochromia).", "Typical of <b>sideroblastic anemia</b>; also weeks after iron therapy, or after transfusion in hypochromic anemia."]},
+{"type": "sort", "q": "Match each white cell change to its typical cause.",
+ "bins": ["Severe infection / sepsis", "Megaloblastic anemia", "Pelger–Hüet anomaly or MDS"],
+ "items": [{"t": "Toxic granulation", "b": 0}, {"t": "Döhle bodies", "b": 0}, {"t": "Cytoplasmic vacuoles", "b": 0}, {"t": "Hypersegmented neutrophils", "b": 1}, {"t": "Bilobed (spectacle-shaped) nuclei", "b": 2}]},
+{"type": "flip", "q": "Define hypersegmentation of neutrophils.",
+ "a": ["<b>≥ 5% of neutrophils with 5 lobes</b>, or <b>any with 6 or more</b>."]}
+]},{
+"key": "h2", "title": "Chapter 2: Automated Hematology Analyzers", "short": "Ch 2 · Analyzers",
+"cards": [
+{"type": "sort", "q": "What does each analyzer principle measure?",
+ "bins": ["Cell volume and number", "Internal composition", "Size and granularity", "Nucleic acid content", "Hemoglobin concentration"],
+ "items": [{"t": "Electrical impedance (Coulter, DC)", "b": 0}, {"t": "Radiofrequency (RF) conductivity", "b": 1}, {"t": "Laser light scatter", "b": 2}, {"t": "Fluorescence flow cytometry", "b": 3}, {"t": "Spectrophotometry", "b": 4}]},
+{"type": "flip", "q": "In the Coulter principle, what do the number and the size of the pulses represent?",
+ "a": ["The <b>number of pulses</b> = the number of cells.", "The <b>pulse height</b> is proportional to the <b>cell volume</b>. Cells are poor conductors, so resistance rises as each passes the aperture."]},
+{"type": "flip", "q": "What is a coincidence error, and how do analyzers handle it?",
+ "a": ["Two or more cells passing the aperture together are counted as <b>one pulse</b>.", "Analyzers correct it automatically, and <b>hydrodynamic focusing</b> largely prevents it."]},
+{"type": "flip", "q": "Which values come directly from the RBC and platelet histograms?",
+ "a": ["<b>MCV</b> and <b>MPV</b>: the mean of each distribution. <b>RDW</b>: the coefficient of variation of the RBC curve.", "The platelet histogram covers 2–20 fL."]},
+{"type": "flip", "q": "Why is RF conductivity useful for the WBC differential?",
+ "a": ["It measures the cell's <b>interior</b> (nuclear volume, N/C ratio, granules), so it separates cells of <b>similar size</b>, such as small lymphocytes and basophils."]},
+{"type": "sort", "q": "Forward scatter or side scatter?",
+ "bins": ["Forward scatter (0–10°)", "Side scatter (about 90°)"],
+ "items": [{"t": "Cell size", "b": 0}, {"t": "Internal complexity (lobularity, granularity)", "b": 1}]},
+{"type": "flip", "q": "What do fluorescent nucleic acid dyes add to modern analyzers?",
+ "a": ["Side fluorescence reflects <b>RNA/DNA content</b>: separates WBC populations, flags blasts, immature granulocytes and reactive lymphocytes, and gives the <b>reticulocyte, NRBC and optical platelet counts</b>."]},
+{"type": "flip", "q": "What does VCS technology stand for?",
+ "a": ["<b>Volume</b> (low-frequency current), <b>Conductivity</b> (high-frequency current) and <b>Scatter</b> (laser light), used by Beckman Coulter for the WBC differential."]},
+{"type": "order", "q": "Put the steps of the cyanmethemoglobin (HiCN) method in order.",
+ "steps": ["Mix blood with an oxidizing solution", "Ferrous iron is oxidized to methemoglobin (ferric)", "Cyanide binds methemoglobin to form cyanmethemoglobin", "Read the stable pigment at 540 nm"]},
+{"type": "flip", "q": "Which hemoglobin form is not measured by the HiCN method?",
+ "a": ["<b>Sulfhemoglobin</b>: its presence slightly underestimates total Hb. Carboxyhemoglobin converts slowly (max ~6% error at 20% COHb)."]},
+{"type": "sort", "q": "Would each condition make the measured hemoglobin falsely high?",
+ "bins": ["Falsely high Hb (turbidity)", "No turbidity error"],
+ "items": [{"t": "WBC above 50 × 10<sup>9</sup>/L", "b": 0}, {"t": "Paraproteins", "b": 0}, {"t": "Hyperlipidemia", "b": 0}, {"t": "Hb S or Hb C cells that resist lysis", "b": 0}, {"t": "Iron deficiency", "b": 1}]},
+{"type": "flip", "q": "What has replaced cyanide reagents on most modern analyzers?",
+ "a": ["Cyanide-free methods such as <b>sodium lauryl sulfate (SLS-Hb)</b> or imidazole reagents. HiCN remains the <b>reference method</b> for calibration."]},
+{"type": "flip", "q": "What is the maximum allowed CV for hemoglobin measurement, and how does a prolonged tourniquet affect the result?",
+ "a": ["Maximum CV <b>2%</b>.", "A prolonged tourniquet causes <b>hemoconcentration</b>: Hb and cell counts too high."]},
+{"type": "sort", "q": "How does each interference affect the result?",
+ "bins": ["Falsely high WBC", "Falsely low MCV and Hct", "Falsely high MCV", "Falsely low platelets"],
+ "items": [{"t": "Unlysed target cells (Hb C) or sickle cells", "b": 0}, {"t": "Nucleated red cells (older analyzers)", "b": 0}, {"t": "Underfilled EDTA tube (excess EDTA)", "b": 1}, {"t": "Hyperglycemia", "b": 2}, {"t": "EDTA-dependent platelet clumping", "b": 3}]},
+{"type": "flip", "q": "A low platelet count shows clumps on the smear. What do you do?",
+ "a": ["Suspect <b>EDTA-dependent pseudothrombocytopenia</b>; recollect the sample in <b>citrate</b> and recount."]},
+{"type": "calc", "kind": "nrbc"},
+{"type": "order", "q": "The MCHC is above 36 g/dL. Put the four investigation steps in order.",
+ "steps": ["Remix the EDTA tube", "Incubate the sample at 37 °C (cold agglutinin)", "Saline replacement of the plasma (lipemia, icterus)", "Check the smear for spherocytes"],
+ "explain": ["A true high MCHC (up to about 38 g/dL) is seen in spherocytosis and Hb SC or CC disease."]},
+{"type": "flip", "q": "List four things the operator of a hematology analyzer must know.",
+ "a": ["Reference ranges; normal scattergrams and histograms; daily maintenance; QC and EQA; delta checks and flags; reflex testing (smear review); notifying critical results."]}
+]},{
+"key": "h3", "title": "Chapter 3: Hematopoiesis", "short": "Ch 3 · Hematopoiesis",
+"cards": [
+{"type": "order", "q": "Put the sites of hematopoiesis in order, from embryo to adult.",
+ "steps": ["Yolk sac (mesoblastic phase, from about day 19)", "Liver, also spleen and thymus (hepatic phase, second trimester)", "Bone marrow (medullary phase, from the 3rd trimester)"]},
+{"type": "sort", "q": "Match each hemoglobin to its period of life.",
+ "bins": ["Embryonic (yolk sac)", "Fetal", "Adult"],
+ "items": [{"t": "Gower-1 (ζ<sub>2</sub>ε<sub>2</sub>)", "b": 0}, {"t": "Portland (ζ<sub>2</sub>γ<sub>2</sub>)", "b": 0}, {"t": "Gower-2 (α<sub>2</sub>ε<sub>2</sub>)", "b": 0}, {"t": "Hb F (α<sub>2</sub>γ<sub>2</sub>)", "b": 1}, {"t": "Hb A (α<sub>2</sub>β<sub>2</sub>)", "b": 2}, {"t": "Hb A<sub>2</sub> (α<sub>2</sub>δ<sub>2</sub>)", "b": 2}]},
+{"type": "flip", "q": "How does yolk sac hematopoiesis differ from later hematopoiesis?",
+ "a": ["It occurs <b>intravascularly</b> (inside developing blood vessels) and makes mainly <b>primitive erythroblasts</b>."]},
+{"type": "flip", "q": "On which chromosomes are the α-globin and β-globin clusters?",
+ "a": ["<b>α cluster: chromosome 16</b> (includes ζ). <b>β cluster: chromosome 11</b> (ε, γ, δ, β)."]},
+{"type": "flip", "q": "Which is the first bone to show hematopoiesis, and when does the marrow become the main site?",
+ "a": ["The <b>clavicle</b>. The bone marrow becomes the primary site by the <b>end of the 6th month</b> of gestation."]},
+{"type": "flip", "q": "Where is red marrow found in adults, and when can yellow marrow become active again?",
+ "a": ["Proximal long bones and the axial skeleton: <b>skull, vertebrae, ribs, sternum, pelvis</b>.", "Yellow marrow can resume hematopoiesis under <b>chronic stress</b> (chronic bleeding, hemolytic anemia)."]},
+{"type": "flip", "q": "What is extramedullary hematopoiesis, and what does it cause?",
+ "a": ["The liver and spleen resume their fetal role when the marrow fails (leukemic infiltration, tumor, fibrosis), causing <b>hepatosplenomegaly</b>."]},
+{"type": "flip", "q": "Give the four conditions needed for normal hematopoiesis.",
+ "a": ["<b>Stem cells</b>; <b>stromal cells</b> (microenvironment); <b>vitamins and trace elements</b> (B12, folate, iron); <b>growth factors</b>."]},
+{"type": "sort", "q": "Promoting, multipotent or lineage-restricted growth factor?",
+ "bins": ["Promoting (early-acting)", "Multipotent (intermediate)", "Restriction (lineage-specific)"],
+ "items": [{"t": "Stem cell factor (c-Kit ligand)", "b": 0}, {"t": "Flt3 ligand", "b": 0}, {"t": "GM-CSF", "b": 1}, {"t": "EPO", "b": 2}, {"t": "G-CSF", "b": 2}, {"t": "TPO", "b": 2}, {"t": "IL-5", "b": 2}]},
+{"type": "sort", "q": "Which cell line does each factor mainly stimulate?",
+ "bins": ["Erythroid", "Megakaryocytic", "Neutrophil", "Monocyte", "Eosinophil"],
+ "items": [{"t": "EPO", "b": 0}, {"t": "TPO and IL-11", "b": 1}, {"t": "G-CSF", "b": 2}, {"t": "M-CSF", "b": 3}, {"t": "IL-5", "b": 4}]},
+{"type": "flip", "q": "Where is EPO made, what triggers it, and which signaling pathway does it activate?",
+ "a": ["Mainly the <b>kidney</b> (peritubular interstitial cells; ~10% liver), induced by <b>hypoxia</b> via HIF.", "EPO receptor → <b>JAK2</b> → phosphorylates <b>STAT5</b> → erythroblast proliferation and survival."]},
+{"type": "flip", "q": "Which growth factor is used to mobilize CD34+ stem cells for collection?",
+ "a": ["<b>G-CSF</b>."]},
+{"type": "flip", "q": "Give the markers of the pluripotent hematopoietic stem cell.",
+ "a": ["<b>CD34+, CD38−, CD33−</b>, CD117+ (c-Kit), <b>Lin−</b>, HLA-DR negative or weak.", "Morphologically like small lymphocytes; mostly in G0; about 1 in 20 million marrow cells."]},
+{"type": "order", "q": "Put the myeloid hierarchy in order.",
+ "steps": ["Long-term HSC", "Short-term HSC", "Multipotent progenitor", "Common myeloid progenitor (CFU-GEMM)", "GMP or MEP", "Unipotent progenitor (CFU-G, CFU-M, BFU-E)", "Precursor (first recognizable cell)"]},
+{"type": "sort", "q": "Stem cell, progenitor or precursor?",
+ "bins": ["Stem cell", "Progenitor", "Precursor"],
+ "items": [{"t": "Self-renewal for life", "b": 0}, {"t": "Studied by in vitro colony assays", "b": 1}, {"t": "Acquires HLA-DR with CD34", "b": 1}, {"t": "First morphologically recognizable cell", "b": 2}, {"t": "No self-renewal; multiplies while maturing", "b": 2}]},
+{"type": "sort", "q": "What happens to each feature as cells mature?",
+ "bins": ["Decreases or disappears", "Increases"],
+ "items": [{"t": "Cell size", "b": 0}, {"t": "Nucleoli", "b": 0}, {"t": "Cytoplasmic basophilia", "b": 0}, {"t": "N/C ratio", "b": 0}, {"t": "Chromatin density", "b": 1}]},
+{"type": "order", "q": "Put the erythroid precursors in order of maturation.",
+ "steps": ["Proerythroblast", "Basophilic (early) erythroblast", "Polychromatophilic (intermediate) erythroblast", "Orthochromic (late) erythroblast", "Reticulocyte", "Erythrocyte"]},
+{"type": "flip", "q": "Which is the last erythroid precursor able to divide?",
+ "a": ["The <b>polychromatophilic (intermediate) erythroblast</b>. The late erythroblast no longer divides and extrudes its nucleus."]},
+{"type": "flip", "q": "How long do reticulocytes contain RNA, and what are shift reticulocytes?",
+ "a": ["About <b>4 days</b>: 3 in the marrow and 1 in the blood.", "Under strong EPO stimulation they are released early and stay reticulocytes 2–2.5 days in the blood: <b>shift reticulocytes</b> (polychromatic macrocytes)."]},
+{"type": "flip", "q": "Give four features that distinguish erythroid precursors in the marrow.",
+ "a": ["Found in <b>erythroblastic islands</b> around a central macrophage (which supplies iron and eats extruded nuclei).", "They <b>stick tightly</b> together; nuclei are <b>perfectly round</b>; late erythroblasts have regularly condensed chromatin."]},
+{"type": "order", "q": "Put the granulocyte precursors in order of maturation.",
+ "steps": ["Myeloblast", "Promyelocyte", "Myelocyte", "Metamyelocyte", "Band neutrophil", "Segmented neutrophil"]},
+{"type": "sort", "q": "Match each feature to the granulocyte precursor.",
+ "bins": ["Myeloblast", "Promyelocyte", "Myelocyte", "Metamyelocyte"],
+ "items": [{"t": "2–5 nucleoli, fine chromatin, few or no granules", "b": 0}, {"t": "Largest cell of the series, coarse azurophilic granules", "b": 1}, {"t": "Specific granules appear (Golgi area first)", "b": 2}, {"t": "Kidney-shaped nucleus; no longer divides", "b": 3}]},
+{"type": "flip", "q": "Which granulocyte precursors can divide, and which form the marrow storage pool?",
+ "a": ["<b>Myeloblasts, promyelocytes and myelocytes</b> divide.", "<b>Metamyelocytes and later cells</b> do not divide: the storage pool. One myeloblast gives about 16 granulocytes."]},
+{"type": "flip", "q": "How do megakaryocytes become polyploid, and how are they regulated?",
+ "a": ["By <b>endomitosis</b> (DNA replication without cell division), up to 32N–64N (even 128N); platelet output parallels DNA content.", "Regulated mainly by <b>TPO</b> and its receptor <b>MPL</b>."]},
+{"type": "flip", "q": "How do monocytes differ from neutrophils in their release from the marrow?",
+ "a": ["Monocytes are <b>released rapidly</b> into the blood rather than stored in the marrow. Series: monoblast → promonocyte → monocyte."]},
+{"type": "flip", "q": "Where do B and T lymphocytes complete their development?",
+ "a": ["<b>B cells</b>: initial development in the <b>bone marrow</b>, final maturation in peripheral lymphoid tissue.", "<b>T cells</b>: precursors leave the marrow for the <b>thymus</b> (cortex then medulla), where CD4, CD8 and regulatory T cells arise."]}
+]},{
+"key": "h4", "title": "Chapter 4: Metabolism and Function of Erythrocytes and Iron Homeostasis", "short": "Ch 4 · Red cell metabolism & iron",
+"cards": [
+{"type": "flip", "q": "Why does a red cell need energy?",
+ "a": ["To maintain <b>membrane integrity</b> (including the Na<sup>+</sup>/K<sup>+</sup>-ATPase pump: high K<sup>+</sup>, low Na<sup>+</sup> inside) and to keep hemoglobin in its <b>reduced</b> (functional) state."]},
+{"type": "grid", "q": "Fill in the composition of the red cell membrane.", "cols": ["Share"],
+ "rows": ["Proteins", "Lipids", "Carbohydrates"], "symbols": ["50%", "42%", "8%"],
+ "answer": [["50%"], ["42%"], ["8%"]]},
+{"type": "sort", "q": "Vertical or horizontal membrane interaction? Which disease does each defect cause?",
+ "bins": ["Vertical (→ hereditary spherocytosis)", "Horizontal (→ hereditary elliptocytosis)"],
+ "items": [{"t": "Spectrin–ankyrin–band 3 (with protein 4.2)", "b": 0}, {"t": "Protein 4.1R–glycophorin C", "b": 0}, {"t": "Spectrin–spectrin", "b": 1}, {"t": "Spectrin–actin–protein 4.1", "b": 1}]},
+{"type": "sort", "q": "Match each red cell metabolic pathway to its main product.",
+ "bins": ["Embden–Meyerhof (glycolysis)", "Hexose monophosphate shunt", "Rapoport–Luebering shunt"],
+ "items": [{"t": "ATP and NADH (about 90% of glucose)", "b": 0}, {"t": "NADPH (about 10% of glucose); first enzyme G6PD", "b": 1}, {"t": "2,3-BPG, regulator of oxygen affinity", "b": 2}]},
+{"type": "flip", "q": "Which enzyme reduces methemoglobin back to hemoglobin, and which cofactor does it use?",
+ "a": ["<b>NADH-methemoglobin reductase (cytochrome b5 reductase)</b>, using NADH from glycolysis.", "Normal methemoglobin is up to 1.5%; cyanosis appears at about 1.5 g/dL (10%)."]},
+{"type": "sort", "q": "Methemoglobin or sulfhemoglobin?",
+ "bins": ["Methemoglobin", "Sulfhemoglobin"],
+ "items": [{"t": "Iron oxidized to Fe<sup>3+</sup>; can be reduced back", "b": 0}, {"t": "Chocolate-brown blood", "b": 0}, {"t": "Mauve-lavender blood", "b": 1}, {"t": "Irreversible; sulfur in the heme ring", "b": 1}, {"t": "Hereditary Hb M variants", "b": 0}, {"t": "<i>Clostridium perfringens</i> bacteremia, sulfonamides", "b": 1}]},
+{"type": "order", "q": "Put the red cell antioxidant chain in order.",
+ "steps": ["Superoxide is converted to H<sub>2</sub>O<sub>2</sub> by superoxide dismutase", "H<sub>2</sub>O<sub>2</sub> is neutralized by reduced glutathione (glutathione peroxidase)", "Oxidized glutathione is reduced by glutathione reductase", "Glutathione reductase uses NADPH from the hexose monophosphate shunt (G6PD)"]},
+{"type": "flip", "q": "Which is the rate-limiting enzyme of heme synthesis, which vitamin does it need, and where does it act?",
+ "a": ["<b>ALA synthase</b>, with <b>vitamin B6</b> (pyridoxal phosphate), in the <b>mitochondria</b> (glycine + succinyl-CoA → ALA)."]},
+{"type": "sort", "q": "Which steps of heme synthesis does lead inhibit, and what accumulates?",
+ "bins": ["ALA dehydratase (PBG synthase) blocked", "Ferrochelatase blocked"],
+ "items": [{"t": "ALA accumulates (urine)", "b": 0}, {"t": "Protoporphyrin and iron accumulate (zinc protoporphyrin)", "b": 1}]},
+{"type": "sort", "q": "Shift of the oxygen dissociation curve: right or left?",
+ "bins": ["Right (↓ affinity, ↑ delivery)", "Left (↑ affinity, ↓ delivery)"],
+ "items": [{"t": "↑ 2,3-BPG (anemia, altitude)", "b": 0}, {"t": "Acidosis and ↑ CO<sub>2</sub> (Bohr effect)", "b": 0}, {"t": "Fever", "b": 0}, {"t": "Hb Kansas", "b": 0},
+  {"t": "Hb F", "b": 1}, {"t": "Stored blood (↓ 2,3-BPG)", "b": 1}, {"t": "Hypothermia", "b": 1}, {"t": "Carboxyhemoglobin", "b": 1}]},
+{"type": "flip", "q": "What is the P50, its normal value, and what does a higher P50 mean?",
+ "a": ["The oxygen pressure at which Hb is 50% saturated: about <b>27 mm Hg</b>.", "A higher P50 = <b>lower affinity</b>, more oxygen delivered to tissues."]},
+{"type": "flip", "q": "Why is the oxygen dissociation curve sigmoid?",
+ "a": ["<b>Cooperative binding</b> (heme–heme interaction): each bound O<sub>2</sub> raises the affinity of the remaining hemes; the fourth binds hundreds of times more strongly than the first."]},
+{"type": "flip", "q": "Why does Hb F have a higher oxygen affinity than Hb A?",
+ "a": ["Its <b>γ chains bind 2,3-BPG poorly</b>. This helps the fetus take oxygen from maternal blood; newborns compensate with higher RBC, Hb and Hct."]},
+{"type": "grid", "q": "How is CO<sub>2</sub> carried from the tissues to the lungs?", "cols": ["Share"],
+ "rows": ["As bicarbonate (chloride shift via band 3)", "As carbaminohemoglobin", "Dissolved in plasma"], "symbols": ["70%", "20–25%", "5–10%"],
+ "answer": [["70%"], ["20–25%"], ["5–10%"]]},
+{"type": "sort", "q": "Match each porphyria to its features.",
+ "bins": ["Acute intermittent porphyria", "Congenital erythropoietic porphyria", "Erythropoietic protoporphyria"],
+ "items": [{"t": "PBG deaminase deficiency; autosomal dominant", "b": 0}, {"t": "Abdominal pain, neuropathy, no photosensitivity", "b": 0}, {"t": "Uroporphyrinogen III synthase; red diapers, red-brown teeth", "b": 1},
+  {"t": "Hemolytic anemia and blistering photosensitivity", "b": 1}, {"t": "Ferrochelatase deficiency; painful photosensitivity without blisters", "b": 2}, {"t": "Most common porphyria of childhood", "b": 2}]},
+{"type": "flip", "q": "How is acute intermittent porphyria diagnosed, and why is there no photosensitivity?",
+ "a": ["Raised urinary <b>ALA and PBG</b> during attacks; urine darkens on light and air.", "ALA and PBG are <b>precursors, not porphyrins</b>."]},
+{"type": "order", "q": "Put the steps of heme breakdown in order.",
+ "steps": ["Macrophages phagocytose old red cells", "Heme oxygenase opens the ring: biliverdin + CO", "Biliverdin becomes unconjugated bilirubin, carried by albumin", "Liver conjugates it (UDP-glucuronyl transferase)", "Gut bacteria form urobilinogen and stercobilin"]},
+{"type": "order", "q": "In intravascular hemolysis, free hemoglobin is handled step by step. Put the steps in order.",
+ "steps": ["Binds haptoglobin (haptoglobin falls)", "Excess heme binds hemopexin", "Remaining heme binds albumin (methemalbumin)", "Free Hb filtered into urine: hemoglobinuria", "Tubular cells store iron: hemosiderinuria after about a week"]},
+{"type": "flip", "q": "Which marker is a sensitive sign of hemolysis?",
+ "a": ["A <b>low or absent haptoglobin</b>."]},
+{"type": "sort", "q": "Match each protein to its step in intestinal iron absorption.",
+ "bins": ["Apical uptake", "Basolateral export"],
+ "items": [{"t": "Dcytb (reduces Fe<sup>3+</sup> to Fe<sup>2+</sup>)", "b": 0}, {"t": "DMT1", "b": 0}, {"t": "Heme carrier protein 1", "b": 0}, {"t": "Ferroportin", "b": 1}, {"t": "Hephaestin (oxidizes Fe<sup>2+</sup> to Fe<sup>3+</sup>)", "b": 1}]},
+{"type": "sort", "q": "Does each factor increase or decrease non-heme iron absorption?",
+ "bins": ["Increases absorption", "Decreases absorption"],
+ "items": [{"t": "Vitamin C (ascorbic acid)", "b": 0}, {"t": "Gastric acid", "b": 0}, {"t": "Human breast milk", "b": 0}, {"t": "Tea and coffee (tannates)", "b": 1},
+  {"t": "Phytates in grains", "b": 1}, {"t": "Proton pump inhibitors", "b": 1}, {"t": "Calcium and cow's milk", "b": 1}]},
+{"type": "flip", "q": "How much iron does the diet supply and the gut absorb, and how much is lost daily?",
+ "a": ["Diet 10–20 mg/day; about <b>10% (1–2 mg)</b> absorbed (up to 5× in deficiency).", "Losses: about <b>1 mg/day</b> (men, postmenopausal women), <b>2 mg/day</b> in menstruating women."]},
+{"type": "flip", "q": "How much iron is lost with one blood donation and in a term pregnancy?",
+ "a": ["About <b>250 mg</b> per donation.", "About <b>750 mg</b> per pregnancy (about 300 mg to the fetus)."]},
+{"type": "flip", "q": "How much of transferrin is normally saturated, and why does that matter?",
+ "a": ["About <b>one-third</b> (1/9 diferric, 4/9 monoferric, 4/9 empty).", "Free (non-transferrin-bound) iron appears only in iron overload and damages liver, heart and endocrine cells."]},
+{"type": "sort", "q": "Ferritin or hemosiderin?",
+ "bins": ["Ferritin", "Hemosiderin"],
+ "items": [{"t": "Short-term, readily available store", "b": 0}, {"t": "Measured in serum to reflect stores", "b": 0}, {"t": "Long-term, insoluble store", "b": 1}, {"t": "Seen with Perls' stain in marrow or urine", "b": 1}]},
+{"type": "grid", "q": "Distribute the body iron of an average man (about 4 g).", "cols": ["Amount"],
+ "rows": ["Hemoglobin", "Storage pool", "Myoglobin and enzymes", "Plasma (transferrin)"], "symbols": ["2.5 g", "1 g", "0.3–0.4 g", "3–6 mg"],
+ "answer": [["2.5 g"], ["1 g"], ["0.3–0.4 g"], ["3–6 mg"]]},
+{"type": "flip", "q": "How does the body excrete excess iron?",
+ "a": ["It <b>cannot</b>: there is no active excretion. Iron balance is controlled <b>only at absorption</b>."]},
+{"type": "sort", "q": "Does each condition raise or lower hepcidin?",
+ "bins": ["Raises hepcidin", "Lowers hepcidin"],
+ "items": [{"t": "Inflammation (IL-6)", "b": 0}, {"t": "Iron overload", "b": 0}, {"t": "Iron deficiency", "b": 1}, {"t": "Active erythropoiesis (erythroferrone)", "b": 1}, {"t": "Hypoxia", "b": 1}, {"t": "Hereditary hemochromatosis (inappropriately low)", "b": 1}]},
+{"type": "flip", "q": "How does hepcidin work?",
+ "a": ["It binds <b>ferroportin</b>, the only iron exporter, causing its internalization and degradation: less <b>absorption</b> and less <b>release from macrophages</b>."]},
+{"type": "grid", "q": "Fill in the normal iron indices.", "cols": ["Normal range"],
+ "rows": ["Serum iron", "TIBC", "Transferrin saturation", "Ferritin (men)", "Ferritin (women)"],
+ "symbols": ["50–175 µg/dL", "250–400 µg/dL", "20–50%", "18–300 ng/mL", "12–150 ng/mL"],
+ "answer": [["50–175 µg/dL"], ["250–400 µg/dL"], ["20–50%"], ["18–300 ng/mL"], ["12–150 ng/mL"]]},
+{"type": "flip", "q": "Which ferritin levels indicate iron deficiency according to WHO 2020?",
+ "a": ["Below <b>15 µg/L</b> in adults (below 12 in children under 5).", "With inflammation: below <b>70 µg/L</b> (below 30 in children). Ferritin is an acute-phase reactant."]},
+{"type": "grid", "q": "Fill in the iron indices (↑ high, ↓ low, N normal).", "cols": ["Ferritin", "Serum iron", "TIBC", "Saturation"],
+ "rows": ["Iron deficiency", "Anemia of chronic disease", "Iron overload"], "symbols": ["↑", "↓", "N"],
+ "answer": [["↓", "↓", "↑", "↓"], ["↑", "↓", "↓", "↓"], ["↑", "↑", "↓", "↑"]],
+ "explain": ["In chronic disease, ferritin is normal or high, TIBC low or normal and saturation normal or slightly low. In overload, saturation is often > 45%."]},
+{"type": "flip", "q": "When is the soluble transferrin receptor (sTfR) especially useful?",
+ "a": ["To diagnose <b>iron deficiency in patients with chronic disease</b>, where ferritin is falsely normal: sTfR rises with cellular iron need and is not an acute-phase reactant."]},
+{"type": "flip", "q": "What is the reference method for assessing iron stores?",
+ "a": ["<b>Perls' Prussian blue stain</b> of a bone marrow aspirate (also detects ring sideroblasts)."]}
+]},{
+"key": "h5", "title": "Chapter 5: Anemia", "short": "Ch 5 · Anemia",
+"cards": [
+{"type": "grid", "q": "Fill in the WHO hemoglobin thresholds for anemia (anemia if below).", "cols": ["Hb threshold"],
+ "rows": ["Adult men", "Non-pregnant women", "Pregnant women (1st and 3rd trimesters)", "Children 6–23 months", "Children 5–11 years"],
+ "symbols": ["13 g/dL", "12 g/dL", "11.5 g/dL", "11 g/dL", "10.5 g/dL"],
+ "answer": [["13 g/dL"], ["12 g/dL"], ["11 g/dL"], ["10.5 g/dL"], ["11.5 g/dL"]]},
+{"type": "flip", "q": "Is anemia a diagnosis?",
+ "a": ["<b>No.</b> It is a laboratory abnormality that requires an explanation, the most common hematologic disorder by far."]},
+{"type": "sort", "q": "Morphologic classification: where does each anemia usually fall?",
+ "bins": ["Microcytic", "Normocytic", "Macrocytic"],
+ "items": [{"t": "Iron deficiency", "b": 0}, {"t": "Thalassemia trait", "b": 0}, {"t": "Acute blood loss", "b": 1}, {"t": "Early anemia of chronic disease", "b": 1}, {"t": "Vitamin B12 deficiency", "b": 2}, {"t": "Folate deficiency", "b": 2}]},
+{"type": "sort", "q": "Kinetic classification: which category fits each finding?",
+ "bins": ["Hypoproliferative", "Maturation defect (ineffective)", "Hemolytic / hemorrhagic"],
+ "items": [{"t": "Low reticulocytes, normal red cell morphology", "b": 0}, {"t": "Low reticulocytes, abnormal morphology; cells die in the marrow", "b": 1}, {"t": "RPI above 3, MCV often slightly high", "b": 2}]},
+{"type": "flip", "q": "When does reticulocytosis begin and peak after a bleed or hemolysis?",
+ "a": ["It begins on day <b>3–4</b> and reaches its proportionate level by day <b>7–10</b>, if the marrow is adequate. The RPI may be low in the first days."]},
+{"type": "flip", "q": "Why must the reticulocyte percentage be corrected in anemia?",
+ "a": ["It is a ratio: with fewer red cells, the same number of reticulocytes gives a higher percentage.", "Example: 50 G/L reticulocytes = 1% with 5 T/L RBCs, but 2.5% with 2 T/L."]},
+{"type": "flip", "q": "Give the normal reticulocyte count, and the absolute count showing an active marrow response.",
+ "a": ["Adults <b>0.5–1.5%</b> (25–75 G/L); newborn 2–6%.", "Absolute count <b>above 100 G/L</b> = marrow responding."]},
+{"type": "calc", "kind": "retic"},
+{"type": "sort", "q": "Interpret the RPI.",
+ "bins": ["Good marrow response", "Inadequate response", "Borderline (adequate only for mild anemia)"],
+ "items": [{"t": "RPI 4.2", "b": 0}, {"t": "RPI 1.1", "b": 1}, {"t": "RPI 2.5", "b": 2}]},
+{"type": "sort", "q": "How does the marrow respond to anemic stress?",
+ "bins": ["Happens", "Does not happen"],
+ "items": [{"t": "Erythroid hyperplasia (M:E ratio falls)", "b": 0}, {"t": "Nucleated red cells released into the blood", "b": 0}, {"t": "Polychromasia and slight macrocytosis", "b": 0}, {"t": "Marrow becomes hypocellular", "b": 1}]}
+]},{
+"key": "h6", "title": "Chapter 6: Iron Deficiency, Chronic Disease, Sideroblastic Anemias and Lead Poisoning", "short": "Ch 6 · IDA, ACD, iron overload",
+"cards": [
+{"type": "flip", "q": "Is iron deficiency the same as iron deficiency anemia? Is a normal MCV against it?",
+ "a": ["<b>No</b>: anemia is a <b>late</b> consequence of iron deficiency.", "<b>No</b>: early iron deficiency is <b>normocytic</b>."]},
+{"type": "flip", "q": "Why are infants at high risk of iron deficiency?",
+ "a": ["Adults recycle 95% of the iron they use daily; infants must take about <b>30% from the diet</b> because of growth."]},
+{"type": "sort", "q": "What is the most common cause of iron deficiency in each group?",
+ "bins": ["Adult men and postmenopausal women", "Premenopausal women", "Unexplained or treatment-resistant cases"],
+ "items": [{"t": "Gastrointestinal blood loss", "b": 0}, {"t": "Menstrual blood loss", "b": 1}, {"t": "Celiac disease", "b": 2}]},
+{"type": "grid", "q": "Fill in the stages of iron deficiency (↑, ↓ or N).", "cols": ["Ferritin", "Saturation", "Hb", "MCV"],
+ "rows": ["Prelatent (store depletion)", "Latent (iron-deficient erythropoiesis)", "Iron deficiency anemia"], "symbols": ["↓", "N", "↑"],
+ "answer": [["↓", "N", "N", "N"], ["↓", "↓", "N", "N"], ["↓", "↓", "↓", "↓"]],
+ "explain": ["In the latent stage, RDW, TIBC, FEP and sTfR rise while Hb is still normal."]},
+{"type": "sort", "q": "General feature of anemia, or characteristic of iron deficiency?",
+ "bins": ["General anemia feature", "Characteristic of iron deficiency"],
+ "items": [{"t": "Fatigue and dyspnea on exertion", "b": 0}, {"t": "Palpitations", "b": 0}, {"t": "Koilonychia (spoon nails)", "b": 1}, {"t": "Pica (ice, clay)", "b": 1}, {"t": "Angular stomatitis and atrophic glossitis", "b": 1}, {"t": "Restless legs", "b": 1}]},
+{"type": "flip", "q": "What is Plummer–Vinson syndrome?",
+ "a": ["<b>Dysphagia</b> (esophageal web) + <b>iron deficiency anemia</b> + <b>angular stomatitis</b>."]},
+{"type": "flip", "q": "Which iron test is the most specific for iron deficiency?",
+ "a": ["A <b>low serum ferritin</b>. Transferrin also rises in pregnancy and with oral contraceptives."]},
+{"type": "flip", "q": "What excludes iron deficiency on a bone marrow Perls' stain?",
+ "a": ["<b>Any stainable iron</b> in the marrow excludes it; storage iron must be completely absent."]},
+{"type": "sort", "q": "Which clue points to each microcytic anemia?",
+ "bins": ["Lead poisoning", "Thalassemia trait", "Anemia of chronic disease", "Sideroblastic anemia"],
+ "items": [{"t": "Coarse basophilic stippling", "b": 0}, {"t": "Mentzer index below 13, normal iron studies", "b": 1}, {"t": "Ferritin not low, sTfR not raised", "b": 2}, {"t": "High ferritin and saturation, ring sideroblasts", "b": 3}]},
+{"type": "flip", "q": "Why is free erythrocyte protoporphyrin (ZPP) good for screening but weak for diagnosis?",
+ "a": ["It is very <b>sensitive</b> for iron-restricted erythropoiesis, but also raised in chronic disease and lead poisoning: <b>not specific</b>."]},
+{"type": "flip", "q": "What response is expected to oral iron, and how long should treatment continue?",
+ "a": ["Reticulocytes rise within <b>7 days</b> (peak 7–10); Hb rises about <b>2 g/dL in 3–4 weeks</b>.", "Continue <b>3–6 months</b> after Hb normalizes to refill stores. Failure: wrong diagnosis, complicating factor, ongoing loss or non-compliance."]},
+{"type": "flip", "q": "How does hepcidin cause the anemia of chronic disease?",
+ "a": ["IL-6 → <b>hepcidin</b> → blocks ferroportin: poor absorption and iron <b>trapped in macrophages</b>, so serum iron falls despite adequate stores.", "Cytokines also suppress erythropoiesis and EPO and shorten red cell survival."]},
+{"type": "sort", "q": "Iron deficiency anemia or anemia of chronic disease?",
+ "bins": ["Iron deficiency anemia", "Anemia of chronic disease"],
+ "items": [{"t": "TIBC increased", "b": 0}, {"t": "TIBC normal or decreased", "b": 1}, {"t": "Ferritin decreased", "b": 0}, {"t": "Ferritin normal or increased", "b": 1},
+  {"t": "sTfR increased", "b": 0}, {"t": "Hepcidin increased", "b": 1}, {"t": "Marrow iron present in macrophages", "b": 1}, {"t": "Hb usually 9–11 g/dL, non-progressive", "b": 1}]},
+{"type": "flip", "q": "Define a ring sideroblast, and the threshold for sideroblastic anemia.",
+ "a": ["An erythroblast with <b>≥ 5 iron granules</b> encircling <b>≥ one-third</b> of the nucleus (iron-loaded mitochondria).", "At least <b>15%</b> of erythroid precursors must be ring sideroblasts."]},
+{"type": "sort", "q": "Inherited or acquired sideroblastic anemia?",
+ "bins": ["Inherited", "Acquired"],
+ "items": [{"t": "X-linked <i>ALAS2</i> mutation", "b": 0}, {"t": "MDS with ring sideroblasts", "b": 1}, {"t": "Alcoholism", "b": 1}, {"t": "Isoniazid or linezolid", "b": 1}, {"t": "Copper deficiency (excess zinc)", "b": 1}]},
+{"type": "flip", "q": "Which gene and mutations cause hereditary hemochromatosis type 1, and how is it inherited?",
+ "a": ["<b><i>HFE</i></b> on chromosome 6 (near HLA-A, hence the HLA-A3 association): mainly <b>C282Y</b>, also H63D.", "<b>Autosomal recessive</b>; about 1 in 200–300 Europeans are C282Y homozygotes."]},
+{"type": "flip", "q": "Why does the gut keep absorbing iron in hereditary hemochromatosis?",
+ "a": ["Mutated HFE cannot signal high transferrin saturation, so <b>hepcidin stays inappropriately low</b>, ferroportin stays active, and iron is absorbed as if the body were deficient."]},
+{"type": "flip", "q": "Which iron results call for HFE genetic testing?",
+ "a": ["Fasting <b>transferrin saturation > 45%</b> (> 35% in premenopausal women) with <b>ferritin > 150 ng/mL</b>.", "Ferritin > 1000 ng/mL in HH means a high risk of cirrhosis."]},
+{"type": "sort", "q": "Is each a feature of hereditary hemochromatosis?",
+ "bins": ["Yes", "No"],
+ "items": [{"t": "Bronze skin", "b": 0}, {"t": "Diabetes mellitus", "b": 0}, {"t": "Cirrhosis", "b": 0}, {"t": "Cardiomyopathy", "b": 0}, {"t": "Hypogonadism", "b": 0}, {"t": "Low transferrin saturation", "b": 1}]},
+{"type": "flip", "q": "How is lead poisoning diagnosed, and what are the reference levels?",
+ "a": ["Raised <b>free erythrocyte protoporphyrin</b> and <b>blood lead</b>; coarse basophilic stippling.", "CDC reference value in children <b>3.5 µg/dL</b>; adults ≥ 5 µg/dL elevated."]},
+{"type": "sort", "q": "Is each a feature of chronic lead poisoning?",
+ "bins": ["Yes", "No"],
+ "items": [{"t": "Abdominal colic with constipation", "b": 0}, {"t": "Wrist drop (motor neuropathy)", "b": 0}, {"t": "Blue-gray lead line on the gums", "b": 0}, {"t": "Encephalopathy (mainly children)", "b": 0}, {"t": "Spherocytes", "b": 1}]}
+]},{
+"key": "h7", "title": "Chapter 7: Macrocytic Anemias", "short": "Ch 7 · Macrocytic anemias",
+"cards": [
+{"type": "flip", "q": "Define macrocytosis in adults, children and newborns.",
+ "a": ["MCV <b>> 100 fL</b> in adults; <b>> 95 fL</b> in children 2–12 years; physiologic in newborns (105–125 fL).", "MCH is high but MCHC normal: macrocytic/normochromic."]},
+{"type": "sort", "q": "Megaloblastic or non-megaloblastic macrocytosis?",
+ "bins": ["Megaloblastic", "Non-megaloblastic"],
+ "items": [{"t": "Vitamin B12 deficiency", "b": 0}, {"t": "Folate deficiency", "b": 0}, {"t": "Methotrexate", "b": 0}, {"t": "Liver disease", "b": 1}, {"t": "Alcoholism", "b": 1}, {"t": "Hypothyroidism", "b": 1}, {"t": "Reticulocytosis", "b": 1}, {"t": "Myelodysplasia", "b": 1}]},
+{"type": "flip", "q": "Why are megaloblastic cells large while hemoglobin production is normal?",
+ "a": ["<b>DNA synthesis</b> is defective (dUMP → dTMP fails) but <b>RNA and cytoplasmic maturation</b> continue: <b>nuclear–cytoplasmic asynchrony</b>."]},
+{"type": "sort", "q": "Folate or vitamin B12?",
+ "bins": ["Folate", "Vitamin B12"],
+ "items": [{"t": "Stores last only about 4 months", "b": 0}, {"t": "Stores last 2–4 years", "b": 1}, {"t": "Destroyed by cooking (heat-labile)", "b": 0}, {"t": "Absorbed in the terminal ileum with intrinsic factor", "b": 1},
+  {"t": "Absorbed in duodenum and proximal jejunum", "b": 0}, {"t": "Deficiency causes neurologic lesions", "b": 1}, {"t": "Deficiency in pregnancy causes neural tube defects", "b": 0}, {"t": "Methylmalonic acid rises", "b": 1}]},
+{"type": "flip", "q": "How much folate is recommended before and during pregnancy?",
+ "a": ["Daily need about 200 µg; recommended intake <b>400 µg</b> (600 µg in pregnancy).", "<b>400 µg/day from before conception</b> to prevent neural tube defects."]},
+{"type": "sort", "q": "What is the main cause of each deficiency?",
+ "bins": ["Folate deficiency", "B12 deficiency"],
+ "items": [{"t": "Inadequate diet (poverty, alcoholism)", "b": 0}, {"t": "Malabsorption (pernicious anemia)", "b": 1}, {"t": "Phenytoin", "b": 0}, {"t": "<i>Diphyllobothrium latum</i>", "b": 1}, {"t": "Strict vegan diet", "b": 1}, {"t": "Chronic hemolytic anemia (increased need)", "b": 0}]},
+{"type": "order", "q": "Put the steps of vitamin B12 absorption in order.",
+ "steps": ["HCl and pepsin release B12 from food protein", "B12 binds haptocorrin (R protein)", "Pancreatic proteases free it in the duodenum; it binds intrinsic factor", "The IF–B12 complex binds receptors in the terminal ileum", "B12 enters the blood bound to transcobalamin"]},
+{"type": "flip", "q": "What is the \"methylfolate trap\"?",
+ "a": ["Without B12, methionine synthase cannot regenerate tetrahydrofolate, so folate stays <b>trapped as methyl-THF</b> and cannot be used for thymidylate (DNA) synthesis."]},
+{"type": "flip", "q": "Why does B12 deficiency cause neurologic disease, and which marker reflects it?",
+ "a": ["B12 is needed for the methionine pathway (myelin) and to convert methylmalonyl-CoA to succinyl-CoA: <b>subacute combined degeneration</b> of the posterior and lateral columns.", "<b>Methylmalonic acid</b> rises in serum and urine."]},
+{"type": "flip", "q": "Can B12 neurologic damage occur without anemia?",
+ "a": ["<b>Yes</b>, even without anemia or macrocytosis. The earliest symptom is distal paresthesia; damage may be irreversible if treatment is delayed beyond 6 months."]},
+{"type": "sort", "q": "Which finding reflects ineffective erythropoiesis in megaloblastic anemia?",
+ "bins": ["Present", "Absent"],
+ "items": [{"t": "Low reticulocyte count", "b": 0}, {"t": "High LDH and indirect bilirubin", "b": 0}, {"t": "Low haptoglobin", "b": 0}, {"t": "Polychromasia and nucleated red cells", "b": 1}]},
+{"type": "sort", "q": "Anti-parietal cell or anti-intrinsic factor antibody?",
+ "bins": ["Anti-parietal cell", "Anti-intrinsic factor"],
+ "items": [{"t": "Sensitive (about 90%) but not specific", "b": 0}, {"t": "Very specific, 50–70% sensitive", "b": 1}],
+ "explain": ["Pernicious anemia is autoimmune atrophic gastritis with achlorhydria and a higher risk of gastric cancer."]},
+{"type": "flip", "q": "Define hypersegmented neutrophils (rule of fives) and why they are important.",
+ "a": ["<b>Any neutrophil with more than 5 lobes</b>, or <b>≥ 5% with 5 lobes</b>.", "The <b>first sign</b> to appear and the <b>last</b> to disappear."]},
+{"type": "sort", "q": "Is each finding typical of megaloblastic anemia?",
+ "bins": ["Typical", "Not typical"],
+ "items": [{"t": "Oval macrocytes", "b": 0}, {"t": "MCV often ≥ 120 fL", "b": 0}, {"t": "Pancytopenia in severe cases", "b": 0}, {"t": "Howell–Jolly bodies and tear drop cells", "b": 0}, {"t": "Markedly raised LDH", "b": 0}, {"t": "Reticulocytosis", "b": 1}]},
+{"type": "flip", "q": "What does the RBC histogram look like in megaloblastic anemia?",
+ "a": ["A <b>macrocytic peak</b> with a large <b>left shoulder</b> of fragmented small cells."]},
+{"type": "flip", "q": "What is the most characteristic marrow finding in the granulocytic line in megaloblastic anemia?",
+ "a": ["<b>Giant metamyelocytes</b>. The marrow is hypercellular with megaloblasts (asynchrony) and large hyperlobulated megakaryocytes."]},
+{"type": "sort", "q": "Which test fits each statement?",
+ "bins": ["Methylmalonic acid", "Homocysteine", "Holotranscobalamin", "Red cell folate"],
+ "items": [{"t": "Raised in B12 but not folate deficiency", "b": 0}, {"t": "Raised in both B12 and folate deficiency", "b": 1}, {"t": "Earliest marker of B12 deficiency (\"active B12\")", "b": 2}, {"t": "Reflects tissue folate stores better than serum", "b": 3}]},
+{"type": "flip", "q": "What serum B12 level defines deficiency?",
+ "a": ["Below <b>200 ng/L</b> (about 150 pmol/L); 200–300 ng/L is borderline. Fasting and light protection are needed for B12 and folate tests."]}
+]},{
+"key": "h8", "title": "Chapter 8: The Inherited Hemolytic Anemias", "short": "Ch 8 · Inherited hemolytic anemias",
+"cards": [
+{"type": "sort", "q": "Sign of regeneration or sign of hemolysis?",
+ "bins": ["Regeneration", "Hemolysis"],
+ "items": [{"t": "Increased reticulocytes and RPI", "b": 0}, {"t": "Increased LDH", "b": 1}, {"t": "Increased indirect bilirubin", "b": 1}, {"t": "Decreased haptoglobin", "b": 1}]},
+{"type": "flip", "q": "Intrinsic red cell defects are usually inherited. Name the classic exception.",
+ "a": ["<b>Paroxysmal nocturnal hemoglobinuria</b>: intrinsic but acquired."]},
+{"type": "sort", "q": "Qualitative or quantitative globin defect?",
+ "bins": ["Structural hemoglobinopathy (qualitative)", "Thalassemia (quantitative)"],
+ "items": [{"t": "Hb S", "b": 0}, {"t": "Hb C", "b": 0}, {"t": "Reduced β-chain synthesis", "b": 1}, {"t": "α-gene deletions", "b": 1}]},
+{"type": "order", "q": "Acid (citrate agar) electrophoresis: order the bands from cathode to anode (\"Cleverly Separates A from F\").",
+ "steps": ["Hb F", "Hb A", "Hb S", "Hb C"]},
+{"type": "flip", "q": "When must hemoglobin electrophoresis results be interpreted with care?",
+ "a": ["If the patient was <b>transfused in the past 3 months</b> or is <b>under 6 months old</b>."]},
+{"type": "flip", "q": "Which methods have largely replaced gel electrophoresis, and why?",
+ "a": ["<b>Cation-exchange HPLC</b> and <b>capillary electrophoresis</b>: they quantify Hb A<sub>2</sub> and Hb F accurately. IEF (with HPLC) is used for newborn screening."]},
+{"type": "sort", "q": "Match each type of hemoglobin variant to its consequence.",
+ "bins": ["Hemolytic anemia", "Familial erythrocytosis", "Familial cyanosis", "Heinz body anemia"],
+ "items": [{"t": "Polymerization or crystals (Hb S, Hb C)", "b": 0}, {"t": "Increased oxygen affinity", "b": 1}, {"t": "Hb M (oxidizes to methemoglobin)", "b": 2}, {"t": "Unstable hemoglobin", "b": 3}]},
+{"type": "flip", "q": "What is the Hb S mutation, and what makes Hb S sickle?",
+ "a": ["<b>β6 Glu→Val</b> (valine replaces glutamic acid).", "<b>Deoxygenation</b> makes Hb S polymerize into rigid fibers; hypoxia, acidosis, dehydration and fever favor it."]},
+{"type": "sort", "q": "Does each factor worsen or lessen sickling?",
+ "bins": ["Worsens sickling", "Lessens sickling"],
+ "items": [{"t": "Hypoxia", "b": 0}, {"t": "Acidosis", "b": 0}, {"t": "Dehydration", "b": 0}, {"t": "Hb F above 10–20%", "b": 1}, {"t": "Coexisting α-thalassemia trait", "b": 1}, {"t": "Hydroxyurea", "b": 1}]},
+{"type": "flip", "q": "Which sickle cell diseases are common in Lebanon, and in which ratio?",
+ "a": ["Sickle cell anemia (SS) and <b>sickle/β-thalassemia</b>, in a ratio of about <b>3:1</b>, clustered in the North and South; Hb C disease is next."]},
+{"type": "flip", "q": "Why does sickle cell anemia become symptomatic only after 3–6 months of age?",
+ "a": ["Until then, <b>Hb F</b> protects the red cells from sickling."]},
+{"type": "sort", "q": "Match each sickle cell crisis to its description.",
+ "bins": ["Vaso-occlusive", "Sequestration", "Aplastic"],
+ "items": [{"t": "Most common; dactylitis in young children", "b": 0}, {"t": "Spleen traps blood in the first 3–5 years; risk of shock", "b": 1}, {"t": "Parvovirus B19 stops erythropoiesis for days", "b": 2}]},
+{"type": "flip", "q": "What is the most common cause of death in children with sickle cell anemia, and why?",
+ "a": ["<b>Infections</b>, mainly encapsulated bacteria (<b>pneumococcus</b>) because of functional asplenia; <i>Salmonella</i> osteomyelitis is also typical. Prophylactic antibiotics prevent most deaths."]},
+{"type": "flip", "q": "What is acute chest syndrome?",
+ "a": ["A <b>vaso-occlusive crisis of the lungs</b>, often triggered by infection: hypoxemia → sickling → more occlusion (vicious circle). A leading cause of hospitalization and death."]},
+{"type": "sort", "q": "Sickle cell anemia (SS) or sickle cell trait (AS)?",
+ "bins": ["Sickle cell anemia (SS)", "Sickle cell trait (AS)"],
+ "items": [{"t": "Hb 6–8 g/dL, reticulocytes 5–20%", "b": 0}, {"t": "Normal CBC and smear", "b": 1}, {"t": "Hb S above 80%, no Hb A", "b": 0}, {"t": "About 60% Hb A and 35–45% Hb S", "b": 1}, {"t": "Sickle cells and target cells on the smear", "b": 0}],
+ "explain": ["The solubility test is positive in both."]},
+{"type": "flip", "q": "Give the principle and the limitations of the sickle solubility test.",
+ "a": ["Deoxygenated Hb S (sodium dithionite) is <b>insoluble</b> in concentrated phosphate buffer: a cloudy tube. Obligatory premarital test in Lebanon.", "Cannot separate trait from disease; <b>false negatives</b> under 6 months and in severe anemia; confirm by electrophoresis or HPLC."]},
+{"type": "flip", "q": "A patient has more Hb S than Hb A. What should you suspect?",
+ "a": ["<b>Hb S/β<sup>+</sup>-thalassemia</b>, or sickle cell disease after transfusion. Uncomplicated trait always has more A than S."]},
+{"type": "flip", "q": "Give the Hb C mutation and its typical smear findings.",
+ "a": ["<b>β6 Glu→Lys</b>.", "<b>Target cells (50–90%)</b> and hexagonal <b>\"gold bar\" crystals</b>; MCHC slightly high; Hb 9–12 g/dL."]},
+{"type": "sort", "q": "Which hemoglobins migrate together at alkaline pH?",
+ "bins": ["With Hb C (slow band)", "With Hb S"],
+ "items": [{"t": "Hb A<sub>2</sub>", "b": 0}, {"t": "Hb E", "b": 0}, {"t": "Hb O-Arab", "b": 0}, {"t": "Hb D", "b": 1}, {"t": "Hb G", "b": 1}],
+ "explain": ["They are separated on citrate agar at acid pH."]},
+{"type": "flip", "q": "A hemoglobin migrates in the S position at alkaline pH, but the solubility test is negative. What is it likely to be?",
+ "a": ["<b>Hb D or Hb G</b>: they do not sickle; separate them from Hb S on citrate agar at pH 6.0."]},
+{"type": "flip", "q": "Why does Hb E behave like a thalassemia?",
+ "a": ["<b>β26 Glu→Lys</b> causes abnormal splicing and <b>reduced β<sup>E</sup> synthesis</b>: qualitative and quantitative. Homozygous EE: MCV ~55–65 fL with many target cells. Hb E/β-thal can be transfusion-dependent."]},
+{"type": "flip", "q": "How does Hb SC disease compare with Hb SS?",
+ "a": ["<b>Milder</b>: Hb 11–13 g/dL, retics 3–5%, symptoms usually from the teenage years, fewer painful crises.", "Smear: target cells, a few sickle cells and blunt, branched <b>SC crystals</b>."]},
+{"type": "flip", "q": "How are unstable hemoglobins inherited and detected?",
+ "a": ["<b>Autosomal dominant</b> (all patients heterozygous); they precipitate as Heinz bodies. Most common: Hb Köln.", "<b>Heat stability test</b> (50 °C, turbidity) and isopropanol precipitation test. Hb F > 5% may give false positives."]},
+{"type": "flip", "q": "How is G6PD deficiency inherited, and how common is it in Lebanon?",
+ "a": ["<b>X-linked recessive</b>: hemizygous men are affected; women are usually carriers.", "About <b>10‰ of Lebanese males</b> and 0.4‰ of females."]},
+{"type": "order", "q": "Put the steps leading to hemolysis in G6PD deficiency in order.",
+ "steps": ["G6PD is deficient: little NADPH", "Reduced glutathione cannot be regenerated", "H<sub>2</sub>O<sub>2</sub> oxidizes hemoglobin", "Denatured Hb precipitates as Heinz bodies", "The spleen removes them (bite cells): hemolysis"]},
+{"type": "grid", "q": "Classify the G6PD variants (WHO 2022).", "cols": ["WHO class"],
+ "rows": ["Activity < 20%, chronic non-spherocytic hemolytic anemia", "Activity < 45%, hemolysis only with triggers", "Activity 60–150%, no hemolysis"], "symbols": ["A", "B", "C"],
+ "answer": [["A"], ["B"], ["C"]],
+ "explain": ["G6PD Mediterranean and G6PD A− are class B. Classification depends on activity <b>and</b> clinical picture."]},
+{"type": "sort", "q": "Which can trigger hemolysis in G6PD deficiency?",
+ "bins": ["Trigger", "Not a trigger"],
+ "items": [{"t": "Infection (most common)", "b": 0}, {"t": "Primaquine", "b": 0}, {"t": "Uncooked fava beans", "b": 0}, {"t": "Naphthalene (mothballs)", "b": 0}, {"t": "Henna in infants", "b": 0}, {"t": "Diabetic ketoacidosis", "b": 0}, {"t": "Iron supplements", "b": 1}]},
+{"type": "flip", "q": "Why can a G6PD assay be falsely normal right after a hemolytic episode, and when should it be repeated?",
+ "a": ["The old deficient cells are destroyed and <b>reticulocytes are rich in G6PD</b>.", "Repeat <b>2–3 months</b> later. DNA testing is usually needed for heterozygous women."]},
+{"type": "flip", "q": "Which smear findings suggest acute G6PD hemolysis, and how are Heinz bodies seen?",
+ "a": ["<b>Bite and blister cells</b>, irregularly contracted cells, polychromasia, some microspherocytes.", "Heinz bodies need a <b>supravital stain</b>."]},
+{"type": "flip", "q": "Which proteins are most often mutated in hereditary spherocytosis, and how is it inherited?",
+ "a": ["<b>Ankyrin</b> (most frequent, 40–50%), <b>band 3</b> (20–35%), β-spectrin; less often α-spectrin or protein 4.2.", "<b>Autosomal dominant</b> in 75%; final common defect: spectrin deficiency."]},
+{"type": "sort", "q": "Hereditary spherocytosis findings: typical or not?",
+ "bins": ["Typical of HS", "Not typical"],
+ "items": [{"t": "Increased MCHC", "b": 0}, {"t": "Increased RDW", "b": 0}, {"t": "Increased osmotic fragility", "b": 0}, {"t": "Reduced EMA binding by flow cytometry", "b": 0}, {"t": "Positive DAT", "b": 1}, {"t": "Mushroom (pincered) cells in band 3 deficiency", "b": 0}]},
+{"type": "flip", "q": "What is the EMA test, and what is its main pitfall?",
+ "a": ["<b>Eosin-5-maleimide</b> binds band 3; flow cytometry shows reduced fluorescence (≥ ~20% decrease) in HS. The test of choice, also in newborns.", "About 90–95% sensitive; <b>false positives in Southeast Asian ovalocytosis</b>."]},
+{"type": "flip", "q": "Why incubate blood 24 hours at 37 °C before an osmotic fragility test?",
+ "a": ["HS cells become <b>more spherical</b>, revealing mild cases. Fragility is decreased in thalassemia."]},
+{"type": "flip", "q": "How do most people with common hereditary elliptocytosis present?",
+ "a": ["About <b>90% are asymptomatic</b>, found on a smear (30–100% elliptocytes).", "Less than 10% elliptocytes also occur in iron deficiency, α-thal trait and megaloblastic anemia."]},
+{"type": "flip", "q": "What are the two consequences of decreased globin chain synthesis in thalassemia?",
+ "a": ["Less Hb → <b>anemia and microcytosis</b>.", "<b>Chain imbalance</b>: unpaired chains precipitate → intramedullary death (ineffective erythropoiesis) and hemolysis."]},
+{"type": "grid", "q": "Match the number of deleted α genes to the condition.", "cols": ["Condition"],
+ "rows": ["1 gene (-α/αα)", "2 genes (--/αα or -α/-α)", "3 genes (--/-α)", "4 genes (--/--)"],
+ "symbols": ["Silent carrier", "α-thal trait", "Hb H disease", "Hb Bart's hydrops"],
+ "answer": [["Silent carrier"], ["α-thal trait"], ["Hb H disease"], ["Hb Bart's hydrops"]]},
+{"type": "grid", "q": "Fill in Hb Bart's (γ<sub>4</sub>) at birth for each α-thalassemia.", "cols": ["Hb Bart's at birth"],
+ "rows": ["Silent carrier", "α-thalassemia trait", "Hb H disease", "Hb Bart's hydrops fetalis"],
+ "symbols": ["1–2%", "4–10%", "20–40%", "80–90%"],
+ "answer": [["1–2%"], ["4–10%"], ["20–40%"], ["80–90%"]],
+ "explain": ["Hb Bart's at birth is the only way, other than DNA testing, to detect a silent carrier."]},
+{"type": "flip", "q": "What are Hb H and Hb Bart's, and how do Hb H inclusions look?",
+ "a": ["<b>Hb H = β<sub>4</sub></b>; <b>Hb Bart's = γ<sub>4</sub></b>; both have very high oxygen affinity.", "Hb H precipitates as evenly spaced dots: <b>\"golf ball\"</b> cells with brilliant cresyl blue."]},
+{"type": "flip", "q": "Why are adults with α-thalassemia trait hard to diagnose by electrophoresis?",
+ "a": ["Hb A, A<sub>2</sub> and F all contain α chains, so their <b>relative percentages stay normal</b>. Diagnosis needs DNA analysis (or Hb Bart's at birth)."]},
+{"type": "flip", "q": "Why does β-thalassemia major appear only at 3–6 months of age?",
+ "a": ["That is when γ chains are switched off and β chains should replace them; excess <b>α chains</b> then precipitate."]},
+{"type": "sort", "q": "β-thalassemia minor or major?",
+ "bins": ["Thalassemia minor (trait)", "Thalassemia major"],
+ "items": [{"t": "RBC count 5–7 × 10<sup>12</sup>/L", "b": 0}, {"t": "Hb A<sub>2</sub> 3.5–7%", "b": 0}, {"t": "Hb 4–7 g/dL, transfusion-dependent", "b": 1}, {"t": "Hb F up to 98% (β<sup>0</sup>)", "b": 1},
+  {"t": "Hair-on-end skull X-ray", "b": 1}, {"t": "Mild or no anemia, MCV 55–70 fL", "b": 0}, {"t": "Extreme erythroblastosis", "b": 1}]},
+{"type": "flip", "q": "What is the main cause of death in β-thalassemia major?",
+ "a": ["<b>Cardiac failure from myocardial iron overload</b> (transfusions plus increased absorption)."]},
+{"type": "flip", "q": "How do the TIF guidelines now classify thalassemias?",
+ "a": ["<b>Transfusion-dependent (TDT)</b>: thalassemia major, some severe Hb E/β-thal.", "<b>Non-transfusion-dependent (NTDT)</b>: intermedia, Hb H disease, mild Hb E/β-thal."]},
+{"type": "flip", "q": "Why should Hb A<sub>2</sub> be repeated after iron treatment in a patient with iron deficiency?",
+ "a": ["Severe iron deficiency can <b>lower Hb A<sub>2</sub></b> and mask β-thalassemia trait."]},
+{"type": "sort", "q": "β-thalassemia trait or iron deficiency anemia?",
+ "bins": ["β-thalassemia trait", "Iron deficiency anemia"],
+ "items": [{"t": "High RBC count, normal RDW", "b": 0}, {"t": "High RDW, normal or low RBC count", "b": 1}, {"t": "Basophilic stippling", "b": 0}, {"t": "Mentzer index below 13", "b": 0}, {"t": "Low ferritin", "b": 1}, {"t": "Hb A<sub>2</sub> above 3.5%", "b": 0}]},
+{"type": "calc", "kind": "mentzer"},
+{"type": "flip", "q": "How do homozygous δβ-thalassemia and homozygous HPFH differ? Both have 100% Hb F.",
+ "a": ["<b>δβ-thalassemia</b>: microcytosis and hemolysis; Hb F <b>heterogeneously</b> distributed.", "<b>HPFH</b>: Hb F distributed evenly (<b>pancellular</b>), no thalassemic features."]}
+]},{
+"key": "h9", "title": "Chapter 9: The Acquired Hemolytic Anemias", "short": "Ch 9 · Acquired hemolytic anemias",
+"cards": [
+{"type": "sort", "q": "Alloimmune, autoimmune or drug-induced immune hemolysis?",
+ "bins": ["Alloimmune", "Autoimmune", "Drug-induced"],
+ "items": [{"t": "Hemolytic transfusion reaction", "b": 0}, {"t": "HDFN", "b": 0}, {"t": "Warm AIHA in CLL", "b": 1}, {"t": "Cold agglutinin disease", "b": 1}, {"t": "Ceftriaxone immune hemolysis", "b": 2}]},
+{"type": "sort", "q": "Warm or cold autoimmune hemolytic anemia?",
+ "bins": ["Warm AIHA", "Cold AIHA"],
+ "items": [{"t": "About 3/4 of cases", "b": 0}, {"t": "Usually IgG (IgG1), often anti-Rh (panreactive)", "b": 0}, {"t": "DAT IgG ± C3d", "b": 0}, {"t": "Mainly splenic (extravascular) hemolysis", "b": 0},
+  {"t": "Usually IgM anti-I", "b": 1}, {"t": "DAT positive for C3d only", "b": 1}, {"t": "Acrocyanosis and Raynaud phenomenon", "b": 1}, {"t": "Destruction mainly in the liver (C3b)", "b": 1}]},
+{"type": "flip", "q": "What proportion of AIHA is secondary, and which disorders are the most common cause?",
+ "a": ["About <b>40–50%</b> are secondary.", "<b>Lymphoproliferative disorders</b> (CLL, lymphomas) cause about half of secondary cases; SLE and other autoimmune diseases most of the rest."]},
+{"type": "flip", "q": "Which IgG subclasses cause hemolysis in warm AIHA?",
+ "a": ["<b>IgG1</b> (and less often IgG3). IgG2 or IgG4 alone on the cells is not associated with hemolysis."]},
+{"type": "flip", "q": "How do cold agglutinins disturb the CBC, and how is it corrected?",
+ "a": ["Agglutination gives a <b>falsely low RBC count</b> and <b>falsely high MCHC</b> (and MCV).", "<b>Warm the sample to 37 °C</b> and repeat the count."]},
+{"type": "sort", "q": "Chronic cold agglutinin disease or acute post-infectious cold agglutinin syndrome?",
+ "bins": ["Chronic CAD", "Post-infectious syndrome"],
+ "items": [{"t": "Older adults, monoclonal IgM κ anti-I", "b": 0}, {"t": "Children and young adults, polyclonal IgM", "b": 1}, {"t": "After <i>Mycoplasma pneumoniae</i> (anti-I) or EBV (anti-i)", "b": 1}, {"t": "Linked to clonal B-cell disorders", "b": 0}, {"t": "Transient", "b": 1}]},
+{"type": "flip", "q": "Which matters more in cold agglutinins: the titer or the thermal amplitude?",
+ "a": ["The <b>thermal amplitude</b>. Low-titer polyclonal cold agglutinins are common and harmless."]},
+{"type": "order", "q": "Put the Donath–Landsteiner test (paroxysmal cold hemoglobinuria) in order.",
+ "steps": ["Incubate the patient's serum with red cells in ice (4 °C)", "The IgG anti-P binds and fixes complement in the cold", "Warm to 37 °C", "Complement completes activation: hemolysis"]},
+{"type": "flip", "q": "Who gets paroxysmal cold hemoglobinuria, and what is the DAT?",
+ "a": ["Mainly <b>children after viral infections</b>; the chronic form with tertiary or congenital syphilis.", "DAT positive for <b>complement only</b> (the IgG leaves the cells at 37 °C)."]},
+{"type": "sort", "q": "Match each drug-induced mechanism to its findings.",
+ "bins": ["Drug adsorption (penicillin type)", "Autoantibody induction (methyldopa)", "Immune complex (innocent bystander)", "Nonimmunologic protein adsorption"],
+ "items": [{"t": "DAT IgG; eluate reacts only with drug-treated cells", "b": 0}, {"t": "Eluate reacts with normal cells, no drug needed", "b": 1}, {"t": "Acute intravascular hemolysis, DAT C3d (ceftriaxone, quinine)", "b": 2}, {"t": "Positive DAT but nonreactive eluate (cisplatin, clavulanate)", "b": 3}]},
+{"type": "flip", "q": "Which drugs are now the most common causes of drug-induced immune hemolysis?",
+ "a": ["Second- and third-generation <b>cephalosporins</b> (especially <b>cefotetan</b> and <b>ceftriaxone</b>) and <b>piperacillin</b>."]},
+{"type": "sort", "q": "Match each non-immune hemolysis to its typical clue.",
+ "bins": ["Schistocytes", "Acanthocytes (spur cells)", "Intra-erythrocytic parasites", "Spherocytes and fragments"],
+ "items": [{"t": "Mechanical heart valve or TTP", "b": 0}, {"t": "Severe liver disease", "b": 1}, {"t": "Malaria or babesiosis", "b": 2}, {"t": "Severe burns", "b": 3}]},
+{"type": "flip", "q": "What causes paroxysmal nocturnal hemoglobinuria?",
+ "a": ["An acquired somatic mutation of <b><i>PIGA</i></b> (X chromosome) in a stem cell: no <b>GPI anchor</b>, so <b>CD55 and CD59</b> are missing and red cells are lysed by complement."]},
+{"type": "flip", "q": "Give the classic triad of PNH and the gold-standard test.",
+ "a": ["<b>Hemolytic anemia, thrombosis</b> (hepatic, portal, cerebral veins) and <b>cytopenias</b>.", "<b>Flow cytometry</b>: loss of CD55/CD59 on red cells and of FLAER binding with CD24/CD14 on neutrophils and monocytes. Ham and sucrose tests are obsolete."]},
+{"type": "sort", "q": "Is each finding typical of PNH?",
+ "bins": ["Typical", "Not typical"],
+ "items": [{"t": "Negative DAT", "b": 0}, {"t": "Iron deficiency from urinary iron loss", "b": 0}, {"t": "Association with aplastic anemia", "b": 0}, {"t": "Hemolysis triggered by cold", "b": 1}]}
+]},{
+"key": "h10", "title": "Chapter 10: Aplastic Anemia and Pure Red Cell Aplasia", "short": "Ch 10 · Aplastic anemia & PRCA",
+"cards": [
+{"type": "flip", "q": "Give the characteristic features of aplastic anemia.",
+ "a": ["<b>Pancytopenia, reticulocytopenia, hypocellular marrow</b> (> 70% fat) and depleted stem cells.", "The remaining cells look <b>normal</b> (at most mild macrocytosis)."]},
+{"type": "flip", "q": "Which smear findings argue against aplastic anemia?",
+ "a": ["Nucleated or abnormally shaped red cells, hypersegmented or abnormal leukocytes, <b>immature cells</b>, megakaryocyte fragments."]},
+{"type": "flip", "q": "What is the main mechanism of acquired aplastic anemia, and what proportion is idiopathic?",
+ "a": ["<b>Immune</b>: cytotoxic T cells destroy the stem cells.", "About <b>70%</b> are idiopathic."]},
+{"type": "sort", "q": "Which cause of aplastic anemia fits each description?",
+ "bins": ["Idiosyncratic (unexpected)", "Dose-related (expected)", "Strongest viral association"],
+ "items": [{"t": "Chloramphenicol", "b": 0}, {"t": "Cancer chemotherapy", "b": 1}, {"t": "Ionizing radiation", "b": 1}, {"t": "Seronegative (non-A to E) hepatitis", "b": 2}]},
+{"type": "flip", "q": "What is the diagnostic test for Fanconi anemia, and what are its typical features?",
+ "a": ["The <b>chromosomal breakage test</b> with DNA cross-linking agents (mitomycin C).", "Autosomal recessive (FA-B X-linked); marrow failure at 5–10 years; café-au-lait spots, short stature, <b>thumb and radial anomalies</b>; more than 20 FANC genes."]},
+{"type": "flip", "q": "Which inherited syndrome combines marrow failure with exocrine pancreatic insufficiency?",
+ "a": ["<b>Shwachman–Diamond syndrome</b> (mainly neutropenia; second cause of pancreatic insufficiency in children after cystic fibrosis)."]},
+{"type": "flip", "q": "Why is lymphocytosis relative in aplastic anemia, and which sample assesses cellularity?",
+ "a": ["Lymphocytes <b>live a long time</b>, so they make up a larger share.", "A <b>bone marrow biopsy (trephine)</b> is essential to assess cellularity."]},
+{"type": "grid", "q": "Fill in the Camitta criteria for severe aplastic anemia (marrow cellularity < 25% plus two of these).", "cols": ["Below"],
+ "rows": ["Neutrophils", "Platelets", "Reticulocytes"], "symbols": ["0.5 × 10⁹/L", "20 × 10⁹/L"],
+ "answer": [["0.5 × 10⁹/L"], ["20 × 10⁹/L"], ["20 × 10⁹/L"]],
+ "explain": ["<b>Very severe</b>: the same with neutrophils below 0.2 × 10<sup>9</sup>/L."]},
+{"type": "sort", "q": "Aplastic anemia or pure red cell aplasia?",
+ "bins": ["Aplastic anemia", "Pure red cell aplasia"],
+ "items": [{"t": "Pancytopenia", "b": 0}, {"t": "Normal WBC and platelets", "b": 1}, {"t": "Hypocellular, fatty marrow", "b": 0}, {"t": "Normocellular marrow with < 5% erythroid precursors", "b": 1}]},
+{"type": "sort", "q": "Which cause of red cell aplasia fits each description?",
+ "bins": ["Transient erythroblastopenia of childhood", "Parvovirus B19 aplastic crisis", "Thymoma", "Diamond–Blackfan anemia"],
+ "items": [{"t": "Healthy children aged 1–4, after a viral infection", "b": 0}, {"t": "Sudden aplasia in sickle cell disease; giant proerythroblasts", "b": 1}, {"t": "Abnormal T-cell suppression of erythroid precursors", "b": 2}, {"t": "Congenital, first year of life; ribosomal protein genes (RPS19)", "b": 3}]},
+{"type": "flip", "q": "Which findings support Diamond–Blackfan anemia?",
+ "a": ["Usually <b>macrocytic</b> anemia, severe reticulocytopenia, erythroid hypoplasia; raised <b>Hb F</b> and <b>erythrocyte adenosine deaminase (eADA)</b>; thumb, craniofacial or heart anomalies."]},
+{"type": "flip", "q": "Why does chronic kidney disease cause anemia?",
+ "a": ["<b>Decreased erythropoietin</b>: a normocytic hypoproliferative anemia."]}
+]},{
+"key": "h11", "title": "Chapter 11: Erythrocytosis and Polycythemia", "short": "Ch 11 · Erythrocytosis",
+"cards": [
+{"type": "flip", "q": "What is the difference between relative erythrocytosis and polycythemia (absolute erythrocytosis)?",
+ "a": ["<b>Relative</b>: more red cells per volume because the <b>plasma volume is low</b>; red cell mass normal.", "<b>Polycythemia</b>: true increase in <b>red cell mass</b> (> 36 mL/kg men, > 32 mL/kg women)."]},
+{"type": "sort", "q": "Relative erythrocytosis, secondary polycythemia, or not true erythrocytosis?",
+ "bins": ["Relative erythrocytosis", "Secondary polycythemia", "Not true erythrocytosis"],
+ "items": [{"t": "Severe dehydration or diarrhea", "b": 0}, {"t": "Gaisböck syndrome", "b": 0}, {"t": "Chronic lung disease", "b": 1}, {"t": "High altitude", "b": 1}, {"t": "Renal cyst or tumor", "b": 1}, {"t": "Testosterone or EPO abuse", "b": 1}, {"t": "Thalassemia trait with high RBC count", "b": 2}]},
+{"type": "sort", "q": "Physiologically appropriate (hypoxic) or inappropriate secondary polycythemia?",
+ "bins": ["Appropriate (hypoxemia)", "Inappropriate (abnormal EPO)"],
+ "items": [{"t": "Cyanotic congenital heart disease", "b": 0}, {"t": "Sleep apnea", "b": 0}, {"t": "High-affinity hemoglobin", "b": 0}, {"t": "Smoking (carboxyhemoglobin)", "b": 0}, {"t": "Cerebellar hemangioblastoma", "b": 1}, {"t": "Hepatocellular carcinoma", "b": 1}, {"t": "Post-renal transplant erythrocytosis", "b": 1}]},
+{"type": "grid", "q": "Fill in the CBC values that suggest polycythemia.", "cols": ["Men", "Women"],
+ "rows": ["Hemoglobin above", "Hematocrit above"], "symbols": ["16.5 g/dL", "16 g/dL", "49%", "48%"],
+ "answer": [["16.5 g/dL", "16 g/dL"], ["49%", "48%"]],
+ "explain": ["RBC count above 6 × 10<sup>6</sup>/µL in men and 5.5 × 10<sup>6</sup>/µL in women."]},
+{"type": "sort", "q": "Primary (polycythemia vera) or secondary polycythemia?",
+ "bins": ["Primary (PV)", "Secondary"],
+ "items": [{"t": "Low EPO", "b": 0}, {"t": "Normal or high EPO", "b": 1}, {"t": "Raised WBC and platelets", "b": 0}, {"t": "Splenomegaly", "b": 0}, {"t": "Aquagenic pruritus", "b": 0}, {"t": "Low oxygen saturation", "b": 1}]},
+{"type": "flip", "q": "How does the ESR behave in polycythemia?",
+ "a": ["It is <b>decreased</b>, in both primary and secondary polycythemia."]},
+{"type": "flip", "q": "Arterial oxygen saturation is normal but the P50 is low. What does it suggest?",
+ "a": ["A <b>high-oxygen-affinity hemoglobin</b> variant."]},
+{"type": "flip", "q": "Which symptoms come from hyperviscosity in polycythemia?",
+ "a": ["Plethora, <b>headache, dizziness, vertigo, tinnitus, visual disturbances</b>, and thrombosis (including hepatic veins)."]}
+]},{
+"key": "h12", "title": "Chapter 12: Benign (Non-malignant) Leukocyte Disorders", "short": "Ch 12 · Benign leukocyte disorders",
+"cards": [
+{"type": "order", "q": "Put the steps of neutrophil function in order.",
+ "steps": ["Chemotaxis toward C5a, IL-8, leukotriene B4", "Rolling on endothelium (selectins)", "Firm adhesion (integrins with ICAM)", "Transmigration (PECAM)", "Phagocytosis of opsonized organisms (IgG, C3b)", "Killing (oxygen-dependent and -independent)"]},
+{"type": "flip", "q": "What is the most common manifestation of neutrophil function disorders?",
+ "a": ["<b>Recurrent bacterial infections</b> (also <i>Candida</i> and <i>Aspergillus</i>), mainly of the skin, mouth, oropharynx and respiratory tract."]},
+{"type": "sort", "q": "Match each neutrophil disorder to its defect.",
+ "bins": ["Chronic granulomatous disease", "Leukocyte adhesion deficiency", "Myeloperoxidase deficiency", "Chédiak–Higashi syndrome"],
+ "items": [{"t": "No respiratory burst (NADPH oxidase)", "b": 0}, {"t": "CD18 (β2 integrin) mutation", "b": 1}, {"t": "Most common inherited neutrophil enzyme defect; usually asymptomatic", "b": 2}, {"t": "<i>LYST</i> gene; giant fused granules", "b": 3}]},
+{"type": "flip", "q": "How is chronic granulomatous disease mostly inherited, and which organisms are typical?",
+ "a": ["Mostly <b>X-linked</b> (<i>CYBB</i>, gp91<sup>phox</sup>, 65–75%); others autosomal recessive.", "<b>Catalase-positive</b> organisms: <i>S. aureus</i>, <i>Aspergillus</i>, <i>Burkholderia cepacia</i>, <i>Serratia</i>, <i>Nocardia</i>; granulomas."]},
+{"type": "sort", "q": "NBT test or DHR flow cytometry for CGD?",
+ "bins": ["NBT slide test", "DHR flow cytometry"],
+ "items": [{"t": "Normal neutrophils reduce a yellow dye to blue-black formazan", "b": 0}, {"t": "More sensitive and quantitative; has largely replaced the other", "b": 1}, {"t": "Detects carriers reliably and suggests the genetic type", "b": 1}]},
+{"type": "flip", "q": "How is myeloperoxidase deficiency often discovered by chance?",
+ "a": ["On analyzers that use a <b>peroxidase stain</b> for the differential (Siemens Advia): they flag a <b>falsely low neutrophil count</b>."]},
+{"type": "flip", "q": "Give three typical features of leukocyte adhesion deficiency type I.",
+ "a": ["<b>Delayed separation of the umbilical cord</b>, persistent <b>marked neutrophilia</b>, and infections <b>without pus</b>."]},
+{"type": "flip", "q": "Describe Chédiak–Higashi syndrome.",
+ "a": ["Autosomal recessive (<i>LYST</i>): <b>giant purple-gray granules</b> in granulocytes (single large granule in lymphocytes, monocytes), recurrent infections, neutropenia, <b>partial albinism</b>.", "Death usually from the accelerated phase (HLH)."]},
+{"type": "sort", "q": "Match each inherited white cell anomaly to its feature.",
+ "bins": ["Pelger–Hüet anomaly", "May–Hegglin anomaly", "Alder–Reilly anomaly"],
+ "items": [{"t": "Bilobed (pince-nez) or round nuclei; normal function", "b": 0}, {"t": "Large Döhle-like bodies, giant platelets, thrombocytopenia (<i>MYH9</i>)", "b": 1}, {"t": "Coarse dark granules in all white cells (mucopolysaccharidoses)", "b": 2}]},
+{"type": "flip", "q": "Name causes of pseudo-Pelger–Hüet neutrophils.",
+ "a": ["<b>Myelodysplastic syndromes</b>, HIV and some bacterial infections, and drugs (mycophenolate, taxanes)."]},
+{"type": "sort", "q": "Which lipid storage disease fits each marrow cell?",
+ "bins": ["Gaucher disease", "Niemann–Pick disease"],
+ "items": [{"t": "\"Crinkled tissue paper\" cytoplasm", "b": 0}, {"t": "Foam cell with even lipid vacuoles", "b": 1}, {"t": "Sea-blue histiocytes (type B)", "b": 1}]},
+{"type": "grid", "q": "Classify the neutrophilia (× 10<sup>9</sup>/L).", "cols": ["Category"],
+ "rows": ["9.5", "16", "25", "45"], "symbols": ["Mild", "Moderate", "Severe", "Leukemoid"],
+ "answer": [["Mild"], ["Moderate"], ["Severe"], ["Leukemoid"]],
+ "explain": ["Mild 7.1–12; moderate 12–20; severe 20–30; leukemoid reaction 30–75."]},
+{"type": "sort", "q": "Rapid demargination or release from the marrow storage pool?",
+ "bins": ["Demargination (no left shift)", "Marrow release (left shift)"],
+ "items": [{"t": "Exercise", "b": 0}, {"t": "Epinephrine or acute stress", "b": 0}, {"t": "Bacterial infection with toxic granulation", "b": 1}, {"t": "Corticosteroids", "b": 1}]},
+{"type": "flip", "q": "Define a leukemoid reaction and name its causes.",
+ "a": ["Neutrophilia <b>> 30 × 10<sup>9</sup>/L</b> with WBC <b>> 50 × 10<sup>9</sup>/L</b> and an intense left shift.", "Severe infections (<i>C. difficile</i> colitis, TB), severe burns, marrow metastases, myelofibrosis."]},
+{"type": "grid", "q": "Classify the neutropenia (× 10<sup>9</sup>/L).", "cols": ["Category"],
+ "rows": ["1.3", "0.8", "0.3", "0.1"], "symbols": ["Mild", "Moderate", "Severe", "Agranulocytosis"],
+ "answer": [["Mild"], ["Moderate"], ["Severe"], ["Agranulocytosis"]],
+ "explain": ["Mild 1.0–1.5; moderate 0.5–1; severe < 0.5; agranulocytosis often < 0.2 (a critical value)."]},
+{"type": "flip", "q": "What is DANC?",
+ "a": ["<b>Duffy-null associated neutrophil count</b>: a lower neutrophil count without infection risk, common in people of African and Middle Eastern ancestry with the <b>Fy(a−b−)</b> phenotype. Not a disease."]},
+{"type": "sort", "q": "Is each a cause of neutropenia?",
+ "bins": ["Yes", "No"],
+ "items": [{"t": "Viral infections (first cause to consider)", "b": 0}, {"t": "Clozapine or antithyroid drugs", "b": 0}, {"t": "Felty syndrome", "b": 0}, {"t": "Cyclic neutropenia (<i>ELANE</i>)", "b": 0}, {"t": "Copper deficiency", "b": 0}, {"t": "Corticosteroids", "b": 1}]},
+{"type": "flip", "q": "What is the mnemonic for causes of eosinophilia?",
+ "a": ["<b>NACP</b>: <b>N</b>eoplasms (CML, Hodgkin lymphoma), <b>A</b>llergies and asthma, <b>C</b>ollagen vascular diseases, <b>P</b>arasites (tissue-invading)."]},
+{"type": "flip", "q": "How is hypereosinophilia and hypereosinophilic syndrome defined (WHO 2022)?",
+ "a": ["Eosinophils <b>> 1.5 × 10<sup>9</sup>/L</b> on two examinations at least 1 month apart; HES also requires <b>organ damage</b> due to eosinophils."]},
+{"type": "flip", "q": "What is monocytosis often a sign of after chemotherapy?",
+ "a": ["<b>Recovery</b> from severe neutropenia or overwhelming infection. Monocytosis > 1 G/L; also chronic infections and chronic inflammation."]},
+{"type": "flip", "q": "What is the first step in evaluating basophilia?",
+ "a": ["<b>Exclude a chronic myeloproliferative neoplasm</b> (especially CML). Basophilia: > 0.15 × 10<sup>9</sup>/L."]},
+{"type": "sort", "q": "Lymphocytosis: are reactive lymphocytes seen?",
+ "bins": ["Reactive lymphocytes seen", "Small mature lymphocytes (no reactive forms)"],
+ "items": [{"t": "Infectious mononucleosis (EBV)", "b": 0}, {"t": "CMV", "b": 0}, {"t": "Toxoplasmosis", "b": 0}, {"t": "Pertussis (some cleaved nuclei)", "b": 1}]},
+{"type": "sort", "q": "Reactive lymphocytes or blasts?",
+ "bins": ["Reactive lymphocytes", "Blasts"],
+ "items": [{"t": "Heterogeneous appearance on the same slide", "b": 0}, {"t": "Monotonous population", "b": 1}, {"t": "Low N/C ratio, abundant blue cytoplasm hugging red cells", "b": 0}, {"t": "Very high N/C ratio", "b": 1}]},
+{"type": "flip", "q": "Give the criteria of a mononucleosis syndrome.",
+ "a": ["Reactive lymphocytes <b>> 10%</b>, lymphocytes <b>> 50%</b> of leukocytes, marked heterogeneity, sometimes 2–5% reactive plasma cells.", "Causes: EBV, CMV, toxoplasmosis, acute HIV, hepatitis."]}
+]},{
+"key": "h13", "title": "Chapter 13: Quantitative Disorders of Platelets", "short": "Ch 13 · Platelet disorders",
+"cards": [
+{"type": "sort", "q": "Reactive thrombocytosis or essential thrombocythemia?",
+ "bins": ["Reactive (secondary)", "Essential thrombocythemia (primary)"],
+ "items": [{"t": "By far the more common", "b": 0}, {"t": "Myeloproliferative neoplasm", "b": 1}, {"t": "Thrombosis or bleeding risk", "b": 1}, {"t": "Iron deficiency or infection", "b": 0}, {"t": "After splenectomy", "b": 0}]},
+{"type": "flip", "q": "What can falsely raise an impedance platelet count?",
+ "a": ["<b>Schistocytes and microspherocytes</b>, white cell fragments in acute leukemia, <b>cryoglobulins</b>, microorganisms. Always confirm on the smear."]},
+{"type": "grid", "q": "Match the platelet count to the bleeding risk.", "cols": ["Bleeding risk"],
+ "rows": ["> 100 × 10⁹/L", "50–100 × 10⁹/L", "20–50 × 10⁹/L", "< 20 × 10⁹/L"],
+ "symbols": ["None", "Major surgery/trauma", "Any surgery", "Spontaneous"],
+ "answer": [["None"], ["Major surgery/trauma"], ["Any surgery"], ["Spontaneous"]],
+ "explain": ["Below 5–10 × 10<sup>9</sup>/L: risk of life-threatening (e.g. intracranial) bleeding."]},
+{"type": "sort", "q": "Which cause of a low platelet count is artifactual (pseudothrombocytopenia)?",
+ "bins": ["Pseudothrombocytopenia", "True thrombocytopenia"],
+ "items": [{"t": "EDTA-dependent platelet clumping", "b": 0}, {"t": "Platelet satellitism", "b": 0}, {"t": "Clotted sample", "b": 0}, {"t": "Giant platelets not counted", "b": 0}, {"t": "Immune thrombocytopenia", "b": 1}]},
+{"type": "order", "q": "Order the skin bleeding lesions by size, smallest first.",
+ "steps": ["Petechiae (1–2 mm)", "Purpura (3–10 mm)", "Ecchymoses (> 1 cm)"],
+ "explain": ["Raised (palpable) purpura suggests vasculitis (e.g. IgA vasculitis)."]},
+{"type": "sort", "q": "Peripheral (destruction) or central (production) thrombocytopenia?",
+ "bins": ["Peripheral", "Central"],
+ "items": [{"t": "Marrow rich in megakaryocytes", "b": 0}, {"t": "Few megakaryocytes", "b": 1}, {"t": "Other lineages often affected", "b": 1}, {"t": "Large platelets, high MPV", "b": 0}]},
+{"type": "sort", "q": "Match each inherited platelet disorder to its feature.",
+ "bins": ["Bernard–Soulier", "Wiskott–Aldrich", "Gray platelet syndrome", "May–Hegglin (MYH9)"],
+ "items": [{"t": "Giant platelets lacking GP Ib-IX-V; no ristocetin aggregation", "b": 0}, {"t": "Small platelets, eczema, immunodeficiency (X-linked)", "b": 1}, {"t": "Pale platelets lacking alpha granules", "b": 2}, {"t": "Döhle-like bodies in neutrophils, macrothrombocytopenia", "b": 3}]},
+{"type": "flip", "q": "How is Bernard–Soulier disease distinguished from von Willebrand disease in aggregation studies?",
+ "a": ["Both show absent ristocetin aggregation, but in Bernard–Soulier it is <b>not corrected by normal plasma</b> (the platelet receptor is missing)."]},
+{"type": "flip", "q": "What causes neonatal alloimmune thrombocytopenia (NAIT)?",
+ "a": ["Maternal antibodies against a paternal platelet antigen the mother lacks, usually <b>HPA-1a</b>. It can cause intracranial hemorrhage in utero, even in a <b>first pregnancy</b>."]},
+{"type": "sort", "q": "Immune or non-immune acquired thrombocytopenia?",
+ "bins": ["Immune", "Non-immune"],
+ "items": [{"t": "Heparin-induced thrombocytopenia", "b": 0}, {"t": "Post-transfusion purpura", "b": 0}, {"t": "SLE", "b": 0}, {"t": "DIC", "b": 1}, {"t": "HELLP syndrome", "b": 1}, {"t": "Gestational thrombocytopenia", "b": 1}, {"t": "Hypersplenism", "b": 1}]},
+{"type": "flip", "q": "Describe gestational thrombocytopenia.",
+ "a": ["Common (<b>5–10% of pregnancies</b>), mild (usually > 70 × 10<sup>9</sup>/L), in late pregnancy, and <b>harmless</b>."]},
+{"type": "flip", "q": "Define primary ITP and its mechanism.",
+ "a": ["Acquired autoimmune thrombocytopenia <b>< 100 G/L</b> without another cause.", "Autoantibodies against <b>GP IIb-IIIa and GP Ib-IX-V</b>; platelets destroyed mainly in the spleen; production also impaired; TPO inappropriately normal."]},
+{"type": "sort", "q": "ITP in children or in adults?",
+ "bins": ["Children", "Adults"],
+ "items": [{"t": "Sudden onset after a viral infection or vaccination", "b": 0}, {"t": "About 80% recover spontaneously", "b": 0}, {"t": "Women 3:1 at age 20–40", "b": 1}, {"t": "About two-thirds become chronic", "b": 1}, {"t": "Insidious onset with menorrhagia and epistaxis", "b": 1}]},
+{"type": "grid", "q": "Name the ITP phase by duration.", "cols": ["Phase"],
+ "rows": ["Less than 3 months", "3–12 months", "More than 12 months"], "symbols": ["Newly diagnosed", "Persistent", "Chronic"],
+ "answer": [["Newly diagnosed"], ["Persistent"], ["Chronic"]]},
+{"type": "sort", "q": "Are these findings expected in primary ITP?",
+ "bins": ["Expected", "Not expected"],
+ "items": [{"t": "High MPV (large platelets)", "b": 0}, {"t": "Normal PT and PTT", "b": 0}, {"t": "Marrow rich in megakaryocytes", "b": 0}, {"t": "Platelet life span about 2 days", "b": 0}, {"t": "Schistocytes", "b": 1}, {"t": "Blasts", "b": 1}]},
+{"type": "flip", "q": "Which tests should every adult with newly diagnosed ITP have?",
+ "a": ["<b>HIV and HCV</b> testing (ASH guidelines), and evaluation for <b><i>Helicobacter pylori</i></b>."]},
+{"type": "sort", "q": "Non-immune heparin-associated thrombocytopenia (type I) or HIT (type II)?",
+ "bins": ["Type I (non-immune)", "Type II HIT"],
+ "items": [{"t": "First 4 days, platelets > 100 × 10<sup>9</sup>/L", "b": 0}, {"t": "Day 5–14, ≥ 50% drop", "b": 1}, {"t": "IgG against heparin–PF4", "b": 1}, {"t": "Thrombosis in about 50%", "b": 1}, {"t": "Heparin can be continued", "b": 0}]},
+{"type": "order", "q": "Put the diagnostic steps for suspected HIT in order.",
+ "steps": ["Estimate pre-test probability with the 4Ts score", "Screen with a PF4–heparin ELISA (or rapid immunoassay)", "Confirm with a platelet activation test (serotonin release assay)"],
+ "explain": ["A 4Ts score ≤ 3 practically excludes HIT. A negative ELISA makes HIT very unlikely; a positive ELISA is not specific."]},
+{"type": "flip", "q": "Which test confirms HIT, and why is it the gold standard?",
+ "a": ["The <b>serotonin release assay</b>: patient serum + washed platelets + heparin; high serotonin release shows platelet-<b>activating IgG</b> antibodies."]},
+{"type": "flip", "q": "What defines a thrombotic microangiopathy?",
+ "a": ["<b>Microangiopathic hemolytic anemia</b> (schistocytes), <b>thrombocytopenia</b> and <b>microvascular thrombi</b> with organ damage."]},
+{"type": "flip", "q": "What causes typical (D+) HUS, and which culture medium detects the organism?",
+ "a": ["<b>Shiga toxin</b>-producing <i>E. coli</i> <b>O157:H7</b> (or <i>Shigella dysenteriae</i> type 1), 5–10 days after bloody diarrhea, mostly in children under 5.", "<b>Sorbitol-MacConkey agar</b>; plus Shiga toxin assay or PCR."]},
+{"type": "flip", "q": "What causes most atypical (D−) HUS?",
+ "a": ["Mutations in <b>complement regulatory proteins</b> (factor H, factor I, MCP, C3, factor B) in 50–60%."]},
+{"type": "flip", "q": "What causes acquired TTP, and why is it urgent?",
+ "a": ["<b>Autoantibodies against ADAMTS13</b>: ultra-large VWF multimers trap platelets in the microcirculation.", "Untreated mortality is about <b>90%</b>: treat urgently (plasma exchange) on suspicion."]},
+{"type": "flip", "q": "What is the dyad that raises suspicion of TTP, and what confirms it?",
+ "a": ["<b>MAHA + thrombocytopenia</b> without another cause, with a negative DAT and no DIC.", "<b>ADAMTS13 activity < 10%</b>; the PLASMIC score estimates the probability while waiting."]},
+{"type": "grid", "q": "Compare TTP, typical HUS and DIC (N normal, ↑, ↓).", "cols": ["PT/PTT", "Fibrinogen", "D-dimers"],
+ "rows": ["TTP", "Typical HUS", "DIC"], "symbols": ["N", "↑", "↓"],
+ "answer": [["N", "N", "N"], ["N", "N", "N"], ["↑", "↓", "↑"]],
+ "explain": ["D-dimers may be slightly raised in TTP and HUS but are markedly raised in DIC. ADAMTS13 < 10% only in TTP."]},
+{"type": "sort", "q": "Which organ dominates each microangiopathy?",
+ "bins": ["Brain (neurologic signs)", "Kidney (acute renal failure)", "Bleeding and thrombosis"],
+ "items": [{"t": "TTP", "b": 0}, {"t": "Typical HUS", "b": 1}, {"t": "DIC", "b": 2}]}
+]}]};
+const KEY = 'studycards-' + DECK.id;
+let status = {};
+try { status = JSON.parse(localStorage.getItem(KEY) || '{}') || {} } catch (e) { status = {} }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(status)) } catch (e) {} }
+const app = document.getElementById('app');
+const esc = s => String(s);
+const plain = s => String(s).replace(/<[^>]+>/g, '');
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] } return a }
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const rnd = (lo, hi, step) => { const n = Math.round((hi - lo) / step); return +(lo + step * Math.floor(Math.random() * (n + 1))).toFixed(4) };
+const fmt = (x, d) => (+x).toFixed(d);
+
+// every card gets a stable id: chapter key + position
+const ALL = [];
+DECK.chapters.forEach(ch => ch.cards.forEach((c, i) => { c._id = ch.key + '.' + (i + 1); c._ch = ch; ALL.push(c) }));
+
+let list = [], idx = 0, mode = '';
+
+function home() {
+  mode = 'home';
+  const again = ALL.filter(c => status[c._id] === 'again').length;
+  const done = ALL.filter(c => status[c._id] === 'done').length;
+  app.innerHTML = '<a class="eyebrow" href="../" style="text-decoration:none">← All books</a><header><div class="eyebrow">' + DECK.eyebrow + '</div><h1>' + DECK.title + '</h1><p class="sub">' + DECK.sub + '</p></header>' +
+    '<div class="toolbar"><button class="btn primary" id="mixed">Mixed review (all chapters)</button>' +
+    '<button class="btn warn" id="again"' + (again ? '' : ' disabled') + '>Review my “Again” cards (' + again + ')</button></div>' +
+    '<p class="sub">' + done + ' of ' + ALL.length + ' cards marked “Got it”.</p>' +
+    '<div class="chapters">' + DECK.chapters.map((ch, k) => {
+      const n = ch.cards.length, g = ch.cards.filter(c => status[c._id] === 'done').length, a = ch.cards.filter(c => status[c._id] === 'again').length;
+      return '<button class="chap-btn" data-k="' + k + '"><span class="chap-title">' + ch.title + '</span><span class="chap-count">' + g + '/' + n + '</span>' +
+        '<span class="bar"><i class="g" style="width:' + (100 * g / n) + '%"></i><i class="a" style="width:' + (100 * a / n) + '%"></i></span></button>';
+    }).join('') + '</div>' +
+    '<div class="toolbar"><button class="btn" id="reset">Clear my progress</button></div><div id="confirm"></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  app.querySelectorAll('.chap-btn').forEach(b => b.onclick = () => start(DECK.chapters[+b.dataset.k].cards, DECK.chapters[+b.dataset.k].title));
+  document.getElementById('mixed').onclick = () => start(shuffle(ALL).slice(0, 30), 'Mixed review · 30 random cards');
+  document.getElementById('again').onclick = () => start(ALL.filter(c => status[c._id] === 'again'), 'Cards marked “Again”');
+  document.getElementById('reset').onclick = () => {
+    document.getElementById('confirm').innerHTML = '<div class="feedback no"><p class="ink">Clear all your progress for this book? This cannot be undone.</p><div class="row"><button class="btn warn" id="yes">Clear progress</button><button class="btn" id="no">Keep it</button></div></div>';
+    document.getElementById('yes').onclick = () => { status = {}; save(); home() };
+    document.getElementById('no').onclick = () => document.getElementById('confirm').innerHTML = '';
+  };
+  window.scrollTo(0, 0);
+}
+
+let setTitle = '';
+function start(cards, title) { if (!cards.length) return; list = cards; idx = 0; setTitle = title; mode = 'study'; study() }
+
+function study() {
+  app.innerHTML = '<div class="topline"><button class="btn" id="back">← Chapters</button><h2>' + setTitle + '</h2></div>' +
+    '<div class="strip" id="strip"></div><section class="card" id="card" aria-live="polite"></section>' +
+    '<div class="nav"><button class="btn" id="prev">← Previous</button><button class="btn" id="next">Next →</button></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  document.getElementById('back').onclick = home;
+  document.getElementById('prev').onclick = () => go(idx - 1);
+  document.getElementById('next').onclick = () => go(idx + 1);
+  go(0);
+}
+function drawStrip() {
+  const strip = document.getElementById('strip'); if (!strip) return;
+  strip.innerHTML = list.map((c, i) => '<button class="dot' + (status[c._id] === 'done' ? ' done' : status[c._id] === 'again' ? ' again' : '') +
+    '" data-i="' + i + '" aria-label="Card ' + (i + 1) + '" aria-current="' + (i === idx) + '">' + (i + 1) + '</button>').join('') +
+    '<span class="score">' + list.filter(c => status[c._id] === 'done').length + ' / ' + list.length + ' got it</span>';
+  strip.querySelectorAll('.dot').forEach(b => b.onclick = () => go(+b.dataset.i));
+}
+function go(i) {
+  idx = Math.max(0, Math.min(list.length - 1, i));
+  const c = list[idx], el = document.getElementById('card');
+  (R[c.type] || R.flip)(c, el);
+  drawStrip();
+  document.getElementById('prev').disabled = idx === 0;
+  document.getElementById('next').disabled = idx === list.length - 1;
+}
+document.addEventListener('keydown', e => {
+  if (mode !== 'study' || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') go(idx + 1); if (e.key === 'ArrowLeft') go(idx - 1);
+});
+
+const LABEL = { flip: 'Flip', grid: 'Fill the grid', panel: 'Rule out', calc: 'Calculate', sort: 'Sort', order: 'Put in order' };
+function head(c) { return '<div class="meta"><span class="chip">' + LABEL[c.type] + '</span><span class="chap">' + c._ch.short + '</span></div>' }
+function rate(box) {
+  box.insertAdjacentHTML('beforeend', '<div class="row"><button class="btn good" data-r="done">Got it</button><button class="btn warn" data-r="again">Again</button></div>');
+  box.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { status[list[idx]._id] = b.dataset.r; save(); if (idx < list.length - 1) go(idx + 1); else drawStrip() });
+}
+function paras(a) { return (Array.isArray(a) ? a : [a]).map(p => '<p>' + p + '</p>').join('') }
+function fb(el, ok, html) { const f = el.querySelector('.fb'); f.innerHTML = '<div class="feedback ' + (ok ? 'ok' : 'no') + '">' + html + '</div>'; if (ok !== null) rate(f) }
+
+const R = {
+  flip(c, el) {
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Answer in your head, then flip the card.</p><div class="row"><button class="btn primary" id="flip">Show answer</button></div>';
+    el.querySelector('#flip').onclick = () => {
+      el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><div class="answer">' + paras(c.a) + '</div><div class="fb"></div>';
+      rate(el.querySelector('.fb'));
+    };
+  },
+  grid(c, el) {
+    const v = c.variants ? pick(c.variants) : c;
+    const sym = c.symbols || ['+', '0'];
+    const rows = v.answer.length, cols = c.cols.length;
+    const state = v.answer.map((r, i) => r.map((x, j) => (v.given && v.given[i] && v.given[i][j] != null) ? null : ''));
+    let h = head(c) + '<p class="q">' + (v.q || c.q) + '</p><p class="hint">' + (c.hint || 'Tap each empty cell to cycle through the possible results, then check.') + '</p>' +
+      '<div class="legend">Tap to cycle: ' + sym.map(s => '<span>' + s + '</span>').join('') + (c.legend ? ' · ' + c.legend : '') + '</div>' +
+      '<div class="scroll"><table class="grid"><thead>';
+    if (c.groups) h += '<tr>' + (c.rows ? '<th></th>' : '') + c.groups.map(g => '<th colspan="' + g[1] + '">' + g[0] + '</th>').join('') + '</tr>';
+    h += '<tr>' + (c.rows || v.rows ? '<th></th>' : '') + c.cols.map(x => '<th>' + x + '</th>').join('') + '</tr></thead><tbody>';
+    const rlab = v.rows || c.rows;
+    for (let i = 0; i < rows; i++) {
+      h += '<tr>' + (rlab ? '<th class="rowh">' + rlab[i] + '</th>' : '');
+      for (let j = 0; j < cols; j++) {
+        const g = v.given && v.given[i] && v.given[i][j] != null ? v.given[i][j] : null;
+        h += g !== null ? '<td class="given">' + g + '</td>' : '<td><button class="tap" data-i="' + i + '" data-j="' + j + '" aria-label="' + plain((rlab ? rlab[i] + ', ' : '') + c.cols[j]) + '">·</button></td>';
+      }
+      h += '</tr>';
+    }
+    h += '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check</button>' + (c.variants ? '<button class="btn" id="nw">New case</button>' : '') + '</div><div class="fb"></div>';
+    el.innerHTML = h;
+    el.querySelectorAll('.tap').forEach(b => b.onclick = () => {
+      const i = +b.dataset.i, j = +b.dataset.j; const k = sym.indexOf(state[i][j]);
+      state[i][j] = sym[(k + 1) % sym.length]; b.textContent = state[i][j]; b.classList.add('set'); b.classList.remove('right', 'wrong');
+    });
+    if (c.variants) el.querySelector('#nw').onclick = () => R.grid(c, el);
+    el.querySelector('#chk').onclick = () => {
+      if (state.some(r => r.includes(''))) { fb(el, null, '<p>Fill every empty cell first.</p>'); return }
+      let ok = true;
+      el.querySelectorAll('.tap').forEach(b => { const i = +b.dataset.i, j = +b.dataset.j; const r = state[i][j] === v.answer[i][j]; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Not quite: the red cells are wrong.') + '</b></p>' + paras(v.explain || c.explain));
+    };
+  },
+  panel(c, el) {
+    const out = new Set(), keep = [].concat(c.keep);
+    let h = head(c) + '<p class="q">' + c.q + '</p><p class="hint">' + (c.hint || 'Tap an antigen to cross it out when it is present on a cell that did <b>not</b> react (0). Prefer homozygous cells. Then check.') + '</p>' +
+      '<div class="scroll"><table class="grid pt"><thead><tr><th>Cell</th>' +
+      c.antigens.map((a, i) => '<th class="ag" data-a="' + i + '" tabindex="0" role="button" aria-pressed="false">' + a + '</th>').join('') + '<th>' + (c.phase || 'IAT') + '</th></tr></thead><tbody>' +
+      c.cells.map((r, k) => '<tr><th class="rowh">' + (k + 1) + '</th>' + r.c.split('').map((x, i) => '<td data-a="' + i + '">' + (x === '+' ? '+' : '0') + '</td>').join('') + '<td class="rx">' + r.rx + '</td></tr>').join('') +
+      '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check my rule-outs</button><button class="btn" id="clr">Clear</button></div><div class="fb"></div>';
+    el.innerHTML = h;
+    const paint = () => {
+      el.querySelectorAll('th.ag').forEach(x => { const on = out.has(+x.dataset.a); x.classList.toggle('out', on); x.setAttribute('aria-pressed', on) });
+      el.querySelectorAll('.pt td[data-a]').forEach(d => d.classList.toggle('out', out.has(+d.dataset.a)));
+    };
+    el.querySelectorAll('th.ag').forEach(x => { const t = () => { const a = +x.dataset.a; out.has(a) ? out.delete(a) : out.add(a); paint() };
+      x.onclick = t; x.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t() } } });
+    el.querySelector('#clr').onclick = () => { out.clear(); paint(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      const wrong = keep.filter(k => out.has(k));
+      const left = c.antigens.map((_, i) => i).filter(i => !out.has(i) && !keep.includes(i));
+      if (wrong.length) fb(el, null, '<p><b>' + wrong.map(k => plain(c.antigens[k])).join(', ') + ' cannot be ruled out.</b> Check again: is it present on any cell that did not react?</p>');
+      else if (left.length) fb(el, null, '<p><b>Keep going.</b> Still not ruled out: ' + left.map(i => plain(c.antigens[i])).join(', ') + '.</p><p>Cross out every antigen carried by a non-reacting cell.</p>');
+      else { keep.forEach(k => el.querySelector('th.ag[data-a="' + k + '"]').classList.add('keep')); fb(el, true, paras(c.explain)) }
+    };
+  },
+  calc(c, el) {
+    const k = CALC[c.kind]();
+    el.innerHTML = head(c) + '<p class="q">' + k.q + '</p><div class="facts">' + k.facts.map(f => '<span>' + f + '</span>').join('') + '</div>' +
+      '<div class="calc"><label for="ans">' + k.label + '</label><input id="ans" type="text" inputmode="decimal" autocomplete="off">' + (k.unit ? '<span>' + k.unit + '</span>' : '') +
+      '<button class="btn primary" id="chk">Check</button><button class="btn" id="nw">New case</button></div><div class="fb"></div>';
+    el.querySelector('#nw').onclick = () => R.calc(c, el);
+    const inp = el.querySelector('#ans'); inp.onkeydown = e => { if (e.key === 'Enter') el.querySelector('#chk').click() };
+    el.querySelector('#chk').onclick = () => {
+      const v = parseFloat(inp.value.replace(',', '.'));
+      if (isNaN(v)) { fb(el, null, '<p>Type a number first.</p>'); return }
+      const ok = Math.abs(v - k.answer) <= k.tol;
+      fb(el, ok, '<p><b>' + (ok ? 'Correct: ' : 'The answer is ') + k.show + '</b></p><ol class="steps">' + k.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>' + (k.note ? '<p>' + k.note + '</p>' : ''));
+    };
+  },
+  sort(c, el) {
+    const items = shuffle(c.items), st = items.map(() => -1);
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap each item to move it through the groups, then check.</p>' +
+      '<div class="legend">Groups: ' + c.bins.map(b => '<span>' + b + '</span>').join('') + '</div><div class="items">' +
+      items.map((it, i) => '<button class="item" data-i="' + i + '"><span>' + it.t + '</span><span class="tag">choose</span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i; st[i] = (st[i] + 1) % c.bins.length;
+      const t = b.querySelector('.tag'); t.textContent = plain(c.bins[st[i]]); t.classList.add('set'); b.classList.remove('right', 'wrong') });
+    el.querySelector('#chk').onclick = () => {
+      if (st.includes(-1)) { fb(el, null, '<p>Place every item in a group first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = st[i] === items[i].b; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Some items are in the wrong group (red).') + '</b></p>' + (ok ? '' : '<ul>' + items.filter((it, i) => st[i] !== it.b).map(it => '<li>' + it.t + ' → ' + c.bins[it.b] + '</li>').join('') + '</ul>') + (c.explain ? paras(c.explain) : ''));
+    };
+  },
+  order(c, el) {
+    const shown = shuffle(c.steps.map((s, i) => ({ s, i }))); let seq = [];
+    const draw = () => {
+      el.querySelectorAll('.item').forEach(b => { const p = seq.indexOf(+b.dataset.i); b.classList.toggle('picked', p >= 0); b.querySelector('.num').textContent = p >= 0 ? p + 1 : '' });
+    };
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap the steps in the right order. Tap a numbered step again to remove it.</p><div class="items">' +
+      shown.map(x => '<button class="item" data-i="' + x.i + '"><span>' + x.s + '</span><span class="num"></span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button><button class="btn" id="clr">Start again</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i, p = seq.indexOf(i); if (p >= 0) seq.splice(p, 1); else seq.push(i);
+      el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw() });
+    el.querySelector('#clr').onclick = () => { seq = []; el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      if (seq.length < c.steps.length) { fb(el, null, '<p>Number every step first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = seq.indexOf(i) === i; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct order.' : 'Not quite. The right order is:') + '</b></p>' + (ok ? '' : '<ol class="steps">' + c.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>') + (c.explain ? paras(c.explain) : ''));
+    };
+  }
+};
+
+const CALC = {
+  rhig() {
+    const kb = rnd(0.3, 3.0, 0.1), fetal = kb * 50, raw = fetal / 30, w = Math.floor(raw), d = raw - w, v = (d >= 0.5 ? w + 1 : w) + 1;
+    return { q: 'A D-negative mother delivers a D-positive baby. How many 300 µg vials of RhIG does she need?',
+      facts: ['Kleihauer–Betke: ' + fmt(kb, 1) + '% fetal cells', 'Maternal blood volume: 5000 mL'], label: 'Vials:', unit: '', answer: v, tol: 0, show: v + ' vials.',
+      steps: ['Fetal blood = ' + fmt(kb, 1) + '% × 5000 mL = ' + fmt(fetal, 0) + ' mL', fmt(fetal, 0) + ' ÷ 30 = ' + fmt(raw, 2), 'Decimal ' + (d >= 0.5 ? '≥ 0.5: round up to ' + (w + 1) : '< 0.5: round down to ' + w), 'Add one vial: <b>' + v + '</b>'] };
+  },
+  hw() {
+    const negPct = pick([9, 16, 25, 36, 49, 64, 4, 1]), q = Math.sqrt(negPct / 100), p = 1 - q, het = 2 * p * q * 100;
+    return { q: 'In a population, ' + (100 - negPct) + '% of people are antigen-positive and ' + negPct + '% are antigen-negative (homozygous for the silent/recessive allele). What percentage are heterozygous?',
+      facts: ['Hardy–Weinberg: p² + 2pq + q² = 1', 'Antigen-negative = q² = ' + (negPct / 100)], label: 'Heterozygous:', unit: '%', answer: het, tol: 0.6, show: fmt(het, 0) + '%.',
+      steps: ['q² = ' + (negPct / 100) + ' → q = ' + fmt(q, 2), 'p = 1 − q = ' + fmt(p, 2), '2pq = 2 × ' + fmt(p, 2) + ' × ' + fmt(q, 2) + ' = ' + fmt(het / 100, 2) + ' → <b>' + fmt(het, 0) + '%</b>'] };
+  },
+  antneg() {
+    const ab = [['anti-Fy<sup>a</sup>', 33], ['anti-S', 50], ['anti-E', 70], ['anti-K', 91], ['anti-c', 20], ['anti-Jk<sup>a</sup>', 23]];
+    const a = shuffle(ab).slice(0, 2), units = pick([2, 3, 4]), f = a[0][1] / 100 * a[1][1] / 100, n = units / f;
+    return { q: 'A patient has ' + a[0][0] + ' and ' + a[1][0] + '. The physician requests ' + units + ' units. About how many units must be screened?',
+      facts: ['Compatible (antigen-negative) donors: ' + plain(a[0][0]).replace('anti-', '') + '-negative ≈ ' + a[0][1] + '%; ' + plain(a[1][0]).replace('anti-', '') + '-negative ≈ ' + a[1][1] + '%'], label: 'Units to screen:', unit: '',
+      answer: n, tol: Math.max(1, n * 0.06), show: 'about ' + Math.round(n) + ' units.',
+      steps: ['Compatible fraction = ' + (a[0][1] / 100) + ' × ' + (a[1][1] / 100) + ' = ' + fmt(f, 3), units + ' ÷ ' + fmt(f, 3) + ' = ' + fmt(n, 1) + ' → about <b>' + Math.round(n) + ' units</b>'] };
+  },
+  cci() {
+    const pre = rnd(5, 15, 1) * 1000, inc = rnd(5, 40, 1) * 1000, post = pre + inc, bsa = rnd(1.5, 2.1, 0.1), dose = rnd(3, 4.5, 0.5), cci = inc * bsa / dose;
+    return { q: 'A patient receives an apheresis platelet unit. Calculate the 1-hour corrected count increment (CCI).',
+      facts: ['Pre-count: ' + pre.toLocaleString('en') + ' /µL', '1-hour post-count: ' + post.toLocaleString('en') + ' /µL', 'Body surface area: ' + fmt(bsa, 1) + ' m²', 'Platelets transfused: ' + fmt(dose, 1) + ' × 10¹¹'],
+      label: 'CCI:', unit: '', answer: cci, tol: Math.max(150, cci * 0.03), show: Math.round(cci).toLocaleString('en') + '.',
+      steps: ['Increment = ' + post.toLocaleString('en') + ' − ' + pre.toLocaleString('en') + ' = ' + inc.toLocaleString('en') + ' /µL', 'CCI = ' + inc.toLocaleString('en') + ' × ' + fmt(bsa, 1) + ' ÷ ' + fmt(dose, 1) + ' = <b>' + Math.round(cci).toLocaleString('en') + '</b>'],
+      note: cci >= 7500 ? 'A 1-hour CCI of 7,500 or more is an adequate response.' : 'Below 7,500: inadequate response. Two consecutive inadequate CCIs define refractoriness.' };
+  },
+  rbcdose() {
+    const kg = rnd(50, 90, 5), init = rnd(0.18, 0.24, 0.01), want = rnd(0.27, 0.32, 0.01), bv = kg * 70, n = bv * (want - init) / 200;
+    return { q: 'How many red cell units are needed to reach the desired hematocrit?',
+      facts: ['Weight: ' + kg + ' kg (blood volume ≈ 70 mL/kg)', 'Initial Hct: ' + fmt(init * 100, 0) + '%', 'Desired Hct: ' + fmt(want * 100, 0) + '%', 'Red cell volume per unit ≈ 200 mL'],
+      label: 'Units:', unit: '', answer: n, tol: 0.25, show: fmt(n, 1) + ' → ' + Math.ceil(n) + ' units.',
+      steps: ['Blood volume = ' + kg + ' × 70 = ' + bv + ' mL', bv + ' × (' + fmt(want, 2) + ' − ' + fmt(init, 2) + ') = ' + fmt(bv * (want - init), 0) + ' mL of red cells', fmt(bv * (want - init), 0) + ' ÷ 200 = <b>' + fmt(n, 1) + '</b>, so about ' + Math.ceil(n) + ' units'] };
+  },
+  indices() {
+    const rbc = rnd(2.8, 5.8, 0.1), mcv = rnd(62, 112, 1), hct = +(rbc * mcv / 10).toFixed(1), mchc = rnd(29, 36, 0.5), hb = +(hct * mchc / 100).toFixed(1);
+    const which = pick(['MCV', 'MCH', 'MCHC']);
+    const val = { MCV: hct / rbc * 10, MCH: hb / rbc * 10, MCHC: hb / hct * 100 }[which];
+    const unit = { MCV: 'fL', MCH: 'pg', MCHC: 'g/dL' }[which];
+    const step = { MCV: 'MCV = Hct ÷ RBC × 10 = ' + hct + ' ÷ ' + rbc + ' × 10', MCH: 'MCH = Hb ÷ RBC × 10 = ' + hb + ' ÷ ' + rbc + ' × 10', MCHC: 'MCHC = Hb ÷ Hct × 100 = ' + hb + ' ÷ ' + hct + ' × 100' }[which];
+    return { q: 'Calculate the <b>' + which + '</b>.', facts: ['RBC: ' + rbc + ' × 10¹²/L', 'Hemoglobin: ' + hb + ' g/dL', 'Hematocrit: ' + hct + '%'], label: which + ':', unit, answer: val, tol: which === 'MCHC' ? 0.3 : 0.6,
+      show: fmt(val, 1) + ' ' + unit + '.', steps: [step + ' = <b>' + fmt(val, 1) + ' ' + unit + '</b>'],
+      note: which === 'MCV' ? (val < 80 ? 'Microcytic.' : val > 100 ? 'Macrocytic.' : 'Normocytic.') : '' };
+  },
+  retic() {
+    const hct = rnd(14, 44, 1), ret = rnd(1, 12, 0.5), cor = ret * hct / 45, mf = hct >= 36 ? 1 : hct >= 26 ? 1.5 : hct >= 16 ? 2 : 2.5, rpi = cor / mf;
+    return { q: 'Calculate the reticulocyte production index (RPI).', facts: ['Reticulocytes: ' + ret + '%', 'Hematocrit: ' + hct + '%', 'Maturation correction: Hct 36–45 → 1.0; 26–35 → 1.5; 16–25 → 2.0; ≤ 15 → 2.5'],
+      label: 'RPI:', unit: '', answer: rpi, tol: 0.15, show: fmt(rpi, 1) + '.',
+      steps: ['Corrected retic = ' + ret + ' × ' + hct + ' ÷ 45 = ' + fmt(cor, 2) + '%', 'Maturation correction for Hct ' + hct + '% = ' + mf, 'RPI = ' + fmt(cor, 2) + ' ÷ ' + mf + ' = <b>' + fmt(rpi, 1) + '</b>'],
+      note: rpi >= 3 ? 'RPI ≥ 3: adequate marrow response (e.g. hemolysis or bleeding).' : rpi < 2 ? 'RPI < 2: inadequate response (hypoproliferative or ineffective erythropoiesis).' : 'Borderline response.' };
+  },
+  nrbc() {
+    const wbc = rnd(6, 30, 0.5), n = rnd(5, 60, 1), cor = wbc * 100 / (100 + n);
+    return { q: 'The analyzer counts nucleated red cells as white cells. Correct the WBC count.', facts: ['WBC (uncorrected): ' + wbc + ' × 10⁹/L', 'NRBC on the smear: ' + n + ' per 100 WBCs'],
+      label: 'Corrected WBC:', unit: '× 10⁹/L', answer: cor, tol: 0.15, show: fmt(cor, 1) + ' × 10⁹/L.', steps: ['Corrected WBC = ' + wbc + ' × 100 ÷ (100 + ' + n + ') = <b>' + fmt(cor, 1) + '</b>'] };
+  },
+  abs() {
+    const wbc = rnd(2, 25, 0.5), cell = pick([['neutrophils', 40, 85], ['lymphocytes', 15, 70], ['eosinophils', 2, 25], ['monocytes', 3, 15]]), pct = rnd(cell[1], cell[2], 1), a = wbc * pct / 100;
+    return { q: 'Calculate the absolute ' + cell[0] + ' count.', facts: ['WBC: ' + wbc + ' × 10⁹/L', cell[0][0].toUpperCase() + cell[0].slice(1) + ': ' + pct + '%'], label: 'Absolute count:', unit: '× 10⁹/L',
+      answer: a, tol: 0.06, show: fmt(a, 2) + ' × 10⁹/L.', steps: ['Absolute count = WBC × % = ' + wbc + ' × ' + (pct / 100) + ' = <b>' + fmt(a, 2) + '</b>'] };
+  },
+  mentzer() {
+    const thal = Math.random() < 0.5, rbc = thal ? rnd(5.2, 6.6, 0.1) : rnd(3.2, 4.4, 0.1), mcv = thal ? rnd(58, 70, 1) : rnd(66, 78, 1), idx = mcv / rbc;
+    return { q: 'A patient has a microcytic anemia. Calculate the Mentzer index.', facts: ['MCV: ' + mcv + ' fL', 'RBC: ' + rbc + ' × 10¹²/L'], label: 'Mentzer index:', unit: '',
+      answer: idx, tol: 0.15, show: fmt(idx, 1) + '.', steps: ['Mentzer index = MCV ÷ RBC = ' + mcv + ' ÷ ' + rbc + ' = <b>' + fmt(idx, 1) + '</b>'],
+      note: idx < 13 ? 'Below 13: favors β-thalassemia trait. Confirm with Hb A<sub>2</sub> (> 3.5%).' : 'Above 13: favors iron deficiency. Confirm with ferritin.' };
+  },
+  inr() {
+    const mn = rnd(11.5, 13, 0.5), pt = rnd(14, 40, 0.5), isi = pick([1.0, 1.1, 1.2, 1.3]), inr = Math.pow(pt / mn, isi);
+    return { q: 'A patient on warfarin (vitamin K antagonist) has the following results. Calculate the INR.', facts: ['Patient PT: ' + pt + ' s', 'Mean normal PT: ' + mn + ' s', 'ISI of the reagent: ' + fmt(isi, 1)],
+      label: 'INR:', unit: '', answer: inr, tol: 0.06, show: fmt(inr, 1) + '.', steps: ['Ratio = ' + pt + ' ÷ ' + mn + ' = ' + fmt(pt / mn, 2), 'INR = ' + fmt(pt / mn, 2) + '<sup>' + fmt(isi, 1) + '</sup> = <b>' + fmt(inr, 1) + '</b>'] };
+  }
+};
+
+home();
+</script>
+</body>
+</html>

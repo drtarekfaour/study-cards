@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MLT Study Cards</title>
+<style>
+/* Layout: a short title block and three book cards, each in its book cover colour. */
+:root {
+  --bg: #F3F6F6; --surface: #FFFFFF; --ink: #15282C; --muted: #5A6E72; --line: #D5E0E1;
+  --sero: #0F5C6B; --hem: #1F3864; --clin: #9B1B30;
+  --f-display: "Segoe UI Variable Display", "SF Pro Display", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  --f-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --sero: #5FB7C6; --hem: #8FA8E0; --clin: #F07A8C; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --sero: #5FB7C6; --hem: #8FA8E0; --clin: #F07A8C; color-scheme: dark }
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(28px, env(safe-area-inset-top, 0px)); padding-bottom: max(40px, env(safe-area-inset-bottom, 0px)) }
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 20px }
+h1 { font: 700 clamp(28px, 6vw, 38px)/1.1 var(--f-display); margin: 0 }
+.sub { color: var(--muted); margin: 0 }
+.books { display: grid; gap: 12px }
+a.book { display: grid; gap: 4px; padding: 18px 20px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line);
+  border-left: 6px solid var(--c); color: var(--ink); text-decoration: none }
+a.book:hover, a.book:focus-visible { border-color: var(--c); outline: none }
+.book b { font: 700 20px/1.2 var(--f-display); color: var(--c) }
+.book span { color: var(--muted); font-size: 15px }
+footer { color: var(--muted); font-size: 13px }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>MLT Study Cards</h1>
+    <p class="sub">Interactive study cards for the three course books. Pick a book, then a chapter. Your progress is saved on this device.</p>
+  </header>
+  <nav class="books">
+    <a class="book" href="hematology/" style="--c: var(--hem)"><b>Hematology</b><span>Blood cells, analyzers, hematopoiesis, anemias, hemolytic anemias, white cell and platelet disorders · 301 cards</span></a>
+    <a class="book" href="clinical-hematology/" style="--c: var(--clin)"><b>Clinical Hematology &amp; Hemostasis</b><span>Leukemias, flow cytometry, MDS, MPN, CLL, myeloma, hemostasis and coagulation · 221 cards</span></a>
+    <a class="book" href="serology/" style="--c: var(--sero)"><b>Serology &amp; Blood Banking</b><span>Blood groups, immunohematology, transfusion, HDFN, immunoassays, infectious and autoimmune serology · 345 cards</span></a>
+  </nav>
+  <footer>Dr. Tarek Faour · Lebanese International University · Based on the course books, revised edition 2027.</footer>
+</div>
+</body>
+</html>

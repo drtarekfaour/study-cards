@@ -1,0 +1,1332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Serology & Blood Banking Study Cards</title>
+<style>
+/* Layout: chapter list (home) and one study card at a time; accent colour comes from each book's cover. */
+:root {
+  --bg: #F3F6F6; --surface: #FFFFFF; --ink: #15282C; --muted: #5A6E72; --line: #D5E0E1;
+  --accent: #0F5C6B; --accent-soft: #E1EEF0; --red: #B8233A; --red-soft: #FBE7EA;
+  --good: #1E7A4C; --good-soft: #E2F3EA; --warn: #9A5B00; --warn-soft: #FDF1DC;
+  --f-display: "Segoe UI Variable Display", "SF Pro Display", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  --f-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", Consolas, "Roboto Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #5FB7C6; --accent-soft: #193A40; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #5FB7C6; --accent-soft: #193A40; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark }
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(20px, env(safe-area-inset-top, 0px)); padding-bottom: max(40px, env(safe-area-inset-bottom, 0px)) }
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 16px }
+header { display: grid; gap: 4px }
+.eyebrow { font: 700 12px/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent) }
+h1 { font: 700 clamp(26px, 6vw, 34px)/1.1 var(--f-display); margin: 0; text-wrap: balance }
+h2 { font: 700 20px/1.2 var(--f-display); margin: 0 }
+.sub { color: var(--muted); margin: 0 }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px }
+.chapters { display: grid; gap: 8px }
+.chap-btn { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; text-align: left; width: 100%;
+  padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit }
+.chap-btn:hover { border-color: var(--accent) }
+.chap-title { font-weight: 700; min-width: 0 }
+.chap-count { font: 500 13px var(--f-mono); color: var(--muted); white-space: nowrap }
+.bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; display: flex }
+.bar i { display: block; height: 100% } .bar .g { background: var(--good) } .bar .a { background: var(--warn) }
+.strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center }
+.dot { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  font: 700 12px var(--f-mono); cursor: pointer; display: grid; place-items: center; padding: 0 }
+.dot[aria-current="true"] { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent) }
+.dot.done { background: var(--good-soft); color: var(--good); border-color: transparent }
+.dot.again { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+.score { margin-left: auto; font: 500 13px var(--f-mono); color: var(--muted) }
+.topline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; min-width: 0 }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.chip { font: 700 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent) }
+.chap { font-size: 13px; color: var(--muted) }
+.q { font: 600 clamp(18px, 4.4vw, 22px)/1.35 var(--f-display); margin: 0; text-wrap: pretty }
+.hint { color: var(--muted); margin: 0; font-size: 15px }
+.answer { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 14px; border-radius: 0 8px 8px 0 }
+.answer p, .feedback p { margin: 0 0 6px } .answer p:last-child, .feedback p:last-child { margin: 0 }
+.answer ul, .feedback ul { margin: 4px 0 0; padding-left: 20px }
+.row { display: flex; gap: 10px; flex-wrap: wrap }
+button.btn { font: 700 15px var(--f-body); padding: 11px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer }
+button.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface) }
+button.btn.good { background: var(--good-soft); color: var(--good); border-color: transparent }
+button.btn.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+button.btn:disabled { opacity: .45; cursor: default }
+button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px }
+.nav { display: flex; justify-content: space-between; gap: 10px }
+.feedback { padding: 12px 14px; border-radius: 8px; font-size: 15px; display: grid; gap: 4px }
+.feedback.ok { background: var(--good-soft); color: var(--good) }
+.feedback.no { background: var(--red-soft); color: var(--red) }
+.feedback .ink { color: var(--ink) }
+.scroll { overflow-x: auto; min-width: 0 }
+table.grid { border-collapse: collapse; font: 500 14px var(--f-mono); width: 100% }
+.grid th, .grid td { border: 1px solid var(--line); padding: 0; text-align: center; min-width: 38px; height: 40px }
+.grid th { background: var(--bg); color: var(--muted); font-weight: 700; padding: 4px 6px; font-family: var(--f-body); font-size: 13px }
+.grid th.rowh { text-align: left; padding: 4px 10px; color: var(--ink) }
+.grid td.given { color: var(--ink); font-weight: 700; padding: 4px 6px }
+.grid td.rx { font-weight: 700; color: var(--red) }
+.tap { width: 100%; height: 100%; min-height: 40px; border: 0; background: transparent; color: var(--ink); font: 700 17px var(--f-mono); cursor: pointer; padding: 2px 6px }
+.tap.set { color: var(--red) }
+.tap.right { background: var(--good-soft) } .tap.wrong { background: var(--red-soft) }
+th.ag { cursor: pointer; user-select: none; color: var(--ink) }
+th.ag.out, td.out { text-decoration: line-through; color: var(--muted); background: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 7px) }
+th.ag.keep { background: var(--red-soft); color: var(--red) }
+.calc { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+.calc input { font: 700 18px var(--f-mono); width: 9ch; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink) }
+.facts { font: 500 15px var(--f-mono); background: var(--bg); border-radius: 8px; padding: 12px 14px; display: grid; gap: 2px }
+ol.steps { margin: 0; padding-left: 20px } ol.steps li { margin: 2px 0 }
+.items { display: grid; gap: 8px }
+.item { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; text-align: left;
+  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer }
+.item .tag { font: 700 12px/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); white-space: nowrap }
+.item .tag.set { background: var(--accent-soft); color: var(--accent) }
+.item.right { border-color: var(--good); background: var(--good-soft) } .item.wrong { border-color: var(--red); background: var(--red-soft) }
+.item .num { font: 700 13px var(--f-mono); min-width: 24px; height: 24px; border-radius: 12px; display: grid; place-items: center; background: var(--bg); color: var(--muted) }
+.item.picked .num { background: var(--accent); color: var(--surface) }
+.legend { display: flex; gap: 6px; flex-wrap: wrap; font-size: 13px; color: var(--muted) }
+.legend span { font: 700 12px var(--f-mono); padding: 4px 6px; border-radius: 6px; background: var(--bg); color: var(--ink) }
+footer { color: var(--muted); font-size: 13px; text-align: center }
+.empty { color: var(--muted); padding: 20px; text-align: center }
+@media (prefers-reduced-motion: no-preference) { .answer, .feedback { animation: in .18s ease-out } @keyframes in { from { opacity: .4; transform: translateY(3px) } } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const DECK = {"id":"sero","title":"Serology &amp; Blood Banking","eyebrow":"Study cards for MLT students","sub":"Pick a chapter. Think of the answer first, then check yourself. Cards you mark Again come back in your review.","footer":"Serology and Blood Banking for MLT Students &middot; Dr. Tarek Faour &middot; 345 cards","chapters":[{
+"key": "s1", "title": "Chapter 1: Immunology and Genetics for Blood Banking", "short": "Ch 1 · Immunology & genetics",
+"cards": [
+{"type": "flip", "q": "What is the difference between an antigen, an immunogen and a hapten?",
+ "a": ["<b>Antigen</b>: a molecule that binds to an antibody or a T-cell receptor.", "<b>Immunogen</b>: an antigen that can also <b>elicit</b> an immune response. Not all antigens are immunogens.", "<b>Hapten</b>: a small molecule (below 10,000 D) that needs a <b>carrier</b> to start an immune response."]},
+{"type": "sort", "q": "Which factors make an antigen a <b>better</b> immunogen, and which make it a <b>poorer</b> one?",
+ "bins": ["Better immunogen", "Poorer immunogen"],
+ "items": [{"t": "Protein", "b": 0}, {"t": "Lipid", "b": 1}, {"t": "Molecular weight above 10,000 D", "b": 0}, {"t": "Small hapten without a carrier", "b": 1},
+  {"t": "Very different from self (foreign)", "b": 0}, {"t": "Close to self", "b": 1}, {"t": "High dose and antigen density", "b": 0}, {"t": "Intravenous or intramuscular route", "b": 0}],
+ "explain": ["Proteins are the best immunogens, then complex carbohydrates; lipids are poor."]},
+{"type": "flip", "q": "Transfused red cells carry antigens that are foreign to the recipient but come from the same species. What are such antigens called?",
+ "a": ["<b>Allogeneic</b> antigens."]},
+{"type": "sort", "q": "Sort each property: IgM or IgG?",
+ "bins": ["IgM", "IgG"],
+ "items": [{"t": "Pentamer with a J chain", "b": 0}, {"t": "10 antigen-binding sites", "b": 0}, {"t": "Bivalent (2 binding sites)", "b": 1},
+  {"t": "About 70–75% of serum immunoglobulins", "b": 1}, {"t": "Agglutinates saline-suspended cells (immediate spin)", "b": 0},
+  {"t": "Usually needs AHG to show the reaction", "b": 1}, {"t": "One molecule activates complement", "b": 0}, {"t": "Crosses the placenta", "b": 1},
+  {"t": "Optimal reaction cold (4–22 °C)", "b": 0}, {"t": "Rh, Kell, Duffy and Kidd antibodies", "b": 1}, {"t": "Anti-A, anti-B, anti-Le<sup>a</sup>, anti-M, anti-P1", "b": 0}]},
+{"type": "flip", "q": "Why can IgM agglutinate saline-suspended red cells while most IgG antibodies cannot?",
+ "a": ["IgM is a large pentamer with <b>10 binding sites</b>, so it bridges the gap between red cells.", "IgG is small and bivalent; it coats the cells but usually needs <b>AHG</b> (or an enhancement medium) to show agglutination."]},
+{"type": "flip", "q": "Which reagents dissociate IgM, and why are they useful?",
+ "a": ["Sulfhydryl reducing agents: <b>2-mercaptoethanol (2-ME)</b> and <b>dithiothreitol (DTT)</b>.", "They cleave the disulfide bonds of the pentamer and J chain, destroying IgM activity while IgG remains."]},
+{"type": "flip", "q": "How many IgM and IgG molecules are needed to start the classical complement pathway? Which IgG subclasses are best?",
+ "a": ["<b>One IgM</b> molecule, but <b>two IgG</b> molecules close together on the cell.", "<b>IgG1 and IgG3</b> are the most effective at activating complement."]},
+{"type": "flip", "q": "Which IgG subclasses are typical of Rh, Kell, Duffy and Kidd antibodies?",
+ "a": ["<b>Rh</b>: mostly IgG1 and IgG3.", "<b>Anti-K</b> and <b>anti-Fy</b>: usually IgG1.", "<b>Anti-Jk</b>: mainly IgG3 (often with IgG1)."]},
+{"type": "flip", "q": "Which IgG subclass has the shortest half-life, and how long is it?",
+ "a": ["<b>IgG3</b>: about <b>7 days</b>, versus about 21 days for the other subclasses. It is a potent pro-inflammatory antibody."]},
+{"type": "flip", "q": "What is the difference between polyclonal and monoclonal antibodies? Which are used in modern typing reagents?",
+ "a": ["<b>Polyclonal</b>: made by many B-cell clones; molecularly heterogeneous.", "<b>Monoclonal</b>: made by a single clone; biochemically identical.", "Most modern blood typing reagents are <b>monoclonal</b>."]},
+{"type": "sort", "q": "Intravascular or extravascular hemolysis?",
+ "bins": ["Intravascular", "Extravascular"],
+ "items": [{"t": "Usually IgM anti-A or anti-B", "b": 0}, {"t": "Mainly IgG antibodies", "b": 1}, {"t": "Rapid activation of large amounts of complement", "b": 0},
+  {"t": "Spleen and liver macrophages remove coated cells", "b": 1}],
+ "explain": ["The mode of hemolysis depends mainly on the antibody class and on the activity of the reticuloendothelial system."]},
+{"type": "flip", "q": "Do capital and lowercase letters mean dominant and recessive in blood group names?",
+ "a": ["<b>No.</b> They only name the antigens. C/c, E/e, K/k and S/s are <b>codominant</b>: a C/c person is C+c+.", "D and d only look dominant and recessive because <b>d means the absence of D</b>."]},
+{"type": "flip", "q": "Define codominance, and name the usual inheritance pattern of blood group systems.",
+ "a": ["In <b>codominance</b>, both alleles are equally expressed in a heterozygote.", "Most blood group systems, including ABO, are inherited in a <b>codominant</b> way."]},
+{"type": "flip", "q": "What is the basis of the dosage effect?",
+ "a": ["<b>Homozygous</b> people may carry more antigen on their red cells than <b>heterozygous</b> people, so some antibodies react more strongly with homozygous cells."]},
+{"type": "flip", "q": "50 people are tested for hemoglobin type: 20 HbA only, 20 HbA + HbS, 10 HbS only. What is the frequency of the <i>S</i> allele?",
+ "a": ["100 alleles in total. <i>S</i> alleles = 20 (in the 10 HbS/HbS) + 20 (in the HbA/HbS) = 40.", "Frequency of <i>S</i> = 40 ÷ 100 = <b>0.40</b>; frequency of <i>A</i> = 0.60. Allele frequencies at a locus add up to 1."]},
+{"type": "calc", "kind": "hw"},
+{"type": "sort", "q": "Relationship testing (maternity assumed): is the alleged father excluded?",
+ "bins": ["Direct exclusion", "Indirect exclusion", "Not excluded"],
+ "items": [{"t": "Mother group O, child group B, alleged father group A", "b": 0},
+  {"t": "Mother Jk(a+b−), child Jk(a+b−), alleged father Jk(a−b+)", "b": 1},
+  {"t": "Mother group O, child group A, alleged father group AB", "b": 2},
+  {"t": "Mother group A, child group AB, alleged father group O", "b": 0}],
+ "explain": ["<b>Direct</b>: the child has a marker absent from both mother and alleged father (the obligatory gene).", "<b>Indirect</b>: the child lacks a marker the father should pass to all children. A silent allele can cause it, so it is never the only marker used."]},
+{"type": "flip", "q": "How is relationship (paternity) testing done today?",
+ "a": ["By <b>DNA analysis</b>, mainly <b>short tandem repeat (STR)</b> typing, giving a probability of paternity above 99.99%. Blood group and HLA typing are no longer used."]}
+]},{
+"key": "s2", "title": "Chapter 2: ABO, H and Lewis Blood Group Systems", "short": "Ch 2 · ABO, H & Lewis",
+"cards": [
+{"type": "flip", "q": "Define a blood group. Why must the detecting antibody be an alloantibody?",
+ "a": ["An <b>inherited character of the red cell surface, detected by a specific alloantibody</b>.", "An alloantibody means that <b>some individuals lack</b> the blood group. Polymorphisms detected only by DNA sequencing are not blood groups."]},
+{"type": "flip", "q": "How many blood group systems does the ISBT recognize, and give the ISBT numbers of ABO, MNS, P1PK and Rh.",
+ "a": ["<b>49 systems</b> (2026), more than 360 red cell antigens.", "ABO <b>001</b>, MNS <b>002</b>, P1PK <b>003</b>, Rh <b>004</b>."]},
+{"type": "sort", "q": "Where does ISBT place each antigen?",
+ "bins": ["System", "Collection (200 series)", "700 series", "901 series"],
+ "items": [{"t": "Antigens controlled by one gene locus that is identified, sequenced and mapped", "b": 0},
+  {"t": "Related antigens that do not meet the criteria for a system", "b": 1},
+  {"t": "Low-frequency antigens that cannot be placed in a system or collection", "b": 2},
+  {"t": "High-frequency antigens that cannot be placed in a system or collection", "b": 3}]},
+{"type": "flip", "q": "What frequencies define a high-frequency (public) and a low-frequency (private) antigen?",
+ "a": ["<b>High-frequency</b>: present in more than 90–99% of people.", "<b>Low-frequency</b>: present in less than 1%."]},
+{"type": "sort", "q": "Match each blood group molecule to its function.",
+ "bins": ["Membrane transporter", "Receptor / adhesion", "Complement regulation", "Enzyme"],
+ "items": [{"t": "Kidd (urea)", "b": 0}, {"t": "Diego (band 3)", "b": 0}, {"t": "Rh and RhAG", "b": 0}, {"t": "Duffy (chemokine receptor)", "b": 1},
+  {"t": "Lutheran", "b": 1}, {"t": "Cromer (CD55, DAF)", "b": 2}, {"t": "Knops (CR1, CD35)", "b": 2}, {"t": "Kell (endopeptidase)", "b": 3}]},
+{"type": "flip", "q": "How do type 1 and type 2 precursor chains differ, and where is each found?",
+ "a": ["Linkage of galactose to N-acetylglucosamine: <b>β1→3 in type 1</b>, <b>β1→4 in type 2</b>.", "<b>Red cells</b>: ABH mainly on <b>type 2</b> chains. <b>Secretions</b>: mainly on <b>type 1</b> chains (glycoproteins)."]},
+{"type": "sort", "q": "Which immunodominant sugar gives each antigen its specificity?",
+ "bins": ["L-fucose", "N-acetyl-D-galactosamine", "D-galactose"],
+ "items": [{"t": "H antigen", "b": 0}, {"t": "A antigen", "b": 1}, {"t": "B antigen", "b": 2}]},
+{"type": "grid", "q": "Fill in the expected forward and reverse grouping.",
+ "groups": [["Forward (patient cells)", 2], ["Reverse (patient plasma)", 2]],
+ "cols": ["Anti-A", "Anti-B", "A<sub>1</sub> cells", "B cells"], "symbols": ["4+", "0"],
+ "variants": [
+  {"q": "The patient is group <b>A</b>. Fill in the expected reactions.", "answer": [["4+", "0", "0", "4+"]], "explain": ["Group A: A antigen on the cells; anti-B in the plasma. Forward and reverse grouping must agree."]},
+  {"q": "The patient is group <b>B</b>. Fill in the expected reactions.", "answer": [["0", "4+", "4+", "0"]], "explain": ["Group B: B antigen on the cells; anti-A in the plasma."]},
+  {"q": "The patient is group <b>O</b>. Fill in the expected reactions.", "answer": [["0", "0", "4+", "4+"]], "explain": ["Group O: no A or B antigen; anti-A, anti-B (and anti-A,B) in the plasma."]},
+  {"q": "The patient is group <b>AB</b>. Fill in the expected reactions.", "answer": [["4+", "4+", "0", "0"]], "explain": ["Group AB: both antigens; no ABO antibodies (Landsteiner's rule)."]}]},
+{"type": "flip", "q": "State Landsteiner's rule.",
+ "a": ["If an antigen is <b>present</b> on the red cells, the corresponding antibody is <b>absent</b> from the plasma; if the antigen is absent, the antibody is (normally) present."]},
+{"type": "flip", "q": "A father is A/O and a mother is B/O. Which ABO groups can their children have?",
+ "a": ["<b>All four</b>: A/B (AB), A/O (A), B/O (B) and O/O (O). A and B are codominant; O is an amorph."]},
+{"type": "sort", "q": "Which gene controls each of these?",
+ "bins": ["H gene (FUT1)", "Se gene (FUT2)", "ABO gene", "Le gene (FUT3)"],
+ "items": [{"t": "ABH antigens on red cells (type 2 H)", "b": 0}, {"t": "ABH antigens in saliva (type 1 H)", "b": 1},
+  {"t": "Converts H into A or B", "b": 2}, {"t": "Adds fucose to type 1 chains to make Le<sup>a</sup> or Le<sup>b</sup>", "b": 3}],
+ "explain": ["FUT1, FUT2 and FUT3 are on chromosome 19; ABO is on chromosome 9. About 80% of people are secretors."]},
+{"type": "order", "q": "Order the blood groups from the <b>most</b> H antigen to the <b>least</b>.",
+ "steps": ["O", "A<sub>2</sub>", "B", "A<sub>2</sub>B", "A<sub>1</sub>", "A<sub>1</sub>B"],
+ "explain": ["Group O cells are richest in H because the O allele does not convert H into A or B."]},
+{"type": "flip", "q": "When do ABH antigens appear, and when do they reach adult levels? Why is ABO called a histo-blood group system?",
+ "a": ["They appear at <b>5–6 weeks of gestation</b>, are weak at birth, and reach adult levels at <b>2–4 years</b>.", "They are found on almost all body cells (except connective tissue and the CNS), hence <b>histo</b>-blood group."]},
+{"type": "flip", "q": "Give two quantitative and qualitative differences between A<sub>1</sub> and A<sub>2</sub> cells.",
+ "a": ["<b>Quantitative</b>: about 1 million A sites on A<sub>1</sub> cells versus 250,000 on A<sub>2</sub>.", "<b>Qualitative</b>: A<sub>1</sub> cells are agglutinated by <i>Dolichos biflorus</i> lectin (anti-A<sub>1</sub>); A<sub>2</sub> cells are not, and have more H.", "A<sub>2</sub> is about 20% of group A people."]},
+{"type": "flip", "q": "How often is anti-A<sub>1</sub> found, and is it clinically significant?",
+ "a": ["In about <b>1–8% of A<sub>2</sub></b> and <b>22–35% of A<sub>2</sub>B</b> people (also in A<sub>x</sub> and A<sub>3</sub>).", "Naturally occurring; usually <b>not clinically significant</b>."]},
+{"type": "flip", "q": "A patient types as group O, but their serum agglutinates group O cells. What is the phenotype, its genetics, and what blood can they receive?",
+ "a": ["<b>Bombay phenotype (O<sub>h</sub>)</b>: <i>h/h</i> (inactive FUT1) and <i>se/se</i>, so no H, A or B on cells or in secretions.", "Strong anti-H, anti-A, anti-B and anti-A,B. Only <b>Bombay blood</b> can be given."]},
+{"type": "flip", "q": "When do ABO antibodies start, peak and decline?",
+ "a": ["Production starts at <b>3–6 months</b>, peaks at <b>5–10 years</b>, then slowly declines with age.", "After 6 months of age it is rare to lack the expected antibodies."]},
+{"type": "sort", "q": "Sort these ABO antibody features by blood group.",
+ "bins": ["Groups A and B", "Group O"],
+ "items": [{"t": "Mainly IgM anti-A or anti-B", "b": 0}, {"t": "More IgG anti-A and anti-B (ABO HDFN)", "b": 1}, {"t": "Anti-A,B, mostly IgG", "b": 1}],
+ "explain": ["Anti-A,B detects weak subgroups such as A<sub>x</sub>: always confirm a group O with anti-A,B."]},
+{"type": "sort", "q": "Which lectin is used as which reagent?",
+ "bins": ["Anti-A<sub>1</sub>", "Anti-H"],
+ "items": [{"t": "<i>Dolichos biflorus</i>", "b": 0}, {"t": "<i>Ulex europaeus</i>", "b": 1}]},
+{"type": "flip", "q": "Where do naturally occurring ABO antibodies come from? Give the example for anti-B.",
+ "a": ["From exposure to food and environmental antigens whose sugars resemble A and B.", "Anti-B: Gram-negative bacteria such as <b><i>E. coli</i></b>, whose cell wall carries B-like galactose structures."]},
+{"type": "flip", "q": "Give the ABO group frequencies in the Syrian population (close to the Lebanese).",
+ "a": ["<b>A 41%</b>, <b>O 34.5%</b>, <b>B 16.25%</b>, <b>AB 8.25%</b> (50,000 people)."]},
+{"type": "grid", "q": "Predict the red cell Lewis phenotype from the genes.", "cols": ["Red cell phenotype"],
+ "rows": ["<i>Le</i>, <i>Se</i> (secretor)", "<i>Le</i>, <i>se/se</i> (non-secretor)", "<i>le/le</i>, <i>Se</i>", "<i>le/le</i>, <i>se/se</i>"],
+ "symbols": ["Le(a−b+)", "Le(a+b−)", "Le(a−b−)"],
+ "answer": [["Le(a−b+)"], ["Le(a+b−)"], ["Le(a−b−)"], ["Le(a−b−)"]],
+ "explain": ["Le<sup>b</sup> needs type 1 H (made by <i>Se</i>). Without <i>Le</i> there is no Lewis antigen at all."]},
+{"type": "flip", "q": "How do Lewis antigens get onto red cells, and what is the Lewis phenotype of a newborn?",
+ "a": ["They are made by tissues (mainly the GI mucosa), secreted into plasma and <b>adsorbed</b> onto red cells.", "Newborns are <b>Le(a−b−)</b>; adult expression is reached by about 5–6 years."]},
+{"type": "flip", "q": "Why can Lewis antigens not be built on type 2 chains?",
+ "a": ["The Lewis enzyme adds fucose to <b>carbon 4 of GlcNAc</b>, which in type 2 chains is already occupied by the β1→4 link to galactose."]},
+{"type": "flip", "q": "Why are Lewis antibodies seldom clinically significant?",
+ "a": ["They are <b>neutralized</b> by Lewis substance in donor plasma.", "They do not cause HDFN: they are <b>IgM</b> and the antigens are poorly developed at birth."]},
+{"type": "flip", "q": "Why may a pregnant woman type as Le(a−b−) and make Lewis antibodies?",
+ "a": ["The larger plasma volume <b>dilutes</b> Lewis antigens and increased lipoproteins <b>strip</b> them from the red cells. The antibodies are transient and clinically insignificant."]},
+{"type": "flip", "q": "Which pathogens bind H and Le<sup>b</sup> antigens?",
+ "a": ["<b><i>Helicobacter pylori</i></b> (group O secretors are more prone to duodenal ulcer).", "<b>Norovirus</b> (non-secretors are relatively resistant)."]}
+]},{
+"key": "s3", "title": "Chapter 3: Rh (004) and RhAG (030) Blood Group Systems", "short": "Ch 3 · Rh system",
+"cards": [
+{"type": "flip", "q": "What do \"Rh positive\" and \"Rh negative\" mean, and which are the 5 principal Rh antigens?",
+ "a": ["The <b>presence or absence of D</b> on the red cells.", "Principal antigens: <b>D, C, c, E, e</b> (56 Rh antigens in the ISBT list)."]},
+{"type": "flip", "q": "Which genes control the Rh antigens, and on which chromosome?",
+ "a": ["Two closely linked genes on <b>chromosome 1</b>: <b><i>RHD</i></b> (D antigen) and <b><i>RHCE</i></b> (C/c and E/e).", "Inheritance is autosomal codominant. (Tippett first proposed this two-gene model in 1986.)"]},
+{"type": "flip", "q": "Describe the Rh proteins: size, membrane crossings, glycosylation, and where the antigens sit.",
+ "a": ["<b>416 amino acids</b>, crossing the membrane <b>12 times</b>; only small external loops carry the antigens.", "<b>Not glycosylated</b>; specificity depends on the amino acid sequence. C/c on loop 2, E/e on loop 4 of RhCE."]},
+{"type": "flip", "q": "What is RhAG and why is it essential?",
+ "a": ["The <b>Rh-associated glycoprotein</b> (its own system, ISBT 030). It carries no Rh antigens.", "It is needed to assemble the Rh complex: <b>without RhAG, no Rh antigens are expressed</b>."]},
+{"type": "flip", "q": "Give the D antigen density, and why Rh antigens are less available to antibodies than ABO antigens.",
+ "a": ["<b>10,000–30,000 D sites</b> per red cell (C, c, E, e: 8,500–85,000).", "Only small loops are exposed and there are fewer sites. Rh antigens are also <b>not soluble</b> and are found only on red cells."]},
+{"type": "sort", "q": "Rh antibodies or ABO antibodies?",
+ "bins": ["Rh antibodies", "ABO antibodies"],
+ "items": [{"t": "Mostly IgG (IgG1, IgG3)", "b": 0}, {"t": "Mainly IgM", "b": 1}, {"t": "Naturally occurring", "b": 1},
+  {"t": "Only after transfusion or pregnancy", "b": 0}, {"t": "Rarely fix complement; mostly extravascular hemolysis", "b": 0},
+  {"t": "Best detected by the IAT at 37 °C", "b": 0}]},
+{"type": "flip", "q": "Which Rh antibodies show dosage, and which does not? Give an example.",
+ "a": ["Anti-C, -c, -E and -e show dosage; <b>anti-D does not</b>.", "Example: anti-E reacts strongly with E+e− cells and more weakly with E+e+ cells."]},
+{"type": "flip", "q": "What proportion of D-negative people make anti-D after receiving D-positive red cells?",
+ "a": ["About <b>80–90% of healthy volunteers</b>, but only about <b>22% of hospitalized patients</b>."]},
+{"type": "grid", "q": "Fill in the Rh antigen frequencies in Syria (close to the Lebanese population).",
+ "cols": ["Frequency in Syria"], "rows": ["D", "C", "c", "E", "e"],
+ "symbols": ["97%", "92.5%", "79%", "74%", "10%"],
+ "answer": [["92.5%"], ["79%"], ["74%"], ["10%"], ["97%"]],
+ "explain": ["White people: D 85%, C 70%, c 80%, E 30%, e 98%."]},
+{"type": "sort", "q": "Match the D-negative mechanism to the population.",
+ "bins": ["White Europeans", "Black Africans", "East Asians"],
+ "items": [{"t": "Deletion of the whole <i>RHD</i> gene", "b": 0}, {"t": "Inactive <i>RHD</i> pseudogene (<i>RHD*Ψ</i>)", "b": 1},
+  {"t": "Hybrid <i>RHD–RHCE–RHD</i> genes; many are DEL", "b": 2}]},
+{"type": "flip", "q": "What is the Rh<sub>null</sub> phenotype? Give its two causes and its clinical effect.",
+ "a": ["Red cells lacking <b>all Rh antigens</b> (also reduced LW, Fy5, glycophorin B (S/s), CD47).", "<b>Amorph type</b>: inactive <i>RHCE</i> in a D-negative person. <b>Regulator type</b>: <i>RHAG</i> mutations.", "Stomatocytes/spherocytes, increased osmotic fragility: <b>mild hemolytic anemia</b> (Rh deficiency syndrome). Transfuse autologous or Rh<sub>null</sub> blood."]},
+{"type": "grid", "q": "Convert each Wiener haplotype to Fisher–Race.", "cols": ["Fisher–Race"],
+ "rows": ["R<sup>0</sup>", "R<sup>1</sup>", "R<sup>2</sup>", "R<sup>z</sup>", "r", "r′", "r″", "r<sup>y</sup>"],
+ "symbols": ["Dce", "DCe", "DcE", "DCE", "dce", "dCe", "dcE", "dCE"],
+ "answer": [["Dce"], ["DCe"], ["DcE"], ["DCE"], ["dce"], ["dCe"], ["dcE"], ["dCE"]],
+ "explain": ["R = D present, r = D absent; ′ or 1 = C; ″ or 2 = E; 0 = c and e; z or y = C and E."]},
+{"type": "order", "q": "Order the \"big four\" Rh haplotypes from most to least common in <b>white</b> people.",
+ "steps": ["R<sup>1</sup>", "r", "R<sup>2</sup>", "R<sup>0</sup>"],
+ "explain": ["In Black people: R<sup>0</sup> > r > R<sup>1</sup> > R<sup>2</sup>. R<sup>0</sup> is most common in Black and least common in white people; r is always second."]},
+{"type": "flip", "q": "Write D+ C+ E− c+ e+ in Rosenfield notation, and give the ISBT number of the C antigen.",
+ "a": ["<b>Rh:1,2,−3,4,5</b> (Rh1 = D, Rh2 = C, Rh3 = E, Rh4 = c, Rh5 = e).", "C antigen: <b>RH2, 004002</b> (004 = Rh system, 002 = antigen)."]},
+{"type": "flip", "q": "A white patient's phenotype is D+ C+ E− c+ e+. What is the most probable genotype? And in a Black patient?",
+ "a": ["White: <b>DCe/dce (R<sup>1</sup>r)</b>.", "Black: <b>DCe/Dce (R<sup>1</sup>R<sup>0</sup>)</b>. Genotype can only be deduced from haplotype frequencies (or DNA testing)."]},
+{"type": "sort", "q": "Weak D, partial D or DEL?",
+ "bins": ["Weak D", "Partial D", "DEL"],
+ "items": [{"t": "All D epitopes present but expressed weakly", "b": 0}, {"t": "One or more D epitopes missing or altered", "b": 1},
+  {"t": "Looks D-negative even by IAT; shown only by adsorption–elution", "b": 2}, {"t": "Changes in transmembrane or intracellular parts of RhD", "b": 0},
+  {"t": "Can make alloanti-D after exposure (e.g. DVI)", "b": 1}, {"t": "Mainly East Asians, strongly linked to C", "b": 2},
+  {"t": "C in trans (Dce/dCe) position effect", "b": 0}]},
+{"type": "flip", "q": "Which weak D types can be managed as D-positive?",
+ "a": ["<b>Weak D types 1, 2 and 3</b> (and, in more recent recommendations cited by the AABB, type 4.0): no established risk of alloanti-D, no RhIG needed.", "Other variants are managed as D-negative. RHD genotyping is recommended for women of childbearing potential with weak D."]},
+{"type": "flip", "q": "What do Roman and Arabic numerals mean in D variant names (e.g. DVI versus weak D type 1)?",
+ "a": ["<b>Roman numerals</b> (DII–DVII): historical serologic categories of <b>partial D</b>.", "<b>Arabic numerals</b>: molecularly defined <b>weak D</b> types. They are independent systems."]},
+{"type": "order", "q": "Put the steps of the tube weak D test in order.",
+ "steps": ["D typing is negative at immediate spin", "Incubate the cells with IgG anti-D at 37 °C for 15–30 minutes, centrifuge and read",
+  "If still negative, wash the cells 3 times", "Add antihuman globulin (AHG), centrifuge and read", "If negative, add IgG-coated check cells to confirm the test is valid"]},
+{"type": "sort", "q": "Is weak D testing required?",
+ "bins": ["Required", "Not required"],
+ "items": [{"t": "Blood donors", "b": 0}, {"t": "Newborns of D-negative mothers", "b": 0}, {"t": "Transfusion recipients", "b": 1}]},
+{"type": "flip", "q": "Why is an Rh control needed with high-protein anti-D, and what if it is positive?",
+ "a": ["Cells already coated with antibody (positive DAT) can agglutinate in high protein even if D-negative: a <b>false positive</b>.", "If the Rh control is positive, the D typing is <b>invalid</b>; retype with a low-protein (saline) anti-D.", "With modern monoclonal reagents, a separate control is needed only when cells react with all reagents (e.g. AB, D+)."]},
+{"type": "flip", "q": "A D-negative woman never exposed to D appears to have anti-D and anti-C. What antibody should you suspect?",
+ "a": ["<b>Anti-G</b>. G is present whenever <b>D or C</b> is present (shared serine 103), so anti-G reacts with D+C−, D−C+ and D+C+ cells."]},
+{"type": "flip", "q": "Why do some services give c-negative <b>and</b> E-negative blood when anti-E is found in an R<sup>1</sup>R<sup>1</sup> patient?",
+ "a": ["In R<sup>1</sup>R<sup>1</sup> people, anti-E is often accompanied by <b>anti-c</b>, which may be weak or undetectable. R<sup>2</sup>R<sup>2</sup> cells expose them to both E and c."]},
+{"type": "flip", "q": "What is the LW system and how does anti-LW react?",
+ "a": ["LW (ISBT 016) is phenotypically related to Rh but genetically distinct.", "Anti-LW reacts <b>strongly with D-positive</b>, weakly with D-negative cells; Rh<sub>null</sub> cells lack LW. The original \"anti-Rhesus\" from animals was anti-LW."]}
+]},{
+"key": "s4", "title": "Chapter 4: Other Blood Group Systems", "short": "Ch 4 · Other blood groups",
+"cards": [
+{"type": "sort", "q": "Cold-reacting (IgM, naturally occurring) or warm-reacting (IgG, immune) antibody?",
+ "bins": ["Cold (IgM)", "Warm (IgG)"],
+ "items": [{"t": "Anti-Le<sup>a</sup>", "b": 0}, {"t": "Anti-I", "b": 0}, {"t": "Anti-P1", "b": 0}, {"t": "Anti-M", "b": 0}, {"t": "Anti-N", "b": 0},
+  {"t": "Anti-K", "b": 1}, {"t": "Anti-Fy<sup>a</sup>", "b": 1}, {"t": "Anti-Jk<sup>a</sup>", "b": 1}, {"t": "Anti-S", "b": 1}, {"t": "Anti-E", "b": 1}],
+ "explain": ["Mnemonic for cold antibodies: <b>LIPMAN</b> (Lewis, I, i, P1, M, A, B, H, N)."]},
+{"type": "sort", "q": "How do proteolytic enzymes (papain, ficin, bromelin) affect each antigen?",
+ "bins": ["Enhanced", "Destroyed / decreased", "Unaffected"],
+ "items": [{"t": "Rh", "b": 0}, {"t": "Kidd", "b": 0}, {"t": "Lewis", "b": 0}, {"t": "I", "b": 0}, {"t": "P1", "b": 0},
+  {"t": "M and N", "b": 1}, {"t": "S and s", "b": 1}, {"t": "Fy<sup>a</sup> and Fy<sup>b</sup>", "b": 1}, {"t": "Kell", "b": 2}, {"t": "U", "b": 2}]},
+{"type": "flip", "q": "Which antibodies show dosage?",
+ "a": ["\"<b>Kidds and Duffy the monkey (Rh) eat lots of M&amp;Ns</b>\": anti-Jk<sup>a</sup>, -Jk<sup>b</sup>, -Fy<sup>a</sup>, -Fy<sup>b</sup>, anti-C, -c, -E, -e (<b>not D</b>), -M, -N, -S and -s."]},
+{"type": "flip", "q": "How do I and i antigens change from birth to adulthood?",
+ "a": ["Newborns have mainly <b>i</b> (linear chains); adults have mainly <b>I</b> (branched chains).", "The I-branching enzyme converts i into I, reaching adult levels at about <b>18 months to 2 years</b>."]},
+{"type": "sort", "q": "Which cold autoantibody is associated with each condition?",
+ "bins": ["Anti-I", "Anti-i", "Anti-IH"],
+ "items": [{"t": "<i>Mycoplasma pneumoniae</i> infection", "b": 0}, {"t": "Infectious mononucleosis (EBV)", "b": 1},
+  {"t": "Most common antibody in cold agglutinin disease", "b": 0}, {"t": "A<sub>1</sub> and A<sub>1</sub>B people; reacts with adult O but not O cord cells", "b": 2},
+  {"t": "Alcoholic cirrhosis", "b": 1}]},
+{"type": "flip", "q": "When does anti-I become clinically significant?",
+ "a": ["Low-titer anti-I (below 1:64) is common in healthy people and harmless.", "<b>High titer and broad thermal range</b> (active up to 37 °C): hemolysis and/or vaso-occlusion (cold agglutinin disease)."]},
+{"type": "grid", "q": "Complete the P phenotypes: which antibody can each make?", "cols": ["Antibody possible"],
+ "rows": ["P<sub>1</sub> (P1, P, P<sup>k</sup>)", "P<sub>2</sub> (P, P<sup>k</sup>, no P1)", "p (null)", "P<sub>1</sub><sup>k</sup> (P1, P<sup>k</sup>, no P)"],
+ "symbols": ["None", "Anti-P1", "Anti-PP1P<sup>k</sup>", "Anti-P"],
+ "answer": [["None"], ["Anti-P1"], ["Anti-PP1P<sup>k</sup>"], ["Anti-P"]],
+ "explain": ["P<sub>1</sub> and P<sub>2</sub> together account for more than 99% of donors."]},
+{"type": "flip", "q": "How can anti-P1 be neutralized or avoided, and who has high titers?",
+ "a": ["Neutralize with <b>hydatid cyst fluid</b> or <b>pigeon egg white</b>, or avoid it by <b>prewarming</b>.", "High titers: hydatid cyst disease and bird handlers."]},
+{"type": "flip", "q": "Describe the Donath–Landsteiner antibody.",
+ "a": ["An <b>IgG auto-anti-P</b> in <b>paroxysmal cold hemoglobinuria</b> (children, after a viral infection).", "Binds and fixes complement in the cold; cells lyse when warmed: a <b>biphasic hemolysin</b>, intravascular. DAT positive for <b>C3 only</b>."]},
+{"type": "flip", "q": "Why does anti-PP1P<sup>k</sup> cause recurrent spontaneous abortions?",
+ "a": ["It is partly IgG and the <b>placenta is rich in P and P<sup>k</sup></b>. It is made by very rare p people."]},
+{"type": "sort", "q": "Match each pathogen or toxin to the antigen it binds.",
+ "bins": ["P (globoside)", "P<sup>k</sup> and P1", "Duffy", "Glycophorins A/B"],
+ "items": [{"t": "Parvovirus B19", "b": 0}, {"t": "Shiga toxin (<i>E. coli</i> O157:H7)", "b": 1}, {"t": "<i>Plasmodium vivax</i>", "b": 2}, {"t": "<i>Plasmodium falciparum</i>", "b": 3}]},
+{"type": "flip", "q": "On which proteins are M, N, S, s and U found? When is U present?",
+ "a": ["<b>M and N</b>: glycophorin A. <b>S, s and U</b>: glycophorin B.", "U is present whenever S or s is present (100% of white people). U-negative (S−s−U−) cells are found almost only in Black people."]},
+{"type": "sort", "q": "Clinically significant or usually not?",
+ "bins": ["Clinically significant", "Usually not significant"],
+ "items": [{"t": "Anti-M", "b": 1}, {"t": "Anti-N", "b": 1}, {"t": "Anti-S", "b": 0}, {"t": "Anti-s", "b": 0}, {"t": "Anti-U", "b": 0},
+  {"t": "Anti-Le<sup>a</sup>", "b": 1}, {"t": "Anti-K", "b": 0}, {"t": "Anti-Jk<sup>a</sup>", "b": 0}, {"t": "HTLA antibodies", "b": 1}]},
+{"type": "flip", "q": "Why may anti-N appear in hemodialysis patients?",
+ "a": ["The <b>formaldehyde</b> used to sterilize dialyzers modifies the N antigen, producing anti-N (anti-N<sup>f</sup>)."]},
+{"type": "flip", "q": "Which Kell antigens does a person with two unmutated <i>KEL</i> alleles express?",
+ "a": ["The high-frequency antigens: <b>k, Kp<sup>b</sup> and Js<sup>b</sup></b> (not K, Kp<sup>a</sup>, Kp<sup>c</sup> or Js<sup>a</sup>).", "One mutated allele adds the low-frequency antigen (e.g. K); two mutated alleles replace k by K."]},
+{"type": "flip", "q": "Why is anti-K common, and why is maternal anti-K so dangerous for the fetus?",
+ "a": ["K is very immunogenic (<b>second only to D</b>) and present in only about 9% of white people.", "Anti-K <b>suppresses erythroid progenitors</b>, which carry Kell antigens: severe fetal anemia with less hemolysis and bilirubin than expected."]},
+{"type": "flip", "q": "What is the McLeod phenotype?",
+ "a": ["Absence of <b>Kx</b> with marked weakening of all Kell antigens, with <b>acanthocytosis</b>, compensated hemolytic anemia and neuromuscular/neurologic disorders."]},
+{"type": "flip", "q": "Which reagents destroy Kell antigens, and why?",
+ "a": ["Sulfhydryl reagents: <b>2-ME, DTT, AET</b>, because Kell antigens contain <b>disulfide bonds</b>."]},
+{"type": "flip", "q": "What antibody can a K<sub>0</sub> (Kell null) person make, and what blood must they receive?",
+ "a": ["<b>Anti-Ku (anti-KEL5)</b>, against an antigen on all cells except K<sub>0</sub>. They must receive K<sub>0</sub> or autologous blood."]},
+{"type": "grid", "q": "Fill in the Kidd phenotype frequencies in white people.", "cols": ["White (%)"],
+ "rows": ["Jk(a+b−)", "Jk(a+b+)", "Jk(a−b+)"], "symbols": ["50.3", "26.3", "23.4"],
+ "answer": [["26.3"], ["50.3"], ["23.4"]],
+ "explain": ["In Black people Jk(a+b−) is the most common (51.1%). Jk(a−b−) is rare (about 0.9% in Polynesians)."]},
+{"type": "flip", "q": "How does the 2 M urea test screen for Jk(a−b−) cells?",
+ "a": ["The Kidd protein is the red cell <b>urea transporter</b>. Jk(a−b−) cells <b>resist lysis</b> in 2 M urea for 15–30 minutes, while Jk(a+) or Jk(b+) cells swell and burst rapidly."]},
+{"type": "flip", "q": "List four special features of Kidd antibodies.",
+ "a": ["IgG but <b>fix complement</b> well (sometimes intravascular).", "<b>Disappear rapidly</b> from the serum.", "<b>Marked dosage</b>.", "Classic cause of <b>delayed hemolytic transfusion reactions</b> (anamnestic). HDFN usually mild."]},
+{"type": "grid", "q": "Fill in the Duffy phenotype frequencies in Black people.", "cols": ["Black (%)"],
+ "rows": ["Fy(a+b−)", "Fy(a+b+)", "Fy(a−b+)", "Fy(a−b−)"], "symbols": ["68", "22", "9", "1"],
+ "answer": [["9"], ["1"], ["22"], ["68"]],
+ "explain": ["Syrian population: Fy(a+b−) 37%, Fy(a+b+) 35%, Fy(a−b+) 28%; Fy(a−b−) rare."]},
+{"type": "flip", "q": "Why are most Black Africans Fy(a−b−), and what else does the Duffy glycoprotein do?",
+ "a": ["<i>Plasmodium vivax</i> needs the Duffy glycoprotein to invade red cells: natural selection.", "It is also a <b>chemokine receptor</b> (DARC, now ACKR1), a \"chemokine scavenger\" on venular endothelium."]},
+{"type": "flip", "q": "What are HTLA antibodies, and why do they matter?",
+ "a": ["\"High-titer, low-avidity\" antibodies to high-incidence antigens: titers ≥ 1:64, but very weak reactions.", "Not clinically significant, but they can <b>mask</b> significant antibodies. They are now named by specificity (Chido/Rodgers, Knops, Cost, JMH)."]}
+]},{
+"key": "s5", "title": "Chapter 5: Immunohematology Tests and Procedures", "short": "Ch 5 · Tests & procedures",
+"cards": [
+{"type": "order", "q": "Put the two stages of hemagglutination in order, with what happens in each.",
+ "steps": ["Sensitization: the antibody binds the antigen (reversible, law of mass action)", "Lattice formation: antibody bridges between adjacent cells give visible agglutination"]},
+{"type": "flip", "q": "What is the zeta potential, and why does it hinder IgG agglutination?",
+ "a": ["The potential difference between the inner (bound) and outer layers of the cation cloud around each negatively charged red cell (sialic acid).", "It keeps cells about <b>25 nm apart</b>. IgM can bridge this gap; IgG usually cannot."]},
+{"type": "sort", "q": "How does each method help IgG antibodies agglutinate red cells?",
+ "bins": ["Brings cells closer / lowers zeta potential", "Speeds antibody uptake", "Concentrates antibody (removes water)", "Second antibody links IgG on adjacent cells"],
+ "items": [{"t": "22% albumin", "b": 0}, {"t": "Proteolytic enzymes", "b": 0}, {"t": "Centrifugation", "b": 0}, {"t": "LISS", "b": 1}, {"t": "PEG", "b": 2}, {"t": "Antihuman globulin (AHG)", "b": 3}]},
+{"type": "sort", "q": "Which temperature favours which antibody reaction?",
+ "bins": ["IgM reactions", "IgG reactions", "Heat elution"],
+ "items": [{"t": "22 °C or 4 °C", "b": 0}, {"t": "37 °C (prewarming)", "b": 1}, {"t": "56 °C", "b": 2}]},
+{"type": "flip", "q": "Calculate the serum-to-cell ratio for 2 drops of serum with 2 drops of a 1.5% cell suspension. What is the minimum recommended?",
+ "a": ["(2 × 100) ÷ (2 × 1.5) = <b>66:1</b>.", "Minimum <b>40:1</b>. In LISS tests the ratio is critical; a lower ratio reduces sensitivity."]},
+{"type": "sort", "q": "Prozone or postzone?",
+ "bins": ["Prozone (antibody excess)", "Postzone (antigen excess)"],
+ "items": [{"t": "All antigen sites saturated, no free sites for bridges", "b": 0}, {"t": "Too few antibody molecules on adjacent cells", "b": 1}, {"t": "Agglutination appears after diluting the serum", "b": 0}]},
+{"type": "flip", "q": "Why are EDTA samples used for reverse grouping, and what is the meaning of hemolysis in a tube test?",
+ "a": ["EDTA chelates Ca<sup>2+</sup>, which complement needs, so antibodies cannot lyse the cells.", "<b>Hemolysis is a positive result</b> and must not be read as negative."]},
+{"type": "sort", "q": "Which AHG reagent is preferred?",
+ "bins": ["Polyspecific (anti-IgG + anti-C3)", "Monospecific anti-IgG"],
+ "items": [{"t": "First-line DAT", "b": 0}, {"t": "Antibody screening and identification (many laboratories)", "b": 1}, {"t": "Detecting complement-dependent Kidd antibodies", "b": 0}],
+ "explain": ["In the DAT, IgM-mediated hemolysis may leave only complement on the cells. In the IAT, anti-IgG avoids detecting complement fixed by insignificant cold antibodies."]},
+{"type": "flip", "q": "What are Coombs control (check) cells, how strongly should they react, and when are they added?",
+ "a": ["Red cells coated with IgG (± C3). They should react <b>1+ to 2+</b>.", "Added to <b>every negative AHG test</b> to show that AHG was present and active and the cells were properly washed."]},
+{"type": "sort", "q": "DAT or IAT?",
+ "bins": ["DAT", "IAT"],
+ "items": [{"t": "Autoimmune hemolytic anemia", "b": 0}, {"t": "HDFN: maternal IgG on the baby's cells", "b": 0}, {"t": "Investigating a transfusion reaction (donor cells coated)", "b": 0},
+  {"t": "Antibody screening", "b": 1}, {"t": "Antiglobulin crossmatch", "b": 1}, {"t": "Weak D test", "b": 1}, {"t": "Titration of maternal antibodies", "b": 1}, {"t": "Drug-induced hemolysis", "b": 0}]},
+{"type": "flip", "q": "Which AHG result is typical of warm AIHA and of cold AIHA?",
+ "a": ["<b>Warm AIHA</b>: DAT almost always positive with <b>IgG</b> (± C3).", "<b>Cold AIHA</b>: DAT often positive with <b>C3d only</b>."]},
+{"type": "sort", "q": "Would each error cause a false-positive or a false-negative AHG test?",
+ "bins": ["False positive", "False negative"],
+ "items": [{"t": "Over-centrifugation", "b": 0}, {"t": "Inadequate washing", "b": 1}, {"t": "Rouleaux", "b": 0}, {"t": "Failure to add AHG", "b": 1},
+  {"t": "Strong cold agglutinins", "b": 0}, {"t": "Delayed washing or reading", "b": 1}, {"t": "Serum-to-cell ratio too low", "b": 1}, {"t": "Small fibrin clots", "b": 0}]},
+{"type": "order", "q": "Put the AABB pretransfusion compatibility testing steps in order.",
+ "steps": ["Recipient identification and sample collection", "Recipient testing: ABO, D and antibody screen; review records", "Donor testing: ABO confirmation (and D on units labeled D-negative)", "Crossmatch: immediate-spin/electronic or full antiglobulin"]},
+{"type": "flip", "q": "When must a pretransfusion sample be collected within 3 days of transfusion, and how long must it be kept afterwards?",
+ "a": ["If the patient was <b>pregnant or transfused in the last 3 months</b>, or the history is unknown.", "Store pretransfusion samples at <b>1–6 °C for at least 7 days</b> after transfusion."]},
+{"type": "flip", "q": "Who does not need a reverse ABO grouping, and why?",
+ "a": ["<b>Infants under 4 months</b>: their antibodies are the mother's, not their own."]},
+{"type": "flip", "q": "Which antigens must the screening cells carry, and why are homozygous cells preferred?",
+ "a": ["C, c, D, E, e, Fy<sup>a</sup>, Fy<sup>b</sup>, Jk<sup>a</sup>, Jk<sup>b</sup>, K, k, M, N, S, s, Le<sup>a</sup>, Le<sup>b</sup> and P1 (at least 2 group O cells, never pooled).", "Homozygous cells detect <b>weak or dosing</b> antibodies (ideally one R<sup>1</sup>R<sup>1</sup> and one R<sup>2</sup>R<sup>2</sup>)."]},
+{"type": "flip", "q": "Why must a PEG tube never be centrifuged or read after 37 °C incubation? When should PEG be avoided?",
+ "a": ["PEG causes <b>non-specific aggregation</b> at 37 °C: wash and add AHG immediately.", "Avoid it with very high plasma protein (e.g. multiple myeloma): PEG precipitates proteins."]},
+{"type": "order", "q": "Order the enzymes by effectiveness for detecting IgG antibodies, best first.",
+ "steps": ["Ficin", "Papain", "Bromelin", "Trypsin"]},
+{"type": "flip", "q": "A serum reacts with all IAT panel cells. With enzyme-treated cells only the c-positive cells react. What is the likely mixture?",
+ "a": ["<b>Anti-c plus anti-Fy<sup>a</sup></b>: enzymes destroy Fy<sup>a</sup>, so only anti-c remains reactive."]},
+{"type": "sort", "q": "Which gel type is used for each test?",
+ "bins": ["Neutral gel", "Specific gel", "Antiglobulin gel"],
+ "items": [{"t": "Reverse ABO grouping", "b": 0}, {"t": "Forward ABO and Rh typing", "b": 1}, {"t": "Antibody screening (IAT)", "b": 2}, {"t": "Extended antigen phenotyping (anti-C, anti-K)", "b": 1}, {"t": "DAT", "b": 2}, {"t": "Enzyme-treated cell techniques", "b": 0}]},
+{"type": "flip", "q": "Why are check cells not needed in the gel antiglobulin test?",
+ "a": ["There is <b>no washing</b>: the plasma stays above the gel and the anti-IgG in the gel cannot be neutralized."]},
+{"type": "flip", "q": "How do positive and negative reactions look in solid-phase red cell adherence?",
+ "a": ["<b>Positive</b>: indicator cells cover the bottom of the well like a <b>carpet</b>.", "<b>Negative</b>: they form a discrete <b>button</b>."]},
+{"type": "sort", "q": "Antibody identification: what does reactivity in each phase suggest?",
+ "bins": ["IgM / cold antibody (P1, M, N, Lewis)", "IgG antibody", "Mixture or carry-over"],
+ "items": [{"t": "Reactions only at immediate spin", "b": 0}, {"t": "Reactions only at AHG", "b": 1}, {"t": "Reactions at both IS and AHG", "b": 2}, {"t": "Agglutination after 37 °C in albumin or LISS, before AHG (often Rh)", "b": 1}]},
+{"type": "panel", "q": "The screen is positive (IAT 2+), autocontrol negative. Identify the antibody.",
+ "antigens": ["D", "C", "E", "c", "e", "K", "Fy<sup>a</sup>", "Fy<sup>b</sup>", "Jk<sup>a</sup>", "Jk<sup>b</sup>"],
+ "cells": [{"c": "++00+0+0+0", "rx": "0"}, {"c": "+0++000+0+", "rx": "2+"}, {"c": "000+++++++", "rx": "0"}, {"c": "00+++0+00+", "rx": "2+"},
+  {"c": "++00+00+0+", "rx": "0"}, {"c": "+0+++0+++0", "rx": "2+"}, {"c": "000++0+0++", "rx": "0"}],
+ "keep": 2, "explain": ["<b>Anti-E.</b> Only E is left.", "Rule of three met: 3 E+ cells reacted (2, 4, 6) and 4 E− cells did not (1, 3, 5, 7).", "Next: type the patient's cells (E-negative expected) and give E-negative blood. Consider anti-c in an R<sup>1</sup>R<sup>1</sup> patient."]},
+{"type": "panel", "q": "The screen is positive (IAT 2+), autocontrol negative. Identify the antibody.",
+ "antigens": ["D", "C", "E", "c", "e", "K", "Fy<sup>a</sup>", "Fy<sup>b</sup>", "Jk<sup>a</sup>", "Jk<sup>b</sup>"],
+ "cells": [{"c": "++00+0+0+0", "rx": "0"}, {"c": "+0++000+0+", "rx": "0"}, {"c": "000+++++++", "rx": "2+"}, {"c": "000++00++0", "rx": "0"},
+  {"c": "++0+++0+0+", "rx": "2+"}, {"c": "+0+++++00+", "rx": "2+"}],
+ "keep": 5, "explain": ["<b>Anti-K.</b> Only K is left.", "Rule of three met: 3 K+ cells reacted (3, 5, 6) and 3 K− cells did not (1, 2, 4), p ≤ 0.05.", "Next: type the patient's red cells; they should be K-negative."]},
+{"type": "flip", "q": "State the rule of three, and the more liberal approach the AABB accepts.",
+ "a": ["Reaction with <b>3 antigen-positive</b> cells and no reaction with <b>3 antigen-negative</b> cells (p ≤ 0.05).", "Also acceptable: 2 positive and 3 negative, or 1 positive and 7 negative (or the reverse)."]},
+{"type": "flip", "q": "Why may a Kidd antibody be missed, and how can you detect it?",
+ "a": ["Some are detected mainly through the <b>complement</b> they fix: missed with monospecific anti-IgG or EDTA samples.", "Use <b>serum</b> (red-top tube) and <b>polyspecific AHG with anti-C3d</b>."]},
+{"type": "sort", "q": "How clinically significant is each antibody?",
+ "bins": ["Usually significant", "Sometimes significant", "Rarely or never significant"],
+ "items": [{"t": "Anti-Jk<sup>a</sup>", "b": 0}, {"t": "Anti-S", "b": 0}, {"t": "Anti-Le<sup>a</sup>", "b": 1}, {"t": "Anti-Yt<sup>a</sup>", "b": 1}, {"t": "Anti-Le<sup>b</sup>", "b": 2}, {"t": "Anti-Ch/Rg", "b": 2}, {"t": "Anti-Xg<sup>a</sup>", "b": 2}, {"t": "Anti-Fy<sup>a</sup>", "b": 0}]},
+{"type": "sort", "q": "Which crossmatch is needed?",
+ "bins": ["Immediate-spin or electronic", "Full antiglobulin"],
+ "items": [{"t": "Current screen negative, no history of significant antibodies", "b": 0}, {"t": "Current screen positive", "b": 1}, {"t": "History of a clinically significant antibody now undetectable", "b": 1}]},
+{"type": "flip", "q": "What are the AABB conditions for an electronic (computer) crossmatch?",
+ "a": ["A validated computer system that alerts to ABO incompatibility.", "<b>Two concordant ABO</b> determinations of the recipient.", "<b>No clinically significant antibodies</b>, current or past."]},
+{"type": "sort", "q": "Interpret each crossmatch problem.",
+ "bins": ["Warm autoantibody", "Antibody to an antigen absent from screening cells (or dosing)", "ABO problem, anti-A<sub>1</sub>, cold antibody or rouleaux"],
+ "items": [{"t": "Positive screen, incompatible crossmatches, positive DAT and autocontrol", "b": 0}, {"t": "Negative screen, compatible IS, incompatible AHG crossmatch", "b": 1}, {"t": "Negative screen, incompatible IS crossmatch", "b": 2}]},
+{"type": "calc", "kind": "antneg"},
+{"type": "flip", "q": "Which red cells may be released uncrossmatched in an emergency?",
+ "a": ["<b>Group O</b> if the ABO group is unknown; <b>D-negative</b> preferred if D is unknown, especially for girls and women of childbearing potential.", "ABO- and D-compatible cells only if a <b>current sample</b> was tested (not records, cards or licenses). The physician signs a release statement."]},
+{"type": "flip", "q": "How often are unexpected red cell antibodies found in the general population?",
+ "a": ["In about <b>0.8–2%</b>, much more often in multiply transfused patients."]},
+{"type": "sort", "q": "Which soluble substance neutralizes which antibody?",
+ "bins": ["Anti-P1", "Lewis antibodies", "Anti-A / anti-B (secretor testing)"],
+ "items": [{"t": "Hydatid cyst fluid", "b": 0}, {"t": "Pigeon egg white", "b": 0}, {"t": "Saliva of a Lewis-positive person", "b": 1}, {"t": "Saliva of a secretor", "b": 2}]},
+{"type": "flip", "q": "Anti-e and anti-S are suspected. How would adsorption separate them?",
+ "a": ["Incubate the plasma with <b>e-positive, S-negative</b> cells: anti-e is adsorbed, anti-S stays in the plasma and is identified.", "Anti-e can be recovered from the cells by elution."]},
+{"type": "flip", "q": "What does RESt remove, and why must RESt-adsorbed serum never be used for reverse grouping?",
+ "a": ["Rabbit erythrocyte stroma removes cold <b>anti-I, anti-H, anti-IH</b> (at 4 °C).", "It also adsorbs <b>anti-B</b>, giving false reverse groupings and crossmatches."]},
+{"type": "sort", "q": "Which red cell treatment destroys which antigens?",
+ "bins": ["Proteolytic enzymes", "DTT", "ZZAP (enzyme + DTT)"],
+ "items": [{"t": "M, N, Fy<sup>a</sup>, Fy<sup>b</sup>", "b": 0}, {"t": "All Kell antigens, Yt<sup>a</sup>, LW", "b": 1}, {"t": "Both groups, and removes IgG coating the cells", "b": 2}]},
+{"type": "sort", "q": "Which elution method is typically used?",
+ "bins": ["Heat or freeze–thaw", "Acid (glycine–HCl)", "Gentle (chloroquine, EGA)"],
+ "items": [{"t": "ABO HDFN (IgG anti-A/anti-B)", "b": 0}, {"t": "Warm IgG auto- and alloantibodies (non-ABO)", "b": 1}, {"t": "Preparing DAT-positive cells for phenotyping", "b": 2}]},
+{"type": "flip", "q": "What is the critical titer for anti-D in pregnancy, and what follows it?",
+ "a": ["Usually <b>16–32</b>. At or above it, the fetus is monitored by <b>Doppler ultrasound</b> (Chapter 8). Earlier samples are frozen for side-by-side titration."]},
+{"type": "flip", "q": "How do you tell rouleaux from true agglutination?",
+ "a": ["<b>Saline replacement</b>: remove the serum and replace it with an equal volume of saline. Rouleaux disperse; true agglutination remains."]},
+{"type": "flip", "q": "What is the prewarm technique for, and what is its risk?",
+ "a": ["It avoids <b>cold insignificant antibodies</b> while detecting warm ones: serum and cells are warmed separately, mixed and washed at 37 °C, then AHG.", "It may <b>weaken</b> some clinically significant antibodies."]}
+]},{
+"key": "s6", "title": "Chapter 6: ABO Discrepancies", "short": "Ch 6 · ABO discrepancies",
+"cards": [
+{"type": "flip", "q": "A recipient has an unresolved ABO discrepancy and needs blood now. What do you give?",
+ "a": ["<b>Group O red cells</b> (O D-negative if the D type is also uncertain) and <b>group AB plasma</b>.", "In donors, the discrepancy must be resolved before the unit is labeled."]},
+{"type": "flip", "q": "What is the most common cause of ABO discrepancies, and what is always the first step?",
+ "a": ["<b>Clerical (transcription) errors</b>.", "First <b>repeat the test</b> (same sample, then a new sample if needed). The weakest reaction is usually the one in doubt."]},
+{"type": "sort", "q": "Would each technical error give a false-positive or a false-negative ABO reaction?",
+ "bins": ["False positive", "False negative"],
+ "items": [{"t": "Under-centrifugation", "b": 1}, {"t": "Over-centrifugation", "b": 0}, {"t": "Warming the test", "b": 1}, {"t": "Too many cells in the suspension", "b": 1},
+  {"t": "Failure to add serum or reagent", "b": 1}, {"t": "Dirty glassware", "b": 0}, {"t": "Reading hemolysis as negative", "b": 1}]},
+{"type": "sort", "q": "Is the problem in the serum (reverse) or the red cell (forward) testing?",
+ "bins": ["Serum (reverse) problem", "Red cell (forward) problem"],
+ "items": [{"t": "Missing anti-B in a newborn", "b": 0}, {"t": "Anti-A<sub>1</sub> in an A<sub>2</sub> patient", "b": 0}, {"t": "Rouleaux in myeloma", "b": 0},
+  {"t": "Acquired B antigen", "b": 1}, {"t": "Mixed field after massive group O transfusion", "b": 1}, {"t": "Weak A in acute leukemia", "b": 1}, {"t": "Cold-reacting anti-N against the reagent cells", "b": 0}],
+ "explain": ["Problems with serum testing are more common than problems with red cell testing."]},
+{"type": "flip", "q": "Why might a newborn or a very old patient show 0, 0, 0, 0 in forward and reverse grouping?",
+ "a": ["Newborns make anti-A and anti-B only from <b>3–6 months</b> (reverse grouping is not done before 4 months); the very elderly may have <b>low antibody levels</b>.", "A group O patient would then show no expected antibodies. Also consider immunodeficiency, chemotherapy or transplantation."]},
+{"type": "order", "q": "A group O patient shows weak or missing anti-A and anti-B. Put the resolution steps in order.",
+ "steps": ["Check the age and diagnosis", "Add one or two more drops of serum and recentrifuge", "Incubate at room temperature or 4–18 °C for 15–30 minutes", "Include an autocontrol to detect cold auto-anti-I"]},
+{"type": "sort", "q": "After cold incubation, which results are valid and which are not?",
+ "bins": ["Valid result", "Not valid (auto-anti-I)"],
+ "items": [{"t": "A<sub>1</sub> 2+, B 2+, autocontrol 0", "b": 0}, {"t": "A<sub>1</sub> 2+, B 2+, autocontrol 2+", "b": 1}, {"t": "Group A: A<sub>1</sub> 0, B 2+, autocontrol 0", "b": 0}],
+ "explain": ["If anti-I is enhanced together with anti-A or anti-B, repeat at 18 °C, where anti-I usually no longer reacts."]},
+{"type": "flip", "q": "A group A patient's serum reacts 2+ with A<sub>1</sub> cells but not with group O screening cells at immediate spin. What do you suspect and how do you confirm it?",
+ "a": ["<b>Anti-A<sub>1</sub></b> (A subgroup), or anti-A passively given with group O platelets.", "Test the cells with <b>anti-A<sub>1</sub> lectin</b> (subgroup: 0), and the serum against 3 A<sub>1</sub> and 3 A<sub>2</sub> cells: anti-A<sub>1</sub> reacts only with A<sub>1</sub>. Passive anti-A reacts with both."]},
+{"type": "flip", "q": "An extra reverse-grouping reaction is caused by a room-temperature anti-N. How do you prove it?",
+ "a": ["Identify the antibody with a panel at room temperature, then <b>type the reagent A<sub>1</sub> and B cells for N</b>: they will be N-positive. Prewarmed reverse grouping can also help."]},
+{"type": "sort", "q": "Which conditions cause rouleaux?",
+ "bins": ["Causes rouleaux", "Does not"],
+ "items": [{"t": "Multiple myeloma", "b": 0}, {"t": "Waldenström macroglobulinemia", "b": 0}, {"t": "High fibrinogen", "b": 0}, {"t": "Dextran plasma expanders", "b": 0},
+  {"t": "Liver disease with reversed albumin/globulin ratio", "b": 0}, {"t": "Iron deficiency anemia", "b": 1}]},
+{"type": "order", "q": "Put the saline replacement technique in order.",
+ "steps": ["Recentrifuge the tube", "Remove the serum without disturbing the button", "Add 2 drops of saline", "Resuspend and read: rouleaux disperse, true agglutination remains"]},
+{"type": "sort", "q": "Match each forward-grouping pattern to its cause.",
+ "bins": ["Mixed field", "Weak or missing antigen", "Acquired B", "Polyagglutination or spontaneous agglutination"],
+ "items": [{"t": "Anti-A MF, anti-B 0, A<sub>1</sub> 0, B 4+", "b": 0}, {"t": "Anti-A 0, anti-B 0, A<sub>1</sub> 0, B 4+", "b": 1},
+  {"t": "Anti-A 4+, anti-B 2+, A<sub>1</sub> 0, B 4+", "b": 2}, {"t": "Anti-A 4+, anti-B 4+, A<sub>1</sub> 0, B 4+", "b": 3}]},
+{"type": "sort", "q": "Which causes give mixed-field agglutination?",
+ "bins": ["Mixed field", "No mixed field"],
+ "items": [{"t": "Massive transfusion of group O cells to a group A patient", "b": 0}, {"t": "ABO-mismatched stem cell transplant", "b": 0}, {"t": "A<sub>3</sub> subgroup", "b": 0},
+  {"t": "Chimerism (twins)", "b": 0}, {"t": "Feto-maternal hemorrhage", "b": 0}, {"t": "Acquired B antigen", "b": 1}]},
+{"type": "flip", "q": "Name causes of weak or missing A/B antigens, and three ways to enhance weak antigens.",
+ "a": ["Weak subgroups, <b>acute leukemia</b> (loss of transferase), massive group O transfusion, stem cell transplant.", "Incubate at room temperature then 4 °C; use <b>anti-A,B</b>; enzyme-treat the cells; adsorption–elution and saliva studies if needed."]},
+{"type": "flip", "q": "How does acquired B arise, and how do you confirm it?",
+ "a": ["In group A<sub>1</sub> patients with <b>colon disease or Gram-negative infection</b>: bacterial deacetylase turns GalNAc into galactosamine, which resembles B.", "The patient's own anti-B does not react with their cells (autocontrol negative); acquired B does not react with <b>acidified anti-B (pH 6)</b>; check the reagent insert."]},
+{"type": "flip", "q": "What is polyagglutination, and why do modern monoclonal reagents rarely show it?",
+ "a": ["Red cells agglutinated by most ABO-compatible <b>adult</b> sera (not cord sera or the patient's own serum), because of exposed cryptantigens such as <b>T and Tn</b>.", "Monoclonal anti-A and anti-B do not contain anti-T or anti-Tn."]},
+{"type": "flip", "q": "A newborn types as group AB on a cord sample. What may be wrong, and what do you do?",
+ "a": ["<b>Wharton's jelly</b> coating the cord cells.", "Wash the cells <b>5–6 times</b> and retest (better: always wash cord cells before typing)."]},
+{"type": "grid", "q": "A group O patient with strong cold agglutinins types AB forward and O reverse. Fill in the expected results after washing the cells 3 times in warm saline.",
+ "groups": [["Forward", 2], ["Reverse", 2]], "cols": ["Anti-A", "Anti-B", "A<sub>1</sub> cells", "B cells"], "symbols": ["4+", "0"],
+ "answer": [["0", "0", "4+", "4+"]],
+ "explain": ["Warm washing removes the cold autoantibody, so the true group O appears."]},
+{"type": "flip", "q": "How do you resolve a strong cold autoagglutinin that makes all forward and reverse tests positive?",
+ "a": ["<b>Cells</b>: incubate at 37 °C and wash 3 times in warm saline; if needed, treat with <b>DTT</b> to disperse IgM agglutination.", "<b>Serum</b>: test at 37 °C, or <b>autoadsorb</b> the anti-I onto the patient's own (enzyme-treated) cells at 4 °C, if not recently transfused."]}
+]},{
+"key": "s7", "title": "Chapter 7: Transfusion Medicine", "short": "Ch 7 · Transfusion medicine",
+"cards": [
+{"type": "flip", "q": "What is the basic rule of blood transfusion?",
+ "a": ["The <b>recipient's plasma must not agglutinate (or lyse) the donor's red cells</b>.", "Transfused plasma must also be compatible with the recipient's red cells."]},
+{"type": "flip", "q": "Give the rules for preoperative autologous donation (PAD).",
+ "a": ["Start up to <b>6 weeks</b> before surgery; up to 4 units; donations at least <b>3 days apart</b>, the last more than <b>72 hours</b> before surgery.", "No fixed age or weight limit; <b>Hb ≥ 11 g/dL (Hct ≥ 33%)</b>. Most often for total joint replacement."]},
+{"type": "sort", "q": "AABB/FDA (USA) or Lebanese (LCBT 2015) donor criterion?",
+ "bins": ["AABB / FDA", "Lebanon (LCBT)"],
+ "items": [{"t": "Age 18–60 years", "b": 1}, {"t": "Maximum 10.5 mL/kg collected (including samples)", "b": 0}, {"t": "Maximum 450 mL, ≤ 13% of blood volume", "b": 1},
+  {"t": "Men Hb ≥ 13.0 g/dL", "b": 0}, {"t": "Men Hb 13.5–18 g/dL", "b": 1}, {"t": "Tattoo or piercing: defer 3 months", "b": 0}, {"t": "Tattoo or piercing: defer 12 months", "b": 1},
+  {"t": "Whole blood per year: men ≤ 6, women ≤ 4", "b": 1}, {"t": "Aspirin: 5 days for platelet donors", "b": 1}, {"t": "Pregnancy: defer 6 weeks after delivery", "b": 0}]},
+{"type": "flip", "q": "What is the minimum interval between whole blood donations, and after a double red cell apheresis?",
+ "a": ["<b>8 weeks (56 days)</b> after whole blood; <b>16 weeks</b> after double red cells (same in AABB and Lebanon)."]},
+{"type": "sort", "q": "Permanent (indefinite) or temporary deferral (AABB/FDA)?",
+ "bins": ["Permanent", "Temporary"],
+ "items": [{"t": "Positive HBsAg", "b": 0}, {"t": "Repeatedly reactive anti-HBc", "b": 0}, {"t": "History of Chagas disease or babesiosis", "b": 0}, {"t": "Signs of injection drug use", "b": 0},
+  {"t": "Received a transfusion", "b": 1}, {"t": "Hepatitis A, after recovery", "b": 1}, {"t": "Live attenuated vaccine (rubella, varicella)", "b": 1}, {"t": "Family history of CJD", "b": 0}]},
+{"type": "flip", "q": "How long are donors deferred after confirmed malaria and after travel to an endemic area (AABB/FDA)? And in Lebanon?",
+ "a": ["AABB/FDA: confirmed malaria <b>3 years</b> after becoming asymptomatic; travel <b>3 months</b>; former residents (> 6 months) 3 years.", "Lebanon: confirmed malaria <b>permanent</b>; travel 12 months to 3 years depending on stay."]},
+{"type": "flip", "q": "Which drugs require donor deferral, and for how long (AABB)?",
+ "a": ["<b>Isotretinoin, finasteride</b>: 1 month (Lebanon 28 days).", "<b>Aspirin</b>: no deferral for whole blood; 2 days for plateletpheresis.", "<b>Clopidogrel, ticlopidine</b>: 14 days for platelet donors."]},
+{"type": "sort", "q": "Labile or stable blood product?",
+ "bins": ["Labile (short shelf life)", "Stable (plasma derivative)"],
+ "items": [{"t": "Red cell concentrate", "b": 0}, {"t": "Platelet concentrate", "b": 0}, {"t": "Fresh frozen plasma", "b": 0}, {"t": "Granulocytes", "b": 0},
+  {"t": "Albumin", "b": 1}, {"t": "Factor VIII concentrate", "b": 1}, {"t": "IVIG", "b": 1}, {"t": "Prothrombin complex concentrate", "b": 1}]},
+{"type": "order", "q": "Order the differential centrifugation of whole blood.",
+ "steps": ["Collect whole blood into the primary bag (closed system)", "Light spin (about 2000 × g, 3 min): red cells and platelet-rich plasma", "Express the platelet-rich plasma into a satellite bag", "Heavy spin of the PRP (about 5000 × g, 5–7 min): platelet concentrate and plasma"]},
+{"type": "sort", "q": "Match each anticoagulant or additive solution to the red cell shelf life.",
+ "bins": ["21 days", "35 days", "42 days"],
+ "items": [{"t": "CPD or CP2D", "b": 0}, {"t": "CPDA-1", "b": 1}, {"t": "Additive solution (AS-1, AS-3, AS-5, SAGM)", "b": 2}],
+ "explain": ["Citrate chelates calcium; dextrose is the energy source; adenine maintains ATP; phosphate buffers; mannitol reduces hemolysis."]},
+{"type": "flip", "q": "How is red cell shelf life defined?",
+ "a": ["At least <b>75%</b> of transfused red cells must remain in the circulation <b>24 hours</b> after transfusion. Hemolysis must stay below 1% (FDA)."]},
+{"type": "flip", "q": "A donor weighs 42 kg. How much blood is collected, and how much anticoagulant is removed from the bag?",
+ "a": ["Volume = 42 ÷ 50 × 450 = <b>378 mL</b>.", "Anticoagulant needed = 378 × 14 ÷ 100 = 53 mL; remove <b>63 − 53 = 10 mL</b>."]},
+{"type": "flip", "q": "How is NAT donor screening organized, and what happens when a pool is reactive?",
+ "a": ["Samples are tested in <b>minipools of 6–16</b> donors.", "If a pool is reactive, each donor sample is tested <b>individually</b>."]},
+{"type": "flip", "q": "How much does one red cell unit raise the hemoglobin? And in children?",
+ "a": ["About <b>1 g/dL</b> (Hct about 3%) in a 70 kg adult.", "In children, <b>4 mL/kg</b> raises the Hb by about 1 g/dL."]},
+{"type": "flip", "q": "What are the AABB 2023 restrictive red cell transfusion thresholds?",
+ "a": ["<b>Hb below 7 g/dL</b> in most hospitalized adults (including critically ill); <b>7.5</b> in cardiac surgery; <b>8</b> in orthopedic surgery or cardiovascular disease.", "Transfusion is rarely indicated above 10 g/dL."]},
+{"type": "calc", "kind": "rbcdose"},
+{"type": "sort", "q": "Red cell storage lesion: what goes down and what goes up?",
+ "bins": ["Decreases", "Increases"],
+ "items": [{"t": "2,3-DPG", "b": 0}, {"t": "pH", "b": 0}, {"t": "ATP", "b": 0}, {"t": "Nitric oxide", "b": 0}, {"t": "Deformability", "b": 0},
+  {"t": "Potassium", "b": 1}, {"t": "Free hemoglobin", "b": 1}, {"t": "Oxygen affinity", "b": 1}]},
+{"type": "flip", "q": "What is the residual white cell limit for leukocyte-reduced units, and what does leukoreduction prevent?",
+ "a": ["Below <b>5 × 10<sup>6</sup></b> per unit (AABB); below 1 × 10<sup>6</sup> (EU). Universal in Lebanon.", "Prevents <b>febrile reactions, HLA alloimmunization and CMV transmission</b>. It does <b>not</b> prevent TA-GVHD."]},
+{"type": "sort", "q": "Which special red cell product is indicated?",
+ "bins": ["Washed", "Frozen–deglycerolized", "Irradiated"],
+ "items": [{"t": "Repeated severe allergic reactions", "b": 0}, {"t": "Rare blood group or multiple alloantibodies", "b": 1}, {"t": "Stem cell transplant recipient", "b": 2},
+  {"t": "Directed donation from a first-degree relative", "b": 2}, {"t": "Intrauterine transfusion", "b": 2}, {"t": "Patient treated with fludarabine", "b": 2}]},
+{"type": "grid", "q": "Fill in the storage temperature of each component.", "cols": ["Storage temperature"],
+ "rows": ["Red cells", "Fresh frozen plasma", "Platelets", "Cryoprecipitate", "Granulocytes"],
+ "symbols": ["1–6 °C", "20–24 °C", "≤ −18 °C"],
+ "answer": [["1–6 °C"], ["≤ −18 °C"], ["20–24 °C"], ["≤ −18 °C"], ["20–24 °C"]],
+ "explain": ["Platelets are agitated continuously; granulocytes are not agitated."]},
+{"type": "grid", "q": "Fill in the shelf life of each component.", "cols": ["Shelf life"],
+ "rows": ["Red cells in additive solution", "Fresh frozen plasma (≤ −18 °C)", "Platelets", "Cryoprecipitate (frozen)", "Granulocytes", "Washed red cells"],
+ "symbols": ["42 days", "1 year", "5 days", "24 hours"],
+ "answer": [["42 days"], ["1 year"], ["5 days"], ["1 year"], ["24 hours"], ["24 hours"]],
+ "explain": ["Platelets: up to 7 days with bacterial risk control. Irradiated red cells: 28 days after irradiation (or original expiry)."]},
+{"type": "flip", "q": "Why must FFP be frozen within 8 hours of collection? What is PF24?",
+ "a": ["<b>Factor VIII</b> falls significantly between 8 and 24 hours of refrigerated storage.", "<b>PF24</b>: plasma frozen 8–24 hours after collection, with lower factor VIII."]},
+{"type": "flip", "q": "What must each cryoprecipitate unit contain, and what is its main use today?",
+ "a": ["Factor VIII <b>≥ 80 IU</b> and fibrinogen <b>≥ 150 mg</b> (also VWF and factor XIII).", "Main use: <b>fibrinogen deficiency</b>. Dose about 1 unit per 10 kg. After thawing: 6 hours (single) or 4 hours (pooled)."]},
+{"type": "sort", "q": "Whole blood-derived or apheresis platelets?",
+ "bins": ["Whole blood-derived (one unit)", "Apheresis (one unit)"],
+ "items": [{"t": "≥ 5.5 × 10<sup>10</sup> platelets in about 50 mL", "b": 0}, {"t": "≥ 3 × 10<sup>11</sup> platelets in about 200 mL", "b": 1}, {"t": "4–6 units pooled for an adult dose", "b": 0}, {"t": "Raises the count by 30,000–60,000/µL in a 70 kg adult", "b": 1}]},
+{"type": "flip", "q": "Which donor–recipient HLA situation carries the highest risk of TA-GVHD?",
+ "a": ["An <b>HLA-homozygous donor</b> (e.g. a relative) and an <b>HLA-heterozygous recipient sharing one haplotype</b>: the recipient does not see the donor cells as foreign, but the donor cells attack the recipient.", "Prevention: <b>irradiation</b>."]},
+{"type": "flip", "q": "Give the granulocyte component requirements and its indication.",
+ "a": ["≥ 1 × 10<sup>10</sup> granulocytes; transfuse within <b>24 hours</b>, stored at 20–24 °C without agitation; must be <b>ABO-compatible, crossmatched and irradiated</b>, never leukoreduced.", "Indication: life-threatening infection with severe <b>reversible</b> neutropenia not responding to antibiotics after 48–72 hours."]},
+{"type": "grid", "q": "Which donor <b>red cells</b> can each recipient receive?", "groups": [["Donor red cells", 4]],
+ "cols": ["O", "A", "B", "AB"], "rows": ["Recipient O", "Recipient A", "Recipient B", "Recipient AB"], "symbols": ["✓", "✗"],
+ "answer": [["✓", "✗", "✗", "✗"], ["✓", "✓", "✗", "✗"], ["✓", "✗", "✓", "✗"], ["✓", "✓", "✓", "✓"]]},
+{"type": "grid", "q": "Which donor <b>plasma</b> (FFP, plasma in platelets) can each recipient receive?", "groups": [["Donor plasma", 4]],
+ "cols": ["O", "A", "B", "AB"], "rows": ["Recipient O", "Recipient A", "Recipient B", "Recipient AB"], "symbols": ["✓", "✗"],
+ "answer": [["✓", "✓", "✓", "✓"], ["✗", "✓", "✗", "✓"], ["✗", "✗", "✓", "✓"], ["✗", "✗", "✗", "✓"]],
+ "explain": ["Group AB plasma is the universal plasma. Low-titer group A plasma is an accepted emergency alternative."]},
+{"type": "flip", "q": "A D-negative young woman receives D-positive platelets. What should be considered, and why?",
+ "a": ["<b>RhIG within 72 hours</b> (per facility policy).", "Platelets lack Rh antigens, but the few red cells in the unit (as little as 0.1 mL) can immunize."]},
+{"type": "flip", "q": "List the requirements for blood for intrauterine transfusion.",
+ "a": ["<b>CMV-negative or leukoreduced</b>, <b>irradiated</b>, compatible with mother and fetus, negative for antigens of maternal antibodies, <b>fresh (< 5–7 days)</b> and <b>HbS-negative</b>."]},
+{"type": "sort", "q": "Which pathogen reduction method fits each statement?",
+ "bins": ["Solvent/detergent", "Nanofiltration", "Methylene blue + light"],
+ "items": [{"t": "Most widely used; enveloped viruses (HIV, HBV, HCV)", "b": 0}, {"t": "Removes small non-enveloped viruses such as parvovirus B19", "b": 1}, {"t": "Single plasma units; avoid in G6PD-deficient recipients", "b": 2}]},
+{"type": "flip", "q": "What is in a 4-factor PCC, and what is its main indication?",
+ "a": ["Factors <b>II, VII, IX and X</b>, plus proteins C and S (often a little heparin).", "Urgent <b>reversal of warfarin</b> in major bleeding or urgent surgery."]},
+{"type": "sort", "q": "May this be done when administering blood?",
+ "bins": ["Correct practice", "Not allowed"],
+ "items": [{"t": "Use a set with a 170–260 µm filter", "b": 0}, {"t": "Add 5% dextrose to the bag", "b": 1}, {"t": "Infuse with 0.9% saline", "b": 0}, {"t": "Run the first 15 minutes slowly with close observation", "b": 0},
+  {"t": "Use Ringer's lactate in the same line", "b": 1}, {"t": "Complete a red cell unit within 4 hours", "b": 0}, {"t": "Take samples from above the infusion site", "b": 1}]},
+{"type": "order", "q": "Put the immediate steps for a suspected transfusion reaction in order.",
+ "steps": ["Stop the transfusion", "Keep the IV line open with normal saline", "Provide emergency care and call for medical review", "Repeat the bedside identity and label check", "Notify the blood bank; return the bag and send samples"]},
+{"type": "flip", "q": "What is the most common adverse donor reaction, and who is most at risk?",
+ "a": ["<b>Vasovagal reactions</b> (about 2.5% of donations): bradycardia, hypotension, fainting.", "Young, female and first-time donors."]},
+{"type": "grid", "q": "Fill in the 2025 AABB/ICTMG platelet thresholds (transfuse if below, × 10<sup>9</sup>/L).", "cols": ["Threshold"],
+ "rows": ["Prophylaxis, hypoproliferative, no bleeding", "Fever, infection or other bleeding risk", "Lumbar puncture", "Major surgery or active bleeding", "Preterm neonates without major bleeding", "CNS or eye bleeding or surgery"],
+ "symbols": ["10", "20", "25", "50", "100"],
+ "answer": [["10"], ["20"], ["20"], ["50"], ["25"], ["100"]]},
+{"type": "calc", "kind": "cci"},
+{"type": "sort", "q": "Match each reaction to its usual cause.",
+ "bins": ["ABO-incompatible red cells", "Donor HLA/HNA antibodies", "Too much volume", "Anti-IgA in IgA deficiency", "Cytokines or recipient HLA antibodies"],
+ "items": [{"t": "Acute hemolytic reaction", "b": 0}, {"t": "TRALI", "b": 1}, {"t": "TACO", "b": 2}, {"t": "Anaphylaxis", "b": 3}, {"t": "Febrile non-hemolytic reaction", "b": 4}]},
+{"type": "flip", "q": "What is the most common cause of acute hemolytic transfusion reactions, and what may be the only sign under anesthesia?",
+ "a": ["<b>ABO incompatibility from identification or labeling errors</b>.", "Under anesthesia: <b>hypotension and excessive bleeding (DIC)</b>."]},
+{"type": "sort", "q": "TRALI or TACO?",
+ "bins": ["TRALI", "TACO"],
+ "items": [{"t": "Within 6 hours", "b": 0}, {"t": "Within 12 hours", "b": 1}, {"t": "Blood pressure often low", "b": 0}, {"t": "Blood pressure often high", "b": 1}, {"t": "Fever common", "b": 0},
+  {"t": "Raised BNP / NT-proBNP", "b": 1}, {"t": "Rapid response to diuretics", "b": 1}, {"t": "Reduced by using plasma from male donors", "b": 0}],
+ "explain": ["TACO is now the leading cause of transfusion-related major morbidity and death."]},
+{"type": "flip", "q": "Which bacterium is the classic contaminant of red cells, and why?",
+ "a": ["<b><i>Yersinia enterocolitica</i></b>: it grows well at 1–6 °C. Platelets (room temperature) are more often contaminated, mainly by Gram-positive skin flora."]},
+{"type": "sort", "q": "Acute (within 24 hours) or delayed/late reaction?",
+ "bins": ["Acute", "Delayed or late"],
+ "items": [{"t": "TRALI", "b": 0}, {"t": "Bacterial sepsis", "b": 0}, {"t": "Allergic urticaria", "b": 0}, {"t": "Delayed hemolytic reaction", "b": 1}, {"t": "Post-transfusion purpura", "b": 1},
+  {"t": "TA-GVHD", "b": 1}, {"t": "Iron overload", "b": 1}, {"t": "Hyperkalemia in massive transfusion", "b": 0}]},
+{"type": "flip", "q": "Describe the findings of a delayed hemolytic transfusion reaction, and the typical antibody.",
+ "a": ["<b>3–14 days</b> after transfusion: unexplained Hb fall, fever, jaundice; <b>positive DAT</b> (weak, mixed field) and a new positive screen; spherocytes.", "Anamnestic response, typically <b>Kidd</b> (also Duffy, Kell, Rh)."]},
+{"type": "flip", "q": "Who gets post-transfusion purpura, and which antibody causes it?",
+ "a": ["Mostly <b>multiparous women</b>: severe thrombocytopenia 5–10 days after transfusion.", "<b>Anti-HPA-1a</b> in an HPA-1a-negative patient; both transfused and own platelets are destroyed. IVIG reverses it."]},
+{"type": "flip", "q": "Give the features and outcome of TA-GVHD.",
+ "a": ["2–30 days after transfusion: <b>fever, rash, diarrhea, liver dysfunction, pancytopenia</b>.", "Fatal in <b>more than 90%</b>; prevented only by <b>irradiation</b>."]},
+{"type": "flip", "q": "What are the donor rules for plateletpheresis (AABB)?",
+ "a": ["Pre-donation platelets <b>≥ 150 × 10<sup>9</sup>/L</b>; at least 2 days apart, ≤ 2 per week, ≤ 24 per year.", "No aspirin within 2 days (Lebanon 5 days); watch for <b>citrate toxicity</b> (perioral tingling)."]},
+{"type": "flip", "q": "What are the double red cell apheresis requirements (FDA)?",
+ "a": ["<b>Hct ≥ 40% (Hb 13.3 g/dL)</b> for both sexes.", "Larger donors only: men ≥ 59 kg and ≥ 155 cm; women ≥ 68 kg and ≥ 165 cm. Deferral 16 weeks."]},
+{"type": "sort", "q": "Match the therapeutic apheresis to its use.",
+ "bins": ["Plasma exchange", "Leukapheresis", "Plateletpheresis", "Red cell exchange"],
+ "items": [{"t": "TTP", "b": 0}, {"t": "Myasthenia gravis", "b": 0}, {"t": "Hyperviscosity in Waldenström", "b": 0}, {"t": "Acute leukemia with hyperleukocytosis", "b": 1},
+  {"t": "Symptomatic essential thrombocythemia", "b": 2}, {"t": "Sickle cell crisis", "b": 3}]},
+{"type": "flip", "q": "How much of an intravascular substance does one plasma volume exchange remove? And 1.5 volumes?",
+ "a": ["One plasma volume: about <b>63%</b>; 1.5 volumes: about <b>78%</b>.", "About three exchanges remove ~95% of a circulating antibody."]},
+{"type": "flip", "q": "Give two definitions of massive transfusion and the modern component ratio.",
+ "a": ["Replacement of <b>one blood volume (about 10 units) within 24 hours</b>, or <b>≥ 4 red cell units within 1 hour</b> with ongoing bleeding (also > 50% in 3 hours, or 150 mL/min).", "Plasma : platelets : red cells close to <b>1:1:1</b>."]},
+{"type": "sort", "q": "Is each a complication of massive transfusion?",
+ "bins": ["Yes", "No"],
+ "items": [{"t": "Dilutional thrombocytopenia", "b": 0}, {"t": "Hypothermia", "b": 0}, {"t": "Citrate toxicity (hypocalcemia)", "b": 0}, {"t": "Hyperkalemia", "b": 0}, {"t": "Acidosis", "b": 0}, {"t": "Polycythemia", "b": 1}],
+ "explain": ["Hypothermia, acidosis and coagulopathy form the \"lethal triad\"."]},
+{"type": "flip", "q": "What CD34+ dose is recommended for an autologous peripheral blood stem cell transplant?",
+ "a": ["Minimum <b>2 × 10<sup>6</sup> CD34+ cells/kg</b>; optimal 2.5–5 × 10<sup>6</sup>/kg (allogeneic: minimum 4, optimal 5–8 × 10<sup>6</sup>/kg)."]},
+{"type": "sort", "q": "Which source of hematopoietic progenitor cells fits each feature?",
+ "bins": ["Bone marrow", "Cord blood", "Peripheral blood (apheresis)"],
+ "items": [{"t": "Harvested from the iliac crests under general anesthesia", "b": 0}, {"t": "Less strict HLA match; limited cell dose, slower engraftment", "b": 1},
+  {"t": "Mobilized with G-CSF; most common source today", "b": 2}, {"t": "More chronic GVHD (more T cells)", "b": 2}]},
+{"type": "flip", "q": "Why are ABO-incompatible stem cell transplants possible?",
+ "a": ["Stem cells carry <b>HLA</b> antigens but <b>not ABO</b> antigens (red cells and plasma in the product need special handling)."]}
+]},{
+"key": "s8", "title": "Chapter 8: Hemolytic Disease of the Fetus and Newborn (HDFN)", "short": "Ch 8 · HDFN",
+"cards": [
+{"type": "flip", "q": "Why are only IgG antibodies involved in HDFN, and which subclasses are most harmful?",
+ "a": ["Only <b>IgG crosses the placenta</b> (not IgM or IgA).", "<b>IgG1 and IgG3</b> are the most harmful; IgG2 crosses least efficiently."]},
+{"type": "flip", "q": "Which blood group antigens are weak or absent at birth?",
+ "a": ["<b>ABO, I, P1 and Lewis</b>. Most other antigens are well developed by 12 weeks of gestation."]},
+{"type": "flip", "q": "What are the three prerequisites for HDFN?",
+ "a": ["1. The mother <b>lacks the antigen</b> and has been exposed (pregnancy or transfusion).", "2. The fetus <b>has the antigen</b> (from the father), well developed in utero.", "3. The mother makes enough <b>IgG antibody</b>."]},
+{"type": "flip", "q": "What volume of fetal red cells can sensitize the mother, and what is the most important cause of feto-maternal hemorrhage?",
+ "a": ["As little as <b>0.1 mL</b>.", "<b>Delivery</b> (also abortion, ectopic pregnancy, amniocentesis, abdominal trauma, external version)."]},
+{"type": "order", "q": "Put the events leading to hydrops fetalis in order.",
+ "steps": ["Maternal IgG coats fetal red cells", "Fetal spleen removes them: anemia", "Extramedullary hematopoiesis in liver and spleen; hepatosplenomegaly", "Hypoalbuminemia and heart failure", "Generalized edema: hydrops fetalis"]},
+{"type": "flip", "q": "Why does bilirubin become dangerous only after birth?",
+ "a": ["Before birth, unconjugated bilirubin crosses the placenta and is cleared by the <b>mother's liver</b>.", "After birth, the immature liver cannot conjugate it: it rises and can cause <b>kernicterus</b> (e.g. above 20 mg/dL in term babies)."]},
+{"type": "sort", "q": "Classify the antibodies as causes of HDFN.",
+ "bins": ["Common", "Less common but severe", "Rare", "Do not cause HDFN"],
+ "items": [{"t": "ABO antibodies", "b": 0}, {"t": "Anti-D", "b": 0}, {"t": "Anti-c", "b": 0}, {"t": "Anti-K", "b": 1}, {"t": "Anti-Fy<sup>a</sup>", "b": 2}, {"t": "Anti-S", "b": 2},
+  {"t": "Anti-Le<sup>a</sup>", "b": 3}, {"t": "Anti-I", "b": 3}, {"t": "Anti-P1", "b": 3}]},
+{"type": "flip", "q": "Why is the first D-positive child usually not affected by anti-D HDFN?",
+ "a": ["Sensitization usually occurs at <b>delivery</b> (late in pregnancy). Later D-positive children are affected, often more severely each time."]},
+{"type": "flip", "q": "What is \"blocked D\"?",
+ "a": ["A <b>false-negative D typing</b> of the baby because the fetal D sites are saturated by maternal anti-D. The DAT is strongly positive."]},
+{"type": "sort", "q": "Rh (anti-D) HDFN or ABO HDFN?",
+ "bins": ["Rh (anti-D) HDFN", "ABO HDFN"],
+ "items": [{"t": "First pregnancy often affected", "b": 1}, {"t": "Strongly positive DAT", "b": 0}, {"t": "Spherocytes common", "b": 1}, {"t": "Maternal antibody screen negative", "b": 1},
+  {"t": "Jaundice within 24 hours; may cause hydrops", "b": 0}, {"t": "Prevented by RhIG", "b": 0}, {"t": "Usually group O mother, group A or B baby", "b": 1}, {"t": "Jaundice 12–48 hours, usually mild", "b": 1}]},
+{"type": "flip", "q": "Why is ABO HDFN usually mild?",
+ "a": ["Fetal red cells express <b>weak A and B antigens</b>.", "A and B are on <b>many tissues and in soluble form</b>, so little antibody binds to the red cells."]},
+{"type": "flip", "q": "Why is the maternal antibody screen negative in ABO HDFN, and how is the antibody shown?",
+ "a": ["Screening cells are <b>group O</b>.", "An <b>eluate</b> of the baby's cells reacts with A<sub>1</sub> and/or B cells but not with group O cells."]},
+{"type": "flip", "q": "How does phototherapy work?",
+ "a": ["Blue light (<b>420–475 nm</b>) converts bilirubin into <b>water-soluble isomers</b> that are excreted."]},
+{"type": "flip", "q": "List the requirements for blood for exchange or intrauterine transfusion.",
+ "a": ["Group O (or compatible with mother and baby), <b>antigen-negative</b> for maternal antibodies, crossmatch-compatible with maternal serum.", "<b>CMV-negative/leukoreduced, irradiated, fresh (< 5–7 days), HbS-negative</b>."]},
+{"type": "flip", "q": "How is a maternal antibody titer followed in pregnancy?",
+ "a": ["Freeze the first sample and test it <b>in parallel</b> with later ones; repeat at 18–20 weeks, then every 2–4 weeks.", "A rise of <b>more than 2 dilutions</b> (> fourfold) is significant. At the critical titer (16–32 for anti-D, lower for anti-K), follow the fetus by <b>MCA-PSV Doppler</b>."]},
+{"type": "flip", "q": "What is non-invasive prenatal RHD genotyping used for?",
+ "a": ["Cell-free fetal DNA in maternal plasma shows whether the fetus is D-positive, so <b>RhIG is given only when needed</b> and risk is known in immunized pregnancies."]},
+{"type": "sort", "q": "Is RhIG indicated?",
+ "bins": ["Give RhIG", "Do not give"],
+ "items": [{"t": "D-negative mother at 28 weeks", "b": 0}, {"t": "Within 72 hours after delivery of a D-positive baby", "b": 0}, {"t": "D-negative mother after miscarriage or amniocentesis", "b": 0},
+  {"t": "Mother already has immune anti-D", "b": 1}, {"t": "Baby is D-negative", "b": 1}, {"t": "To the D-positive newborn", "b": 1}]},
+{"type": "flip", "q": "How does RhIG prevent immunization, and why is the postpartum dose essential?",
+ "a": ["It binds fetal D-positive cells, which the mother's <b>spleen removes</b> before she can respond.", "Only about <b>10% of the antenatal dose</b> remains at birth."]},
+{"type": "order", "q": "Put the rosette test in order.",
+ "steps": ["Incubate the mother's red cells with IgG anti-D at 37 °C", "Wash away unbound anti-D", "Add D-positive indicator red cells", "Look for rosettes under the microscope", "If positive, quantify with Kleihauer–Betke or flow cytometry"]},
+{"type": "flip", "q": "What is the principle of the Kleihauer–Betke test?",
+ "a": ["<b>Fetal hemoglobin resists acid elution</b>: fetal cells stay pink; adult cells lose their Hb and become pale \"ghosts\". Count fetal cells among 1000–2000 cells."]},
+{"type": "calc", "kind": "rhig"},
+{"type": "flip", "q": "Why is flow cytometry preferred to the Kleihauer–Betke test when available?",
+ "a": ["With anti-HbF (or anti-D) it counts fetal and maternal cells <b>more accurately and reproducibly</b>."]}
+]},{
+"key": "s11", "title": "Chapter 11: Acute Phase Proteins", "short": "Ch 11 · Acute phase proteins",
+"cards": [
+{"type": "flip", "q": "Which cytokine is the main stimulus of acute phase protein synthesis by the liver?",
+ "a": ["<b>Interleukin-6 (IL-6)</b>. Others involved: IL-1, TNF-α, chemokines, TGF-β, interferons."]},
+{"type": "sort", "q": "Positive or negative acute phase protein?",
+ "bins": ["Positive (rises)", "Negative (falls)"],
+ "items": [{"t": "CRP", "b": 0}, {"t": "Serum amyloid A", "b": 0}, {"t": "Fibrinogen", "b": 0}, {"t": "Haptoglobin", "b": 0}, {"t": "Ceruloplasmin", "b": 0},
+  {"t": "Albumin", "b": 1}, {"t": "Transferrin", "b": 1}, {"t": "Transthyretin (prealbumin)", "b": 1}]},
+{"type": "order", "q": "Order these acute phase proteins from the <b>fastest</b> to rise to the slowest.",
+ "steps": ["CRP and serum amyloid A (6–10 h)", "α1-antitrypsin (10 h)", "Haptoglobin and fibrinogen (24 h)", "C3, C4 and ceruloplasmin (48–72 h)"]},
+{"type": "sort", "q": "How much does each protein rise?",
+ "bins": ["Up to 1000-fold", "2–5-fold", "Up to 2-fold"],
+ "items": [{"t": "CRP", "b": 0}, {"t": "Serum amyloid A", "b": 0}, {"t": "Haptoglobin", "b": 1}, {"t": "Fibrinogen", "b": 1}, {"t": "C3", "b": 2}, {"t": "Ceruloplasmin", "b": 2}]},
+{"type": "flip", "q": "Why does CRP follow inflammation so closely?",
+ "a": ["Its plasma <b>half-life is short (about 19 hours)</b>, while most acute phase proteins last 2–4 days."]},
+{"type": "flip", "q": "What complication can a persistent acute phase response cause?",
+ "a": ["Tissue damage, cardiovascular disease and <b>reactive AA amyloidosis</b>."]},
+{"type": "sort", "q": "CRP or ESR?",
+ "bins": ["CRP", "ESR"],
+ "items": [{"t": "Rises within 6–10 hours", "b": 0}, {"t": "Rises after at least 48 hours and falls slowly", "b": 1}, {"t": "Falsely normal in polycythemia and sickle cell disease", "b": 1}, {"t": "Spuriously high in anemia and hypergammaglobulinemia", "b": 1}, {"t": "Made by the liver under IL-6 control", "b": 0}]},
+{"type": "flip", "q": "How does CRP behave after uncomplicated surgery, and what should alert you?",
+ "a": ["It peaks about <b>2 days</b> after surgery and returns to normal within <b>7–10 days</b>.", "A persistently high or rising CRP may signal <b>infection</b> before clinical signs."]},
+{"type": "flip", "q": "In which autoimmune disease is CRP often only mildly raised?",
+ "a": ["<b>SLE</b>, unless there is infection or serositis."]},
+{"type": "flip", "q": "Is hs-CRP a different protein? What is it used for?",
+ "a": ["<b>No</b>: the same CRP measured with a high-sensitivity assay (down to 0.1–0.3 mg/L).", "It assesses <b>cardiovascular risk</b> (low-grade vascular inflammation). Measure when free of acute illness; repeat if above 10 mg/L."]},
+{"type": "grid", "q": "Classify the hs-CRP results for cardiovascular risk.", "cols": ["Risk"],
+ "rows": ["0.6 mg/L", "2.1 mg/L", "4.5 mg/L"], "symbols": ["Low", "Average", "High"],
+ "answer": [["Low"], ["Average"], ["High"]],
+ "explain": ["Below 1.0 mg/L low; 1.0–3.0 average; above 3.0 high."]},
+{"type": "flip", "q": "Which methods measure CRP, and what is the usual reference value?",
+ "a": ["Latex agglutination (semi-quantitative), <b>immunoturbidimetry or nephelometry</b> (quantitative).", "Standard CRP: below <b>10 mg/L</b> (method-dependent)."]}
+]},{
+"key": "s12", "title": "Chapter 12: Labeling Techniques in Immunoassay", "short": "Ch 12 · Immunoassay labels",
+"cards": [
+{"type": "sort", "q": "Match each label to its assay.",
+ "bins": ["Enzyme", "Radioactive isotope", "Fluorochrome", "Particles (latex)"],
+ "items": [{"t": "ELISA / EIA", "b": 0}, {"t": "RIA", "b": 1}, {"t": "Immunofluorescence (FITC)", "b": 2}, {"t": "Nephelometry or turbidimetry", "b": 3}]},
+{"type": "sort", "q": "Homogeneous or heterogeneous immunoassay?",
+ "bins": ["Homogeneous", "Heterogeneous"],
+ "items": [{"t": "No separation of bound and free label", "b": 0}, {"t": "Solid phase and washing", "b": 1}, {"t": "Typical for drugs and toxicology", "b": 0},
+  {"t": "Typical for hormones, tumor markers, infectious serology", "b": 1}, {"t": "EMIT", "b": 0}, {"t": "FPIA", "b": 0}, {"t": "Sandwich ELISA", "b": 1}]},
+{"type": "flip", "q": "In EMIT, why does enzyme activity increase with the drug concentration?",
+ "a": ["The antibody bound to the drug–enzyme conjugate <b>blocks the enzyme</b> (classically G6PD).", "Free drug from the sample competes for the antibody, <b>releasing active conjugate</b>: more drug, more enzyme activity."]},
+{"type": "flip", "q": "In FPIA, why does polarization decrease as the drug concentration rises?",
+ "a": ["Antibody-bound tracer tumbles slowly: <b>high polarization</b>.", "Free drug displaces the tracer, which then tumbles fast: <b>depolarized</b> emission. The fall in polarization is proportional to the drug."]},
+{"type": "sort", "q": "Competitive or sandwich (non-competitive) immunoassay?",
+ "bins": ["Competitive", "Sandwich"],
+ "items": [{"t": "Signal inversely related to concentration", "b": 0}, {"t": "Signal directly proportional to concentration", "b": 1}, {"t": "Small molecules (drugs, steroid hormones)", "b": 0},
+  {"t": "Large molecules with ≥ 2 epitopes (TSH, hCG, HBsAg)", "b": 1}, {"t": "Can show the high-dose hook effect (one-step)", "b": 1}]},
+{"type": "flip", "q": "What is the high-dose hook effect?",
+ "a": ["In a <b>one-step sandwich</b> assay, a huge antigen excess saturates both antibodies so the sandwich cannot form: a <b>falsely low</b> signal. A two-step format with washing avoids it."]},
+{"type": "order", "q": "Put the steps of a direct sandwich ELISA for antigen in order.",
+ "steps": ["Coat the plate with capture antibody", "Add the sample: the antigen binds", "Add enzyme-labeled detection antibody", "Add chromogenic substrate: color develops", "Stop with acid and read the absorbance"]},
+{"type": "flip", "q": "What properties must an enzyme label have? Name three common ones.",
+ "a": ["Very stable, highly specific, <b>absent from the sample</b>, not affected by inhibitors.", "Horseradish peroxidase (HRP), alkaline phosphatase, β-galactosidase."]},
+{"type": "flip", "q": "How does the IgM-capture ELISA (MAC ELISA) work, and what does it avoid?",
+ "a": ["Anti-human IgM on the plate captures the patient's IgM; then specific antigen and a labeled antibody are added.", "It avoids interference from <b>IgG and rheumatoid factor</b>."]},
+{"type": "flip", "q": "In a competitive RIA, what does high bound radioactivity mean?",
+ "a": ["A <b>low</b> amount of the patient's substance. The isotope is usually <sup>125</sup>I (half-life about 60 days)."]},
+{"type": "sort", "q": "Match the chemiluminescent system to its description.",
+ "bins": ["HRP–luminol", "ALP–dioxetane", "Acridinium esters", "Electrochemiluminescence"],
+ "items": [{"t": "Enzyme-enhanced oxidation of luminol by H<sub>2</sub>O<sub>2</sub>", "b": 0}, {"t": "Alkaline phosphatase acts on a dioxetane substrate", "b": 1},
+  {"t": "Direct label, no enzyme needed (Abbott Architect, Alinity)", "b": 2}, {"t": "Ruthenium + TPA at an electrode, light at 620 nm (Roche)", "b": 3}]},
+{"type": "flip", "q": "How does biotin interfere with streptavidin-based assays, and what is advised?",
+ "a": ["High-dose biotin gives <b>falsely low sandwich</b> and <b>falsely high competitive</b> results.", "Stop biotin at least <b>8 hours</b> before sampling (up to 72 hours for very high doses)."]},
+{"type": "sort", "q": "Direct or indirect immunofluorescence?",
+ "bins": ["Direct", "Indirect"],
+ "items": [{"t": "Labeled antibody binds the antigen in the tissue", "b": 0}, {"t": "Skin and kidney biopsies", "b": 0}, {"t": "ANA on HEp-2 cells", "b": 1}, {"t": "FTA-ABS", "b": 1}],
+ "explain": ["FITC gives apple-green fluorescence."]},
+{"type": "flip", "q": "How is specific IgE measured today?",
+ "a": ["Mostly by automated <b>fluorescence enzyme immunoassay</b> (e.g. ImmunoCAP) or chemiluminescence, which replaced RAST and FAST. Multiplex allergen arrays also exist."]},
+{"type": "flip", "q": "What must appear for a lateral flow test to be valid?",
+ "a": ["The <b>control line</b>. The sample flows by capillary action through the conjugate pad (e.g. colloidal gold) to the test and control lines."]},
+{"type": "flip", "q": "What is carryover, and how is it prevented?",
+ "a": ["Contamination of a sample by the one analyzed just before (e.g. strongly positive HBsAg followed by a negative).", "<b>Disposable tips</b>, probe washing and maintenance, and automatic retesting of weak positives after strong ones."]}
+]},{
+"key": "s13", "title": "Chapter 13: Nephelometry", "short": "Ch 13 · Nephelometry",
+"cards": [
+{"type": "sort", "q": "Turbidimetry or nephelometry?",
+ "bins": ["Turbidimetry", "Nephelometry"],
+ "items": [{"t": "Measures transmitted light, in line with the beam", "b": 0}, {"t": "Measures scattered light, often at 90°", "b": 1}, {"t": "Suits higher concentrations", "b": 0}, {"t": "Suits low concentrations; more sensitive", "b": 1}]},
+{"type": "flip", "q": "Which factors affect light scattering?",
+ "a": ["Particle <b>size</b>, the <b>wavelength</b>, the <b>angle</b> of observation, the particle <b>concentration</b> and their <b>molecular weight</b>."]},
+{"type": "flip", "q": "How does latex enhancement improve immunonephelometry?",
+ "a": ["Antigen- or antibody-coated latex particles <b>agglutinate</b>, increasing light scatter, so lower concentrations can be measured (below about 1 µg/mL)."]},
+{"type": "sort", "q": "Is each analyte commonly measured by immunonephelometry?",
+ "bins": ["Yes", "No"],
+ "items": [{"t": "IgG, IgA, IgM", "b": 0}, {"t": "Free light chains", "b": 0}, {"t": "C3 and C4", "b": 0}, {"t": "CRP", "b": 0}, {"t": "Haptoglobin", "b": 0}, {"t": "Rheumatoid factor", "b": 0}, {"t": "Hemoglobin A1c by HPLC", "b": 1}]}
+]},{
+"key": "s14", "title": "Chapter 14: Immunologic Manifestations of Infectious Diseases", "short": "Ch 14 · Infectious serology",
+"cards": [
+{"type": "flip", "q": "When do ASO antibodies appear, peak and normalize? What is the adult upper limit?",
+ "a": ["Appear at least <b>1 week</b> after infection, peak <b>2–4 weeks</b> later, normalize in 6–12 months. Repeat after 10–14 days to see a rising titer.", "Upper limit about <b>200 IU/mL</b> in adults (higher in school-age children)."]},
+{"type": "flip", "q": "When is anti-DNase B more useful than ASO?",
+ "a": ["After <b>skin infections (impetigo)</b>, which give poor ASO responses (post-streptococcal glomerulonephritis), and in <b>Sydenham chorea</b>.", "Both tests together detect about 95% of streptococcal infections (80% with one)."]},
+{"type": "sort", "q": "Which can cause a false-positive ASO?",
+ "bins": ["False-positive ASO", "Not a cause"],
+ "items": [{"t": "Lipemic serum (high β-lipoproteins)", "b": 0}, {"t": "Bacterial contamination of the serum", "b": 0}, {"t": "Oxidized ASO reagent (aerated vial)", "b": 0}, {"t": "Impetigo", "b": 1}]},
+{"type": "order", "q": "Put the stages of untreated syphilis in order.",
+ "steps": ["Incubation (about 3 weeks)", "Primary: painless chancre", "Secondary: rash, mucous lesions, lymphadenopathy", "Latent: no symptoms (3–30 years)", "Late (tertiary): cardiovascular, neurosyphilis, gummas"]},
+{"type": "sort", "q": "Non-treponemal or treponemal test?",
+ "bins": ["Non-treponemal", "Treponemal"],
+ "items": [{"t": "VDRL", "b": 0}, {"t": "RPR", "b": 0}, {"t": "FTA-ABS", "b": 1}, {"t": "TP-PA", "b": 1}, {"t": "Treponemal EIA/CLIA", "b": 1},
+  {"t": "Titer follows treatment (fourfold fall)", "b": 0}, {"t": "Usually positive for life", "b": 1}, {"t": "Biological false positives (pregnancy, autoimmune disease)", "b": 0}]},
+{"type": "sort", "q": "VDRL or RPR?",
+ "bins": ["VDRL", "RPR"],
+ "items": [{"t": "Flocculation read under the microscope", "b": 0}, {"t": "Charcoal particles, read by eye on a card", "b": 1}, {"t": "Serum heated at 56 °C for 30 minutes", "b": 0}, {"t": "Standard test on CSF for neurosyphilis", "b": 0}, {"t": "Cannot be done on CSF", "b": 1}]},
+{"type": "flip", "q": "How should the laboratory report an RPR titer (CDC 2024)?",
+ "a": ["As the <b>endpoint titer</b>: the highest dilution giving a reactive result (e.g. 1:32), without \">\" or \"<\" signs."]},
+{"type": "flip", "q": "Why is serum absorbed with the Reiter strain in the FTA-ABS test?",
+ "a": ["To remove <b>cross-reacting antibodies</b> to non-pathogenic treponemes. The antigen is killed <i>T. pallidum</i> (Nichols strain); fluorescent treponemes = positive."]},
+{"type": "order", "q": "Put the CDC reverse-sequence syphilis algorithm in order.",
+ "steps": ["Treponemal EIA/CLIA screen", "If reactive: RPR with reflex to titer", "If RPR is nonreactive: a second treponemal test (TP-PA)"]},
+{"type": "sort", "q": "Reverse-sequence algorithm: interpret each result pattern.",
+ "bins": ["Untreated or recently treated syphilis", "Past treated (or very early or late latent) syphilis", "Likely false-positive EIA"],
+ "items": [{"t": "EIA reactive, RPR reactive", "b": 0}, {"t": "EIA reactive, RPR nonreactive, TP-PA positive", "b": 1}, {"t": "EIA reactive, RPR nonreactive, TP-PA negative", "b": 2}]},
+{"type": "flip", "q": "Which pregnant women are screened for toxoplasmosis in Lebanon, and with which other tests?",
+ "a": ["<b>All pregnant women</b> at the first antenatal visit, together with <b>rubella</b> serology (and sometimes CMV).", "Non-immune women are retested during pregnancy and advised on prevention (well-cooked meat, washed vegetables, no cat litter)."]},
+{"type": "flip", "q": "Why does a positive toxoplasma IgM not prove recent infection, and what confirms it?",
+ "a": ["IgM can give false positives and can <b>persist for a year or more</b>.", "Confirm at a reference laboratory with <b>IgG avidity</b>."]},
+{"type": "flip", "q": "Why are IgA assays useful in congenital toxoplasmosis?",
+ "a": ["In the newborn they are <b>more sensitive than IgM</b>; maternal IgM and IgA do not cross the placenta, so they reflect the infant's own response. Repeat a positive result after about 10 days."]},
+{"type": "flip", "q": "What is the reference (gold standard) test for toxoplasma IgG?",
+ "a": ["The <b>Sabin–Feldman dye test</b>: live organisms are lysed by specific IgG with complement. A negative result practically rules out exposure."]},
+{"type": "grid", "q": "Classify each IgG avidity index (typical kit cutoffs).", "cols": ["Avidity"],
+ "rows": ["AI = 0.35", "AI = 0.55", "AI = 0.78"], "symbols": ["Low", "Borderline", "High"],
+ "answer": [["Low"], ["Borderline"], ["High"]],
+ "explain": ["AI = signal with urea ÷ signal without urea. <b>High avidity excludes infection in the previous 3–4 months</b> (very useful in the first trimester)."]},
+{"type": "sort", "q": "CMV serology: primary infection, reactivation or reinfection?",
+ "bins": ["Primary infection", "Reactivation", "Reinfection"],
+ "items": [{"t": "IgG seroconversion with transient IgM and low avidity", "b": 0}, {"t": "IgG rise in a seropositive person, usually no IgM", "b": 1}, {"t": "IgG rise with a different strain; unpredictable IgM", "b": 2}]},
+{"type": "flip", "q": "How is congenital CMV infection diagnosed after birth?",
+ "a": ["<b>PCR on saliva</b> (preferred) or urine <b>within the first 3 weeks</b> of life; confirm a positive saliva result on urine (breast milk contamination).", "Before birth: PCR on amniotic fluid (after 20 weeks and ≥ 6–8 weeks after maternal infection)."]},
+{"type": "flip", "q": "Which method is preferred to diagnose CMV in immunocompromised patients?",
+ "a": ["<b>Quantitative PCR (viral load)</b>: serology is unreliable in these patients."]},
+{"type": "flip", "q": "Through which receptor does EBV enter B cells, and what is the classic blood count?",
+ "a": ["<b>CD21</b> (CR2, the C3d receptor).", "Leukocytosis and lymphocytosis with <b>more than 10% reactive lymphocytes</b>."]},
+{"type": "flip", "q": "In whom is the heterophile (Monospot) test often falsely negative?",
+ "a": ["About 15% of patients, mainly <b>children under 10</b> (especially under 4) and <b>early in the illness</b>. EBV-specific serology is then indicated."]},
+{"type": "grid", "q": "Fill in the EBV serology pattern.", "cols": ["VCA IgM", "VCA IgG", "EBNA IgG", "Heterophile"], "symbols": ["+", "−"],
+ "variants": [
+  {"q": "Fill in the pattern of <b>acute (primary) EBV infection</b>.", "answer": [["+", "+", "−", "+"]], "explain": ["Anti-EBNA appears only in convalescence (after 1–3 months)."]},
+  {"q": "Fill in the pattern of <b>past EBV infection</b>.", "answer": [["−", "+", "+", "−"]], "explain": ["VCA IgG and EBNA IgG persist for life."]},
+  {"q": "Fill in the pattern of <b>no EBV infection</b> (susceptible).", "answer": [["−", "−", "−", "−"]], "explain": ["All markers are negative."]}]},
+{"type": "flip", "q": "In rubella, what does a stable IgG titer in paired samples mean? And a rising titer?",
+ "a": ["<b>Stable</b>: previous immunity (vaccine or infection), or the first sample was taken after the peak.", "<b>Rising</b>: recent primary infection, or a booster response (then IgM is usually absent). IgG avidity helps decide."]},
+{"type": "flip", "q": "What is the test of choice for acute hepatitis A?",
+ "a": ["<b>Anti-HAV IgM</b>, positive by the time symptoms begin and for 3–6 months.", "Total anti-HAV positive with negative IgM = past infection or vaccination."]},
+{"type": "flip", "q": "Give the rule of thumb: when is serology more useful than PCR?",
+ "a": ["When symptoms are caused by the <b>immune response</b> (e.g. hepatitis A), viremia is already falling: <b>serology</b> is better.", "When the virus itself causes symptoms or becomes chronic: <b>PCR and viral load</b> are better."]},
+{"type": "flip", "q": "How does the risk of chronic HBV depend on age at infection?",
+ "a": ["About <b>80–90%</b> of infants infected at birth, about <b>30%</b> of children infected before 6 years, and <b>less than 5%</b> of healthy adults."]},
+{"type": "flip", "q": "Which three markers make the CDC 2023 adult hepatitis B screening panel?",
+ "a": ["<b>HBsAg, anti-HBs and total anti-HBc</b>, once in a lifetime for all adults. Pregnant women: HBsAg in every pregnancy."]},
+{"type": "sort", "q": "Match each HBV marker to its meaning.",
+ "bins": ["First marker of infection", "Replication and high infectivity", "Acute infection and window period", "Recovery, immunity or vaccination"],
+ "items": [{"t": "HBsAg", "b": 0}, {"t": "HBeAg", "b": 1}, {"t": "Anti-HBc IgM", "b": 2}, {"t": "Anti-HBs", "b": 3}]},
+{"type": "grid", "q": "Fill in the hepatitis B panel.", "cols": ["HBsAg", "Total anti-HBc", "IgM anti-HBc", "Anti-HBs"], "symbols": ["+", "−"],
+ "variants": [
+  {"q": "Fill in the panel of <b>acute hepatitis B</b>.", "answer": [["+", "+", "+", "−"]], "explain": ["IgM anti-HBc marks acute infection."]},
+  {"q": "Fill in the panel of <b>chronic hepatitis B</b>.", "answer": [["+", "+", "−", "−"]], "explain": ["HBsAg persisting more than 6 months defines chronic infection."]},
+  {"q": "Fill in the panel of a person <b>immune after vaccination</b>.", "answer": [["−", "−", "−", "+"]], "explain": ["Anti-HBs is the only marker after vaccination (≥ 10 mIU/mL protective)."]},
+  {"q": "Fill in the panel of a person <b>immune after natural infection</b>.", "answer": [["−", "+", "−", "+"]], "explain": ["Total anti-HBc persists for decades after infection."]},
+  {"q": "Fill in the panel of a <b>susceptible</b> person (never infected, not vaccinated).", "answer": [["−", "−", "−", "−"]], "explain": ["Vaccination is needed."]}]},
+{"type": "flip", "q": "Only anti-HBc is positive (HBsAg and anti-HBs negative). What are the possibilities?",
+ "a": ["<b>Window period</b> of recovery, <b>distant past infection</b> with low anti-HBs, <b>false-positive</b> anti-HBc, or <b>occult HBV infection</b>."]},
+{"type": "flip", "q": "Why has HBV DNA replaced HBeAg to assess replication in chronic hepatitis B?",
+ "a": ["<b>Pre-core mutants</b>: HBeAg-negative patients can still replicate actively. Modern PCR detects about 10–20 IU/mL."]},
+{"type": "sort", "q": "Chronic hepatitis B or inactive HBsAg carrier?",
+ "bins": ["Chronic hepatitis B", "Inactive carrier"],
+ "items": [{"t": "HBV DNA above 20,000 IU/mL", "b": 0}, {"t": "HBV DNA below 2,000 IU/mL", "b": 1}, {"t": "Raised ALT/AST", "b": 0}, {"t": "Persistently normal ALT", "b": 1}, {"t": "HBeAg negative, anti-HBe positive", "b": 1}]},
+{"type": "sort", "q": "HDV co-infection or superinfection?",
+ "bins": ["Co-infection", "Superinfection"],
+ "items": [{"t": "IgM anti-HBc with anti-HDV", "b": 0}, {"t": "Usually resolves", "b": 0}, {"t": "IgM anti-HDV in a chronic HBV carrier", "b": 1}, {"t": "Often becomes chronic and progressive", "b": 1}],
+ "explain": ["Every HBsAg-positive person should be tested once for anti-HDV, then HDV RNA if positive."]},
+{"type": "order", "q": "Put the current hepatitis C testing algorithm in order.",
+ "steps": ["Anti-HCV screening immunoassay", "If reactive: HCV RNA on the same sample (reflex)", "RNA positive = current infection; RNA negative = past infection or false-positive antibody"]},
+{"type": "flip", "q": "Compare the risk of infection after a needlestick from an infected source: HBV, HCV and HIV.",
+ "a": ["<b>HBV</b>: up to 30% (the most transmissible); <b>HCV</b>: about 1.8%; <b>HIV</b>: about 0.3%."]},
+{"type": "flip", "q": "What proportion of hepatitis C infections become chronic?",
+ "a": ["About <b>60–80%</b>; up to 20% of chronic patients develop cirrhosis after 20–30 years."]},
+{"type": "sort", "q": "Which HEV genotypes fit each description?",
+ "bins": ["Genotypes 1 and 2", "Genotypes 3 and 4"],
+ "items": [{"t": "Water-borne epidemics in developing countries", "b": 0}, {"t": "Zoonosis from undercooked pork", "b": 1}, {"t": "Fulminant hepatitis in pregnant women", "b": 0}, {"t": "Chronic infection in immunocompromised patients", "b": 1}]},
+{"type": "sort", "q": "Match each HIV gene to its products.",
+ "bins": ["env", "gag", "pol"],
+ "items": [{"t": "gp120 and gp41", "b": 0}, {"t": "p24", "b": 1}, {"t": "Reverse transcriptase", "b": 2}, {"t": "p17", "b": 1}, {"t": "Integrase p31", "b": 2}]},
+{"type": "order", "q": "Order the HIV tests by window period, shortest first.",
+ "steps": ["NAT (about 10 days)", "4th-generation Ag/Ab (about 2–3 weeks)", "Antibody-only test (about 3–4 weeks)"]},
+{"type": "order", "q": "Put the CDC laboratory HIV diagnostic algorithm in order.",
+ "steps": ["4th-generation HIV-1/2 Ag/Ab immunoassay", "If reactive: HIV-1/HIV-2 antibody differentiation assay", "If differentiation is negative or indeterminate: HIV-1 RNA (NAT)"]},
+{"type": "flip", "q": "How is HIV infection diagnosed in infants of HIV-positive mothers, and why?",
+ "a": ["By <b>HIV DNA or RNA PCR</b>: maternal antibodies persist <b>up to 18 months</b>, so antibody tests are misleading."]},
+{"type": "grid", "q": "At what induration is the tuberculin skin test positive for each person?", "cols": ["Positive if"],
+ "rows": ["Person with HIV infection", "Close contact of infectious TB", "Born in a high-TB country", "Nursing home resident", "Child under 4 years", "No risk factors"],
+ "symbols": ["≥ 5 mm", "≥ 10 mm", "≥ 15 mm"],
+ "answer": [["≥ 5 mm"], ["≥ 5 mm"], ["≥ 10 mm"], ["≥ 10 mm"], ["≥ 10 mm"], ["≥ 15 mm"]],
+ "explain": ["Read induration (not redness) at 48–72 hours."]},
+{"type": "sort", "q": "Tuberculin skin test (TST) or IGRA?",
+ "bins": ["TST", "IGRA", "Both"],
+ "items": [{"t": "False positive after BCG", "b": 0}, {"t": "Uses ESAT-6 and CFP-10", "b": 1}, {"t": "Needs a return visit at 48–72 hours", "b": 0}, {"t": "Cannot distinguish latent from active TB", "b": 2}, {"t": "No boosting on repeat testing", "b": 1}]},
+{"type": "sort", "q": "Which H. pylori test fits each use?",
+ "bins": ["Urea breath test or stool antigen", "IgG serology"],
+ "items": [{"t": "Confirming eradication (≥ 4 weeks after treatment)", "b": 0}, {"t": "Bleeding ulcer or recent PPIs, when the others may be falsely negative", "b": 1}, {"t": "Preferred test for active infection", "b": 0}, {"t": "Stays positive after cure", "b": 1}]},
+{"type": "grid", "q": "Complete the Weil–Felix reaction pattern.", "cols": ["OX19", "OX2", "OXK"],
+ "rows": ["Epidemic typhus", "Scrub typhus", "Q fever"], "symbols": ["4+", "1+", "0"],
+ "answer": [["4+", "1+", "0"], ["0", "0", "4+"], ["0", "0", "0"]],
+ "explain": ["The test is non-specific and largely replaced by IFA and PCR."]},
+{"type": "flip", "q": "How is the Widal test interpreted, and what are its limitations?",
+ "a": ["A <b>fourfold rise</b> in O agglutinins, or a single O titer of <b>1:80</b> or more (1:160 or more in endemic areas). Antibodies appear from the 2nd week.", "Culture-proven typhoid may be Widal-negative; positives occur in healthy people in endemic areas. <b>Blood culture</b> is best in weeks 1–2."]},
+{"type": "flip", "q": "When is the Brucella Coombs test used, and what is the diagnostic SAT titer?",
+ "a": ["When <b>chronic brucellosis</b> is suspected but agglutination tests are negative: it detects <b>non-agglutinating IgG</b>.", "Significant: SAT <b>≥ 1:160</b>, or a fourfold rise in samples 15–30 days apart."]}
+]},{
+"key": "s15", "title": "Chapter 15: Serology of Autoimmunity", "short": "Ch 15 · Autoimmunity",
+"cards": [
+{"type": "sort", "q": "Organ-specific or systemic (non-organ-specific) autoimmune disease?",
+ "bins": ["Organ-specific", "Systemic"],
+ "items": [{"t": "Type 1 diabetes", "b": 0}, {"t": "Hashimoto thyroiditis", "b": 0}, {"t": "Myasthenia gravis", "b": 0}, {"t": "Goodpasture syndrome", "b": 0},
+  {"t": "Systemic lupus erythematosus", "b": 1}, {"t": "Rheumatoid arthritis", "b": 1}, {"t": "Systemic sclerosis", "b": 1}, {"t": "Antiphospholipid syndrome", "b": 1}]},
+{"type": "sort", "q": "Match each autoantibody to its disease.",
+ "bins": ["SLE", "Primary biliary cholangitis", "Granulomatosis with polyangiitis", "Diffuse systemic sclerosis", "Mixed connective tissue disease"],
+ "items": [{"t": "Anti-dsDNA", "b": 0}, {"t": "Anti-Sm", "b": 0}, {"t": "Antimitochondrial (anti-M2)", "b": 1}, {"t": "c-ANCA (anti-PR3)", "b": 2}, {"t": "Anti-Scl-70", "b": 3}, {"t": "Anti-U1 RNP (high titer)", "b": 4}]},
+{"type": "sort", "q": "Match each autoantibody to its disease.",
+ "bins": ["CREST (limited systemic sclerosis)", "Drug-induced lupus", "Autoimmune hepatitis type 2", "Autoimmune hepatitis type 1", "Pernicious anemia"],
+ "items": [{"t": "Anti-centromere", "b": 0}, {"t": "Anti-histone", "b": 1}, {"t": "Anti-LKM-1", "b": 2}, {"t": "Anti-smooth muscle (anti-actin)", "b": 3}, {"t": "Anti-intrinsic factor", "b": 4}]},
+{"type": "sort", "q": "c-ANCA, p-ANCA or atypical ANCA?",
+ "bins": ["c-ANCA (PR3)", "p-ANCA (MPO)", "Atypical ANCA"],
+ "items": [{"t": "Granulomatosis with polyangiitis", "b": 0}, {"t": "Microscopic polyangiitis", "b": 1}, {"t": "EGPA (Churg–Strauss)", "b": 1}, {"t": "Ulcerative colitis", "b": 2}],
+ "explain": ["ANCA is screened by indirect immunofluorescence on ethanol-fixed neutrophils and confirmed by ELISA."]},
+{"type": "flip", "q": "Which antibody to SLE is very specific but has low sensitivity? Which follows disease activity?",
+ "a": ["<b>Anti-Sm</b>: very specific, found in only 10–30%.", "<b>Anti-dsDNA</b>: high titers with low C3/C4 follow activity, especially <b>lupus nephritis</b>."]},
+{"type": "flip", "q": "What is the main use of a negative ANA test?",
+ "a": ["Its absence makes <b>SLE very unlikely</b> (unless the patient is immunosuppressed). ANA are positive in more than 95% of untreated SLE but are not specific.", "The 2019 EULAR/ACR criteria require ANA ≥ 1:80 on HEp-2 cells as the entry criterion."]},
+{"type": "flip", "q": "What is the reference method for ANA, and how are patterns named?",
+ "a": ["<b>Indirect immunofluorescence on HEp-2 cells</b> (screening titer 1:80 or 1:160).", "Patterns are named by the international consensus (<b>ICAP \"AC\" codes</b>): homogeneous, speckled, nucleolar, centromere…"]},
+{"type": "flip", "q": "Why may maternal anti-Ro (SS-A) harm the baby?",
+ "a": ["It can cause <b>neonatal lupus</b> and <b>congenital heart block</b>. Anti-Ro and anti-La are found in most patients with Sjögren syndrome (and in SLE)."]},
+{"type": "flip", "q": "The lupus anticoagulant prolongs the APTT. Does it cause bleeding?",
+ "a": ["<b>No.</b> It prolongs phospholipid-dependent tests (APTT, dRVVT) in vitro, but in vivo it is associated with <b>thrombosis</b>. Antiphospholipid antibodies also cause false-positive VDRL/RPR."]},
+{"type": "flip", "q": "Give the laboratory criteria for antiphospholipid syndrome (Sydney 2006).",
+ "a": ["Lupus anticoagulant, anticardiolipin (IgG/IgM, medium or high titer) or anti-β2-glycoprotein I (IgG/IgM).", "Each present on <b>two or more occasions at least 12 weeks apart</b>, with at least one clinical criterion (thrombosis or pregnancy morbidity)."]},
+{"type": "sort", "q": "Rheumatoid factor or anti-CCP?",
+ "bins": ["Rheumatoid factor", "Anti-CCP"],
+ "items": [{"t": "IgM antibody against the Fc of IgG", "b": 0}, {"t": "About 95% specific for RA", "b": 1}, {"t": "Also in Sjögren syndrome, SLE and 5% of healthy people", "b": 0},
+  {"t": "May appear years before RA and predicts erosive disease", "b": 1}, {"t": "Latex agglutination and Waaler–Rose test", "b": 0}]},
+{"type": "flip", "q": "Which antibodies are found in Hashimoto thyroiditis, and what does anti-TPO predict?",
+ "a": ["<b>Anti-TPO</b> (about 90%) and <b>anti-thyroglobulin</b>.", "A positive anti-TPO with a high TSH means a <b>risk of hypothyroidism</b>. Their absence argues strongly against autoimmune thyroiditis."]},
+{"type": "flip", "q": "Give the laboratory findings of Graves' disease.",
+ "a": ["Raised free T4/T3, <b>suppressed TSH</b>, positive <b>TSH receptor antibodies</b> (stimulating, TSI), and diffusely increased radioiodine uptake."]},
+{"type": "sort", "q": "Type 1 diabetes autoantibodies: match each to its feature.",
+ "bins": ["Anti-insulin (IAA)", "Anti-GAD65", "Anti-IA-2", "Anti-ZnT8"],
+ "items": [{"t": "Not useful after insulin treatment starts", "b": 0}, {"t": "Most common, persists longest", "b": 1}, {"t": "About 75% at diagnosis, then decreases", "b": 2}, {"t": "Most recently described", "b": 3}]},
+{"type": "flip", "q": "What is the first-line test for celiac disease, and why is total IgA measured with it?",
+ "a": ["<b>Anti-tissue transglutaminase IgA (tTG-IgA)</b>, about 95% sensitive, with <b>total IgA</b>.", "Selective IgA deficiency (2–3% of celiac patients) gives false negatives; then use IgG tests (tTG-IgG, DGP-IgG)."]},
+{"type": "sort", "q": "Celiac disease tests: which fits each statement?",
+ "bins": ["tTG-IgA", "Anti-endomysial IgA", "DGP IgG", "HLA-DQ2/DQ8"],
+ "items": [{"t": "Most sensitive; recommended first test", "b": 0}, {"t": "Most specific (about 99%), by immunofluorescence", "b": 1}, {"t": "Useful in children under 2 and IgA-deficient patients", "b": 2}, {"t": "Absence makes celiac disease extremely unlikely", "b": 3}]},
+{"type": "sort", "q": "Which IBD marker points to which disease?",
+ "bins": ["Crohn's disease", "Ulcerative colitis", "Both (inflammation marker)"],
+ "items": [{"t": "ASCA", "b": 0}, {"t": "Atypical p-ANCA", "b": 1}, {"t": "Fecal calprotectin", "b": 2}]},
+{"type": "flip", "q": "Which laboratory test supports a diagnosis of multiple sclerosis, and which infection is the strongest environmental risk?",
+ "a": ["<b>Oligoclonal IgG bands in the CSF</b> (absent in serum). Anti-myelin antibodies are not used for diagnosis.", "<b>Epstein–Barr virus</b> infection (Bjornevik et al., 2022)."]},
+{"type": "flip", "q": "Which antibody is used for myasthenia gravis, and what if it is negative?",
+ "a": ["<b>Acetylcholine receptor antibody</b> (about 85% of generalized cases).", "<b>Anti-MuSK</b> in some negative cases."]},
+{"type": "flip", "q": "Which antibody is associated with the anti-synthetase syndrome in inflammatory myopathies?",
+ "a": ["<b>Anti-Jo-1</b>, with raised creatine kinase and proximal muscle weakness."]},
+{"type": "flip", "q": "What does the mnemonic SOAP BRAIN MD stand for in SLE?",
+ "a": ["<b>S</b>erositis, <b>O</b>ral ulcers, <b>A</b>rthritis, <b>P</b>hotosensitivity, <b>B</b>lood disorders, <b>R</b>enal disease, <b>A</b>NA, <b>I</b>mmunologic tests, <b>N</b>eurologic disorders, <b>M</b>alar rash, <b>D</b>iscoid rash."]},
+{"type": "flip", "q": "Why must an ANA be done in a patient with Raynaud phenomenon?",
+ "a": ["To look for an underlying <b>connective tissue disease</b> (SLE, Sjögren, scleroderma). If positive, test specific antibodies."]},
+{"type": "flip", "q": "What is familial Mediterranean fever, and how is it diagnosed?",
+ "a": ["An <b>autosomal recessive autoinflammatory</b> disease (<i>MEFV</i> gene), common in Eastern Mediterranean populations including Lebanese: recurrent fever with peritonitis, arthritis or pleuritis.", "Diagnosis is mainly <b>clinical</b>, with high CRP and SAA in attacks; <i>MEFV</i> mutations (M694V, M680I, V726A, E148Q) support it. Main complication: AA amyloidosis."]}
+]},{
+"key": "s16", "title": "Chapter 16: Tumor Markers", "short": "Ch 16 · Tumor markers",
+"cards": [
+{"type": "flip", "q": "Describe the ideal tumor marker.",
+ "a": ["Made only by tumor cells (<b>100% specific</b>), detectable in early disease (<b>100% sensitive</b>), proportional to tumor mass, organ-specific, easy and cheap. No current marker fits this model."]},
+{"type": "flip", "q": "Why can most tumor markers not be used to screen healthy people?",
+ "a": ["They are also raised in <b>benign conditions</b>, are often normal in <b>early cancer</b>, and many are not organ-specific: many false positives. PSA (with shared decision-making) is the possible exception."]},
+{"type": "flip", "q": "What is the most useful application of tumor markers?",
+ "a": ["<b>Monitoring treatment and detecting recurrence</b>: a marked fall after effective treatment, and a rise often before clinical signs.", "Use the <b>same laboratory and method</b> for serial results."]},
+{"type": "sort", "q": "Match each marker to its main cancer.",
+ "bins": ["Hepatocellular carcinoma / germ cell tumors", "Epithelial ovarian cancer", "Pancreatic cancer", "Colorectal cancer follow-up", "Metastatic breast cancer", "Medullary thyroid carcinoma"],
+ "items": [{"t": "AFP", "b": 0}, {"t": "CA 125", "b": 1}, {"t": "CA 19-9", "b": 2}, {"t": "CEA", "b": 3}, {"t": "CA 15-3", "b": 4}, {"t": "Calcitonin", "b": 5}]},
+{"type": "sort", "q": "Which benign condition raises which marker?",
+ "bins": ["CEA", "AFP", "CA 125", "PSA"],
+ "items": [{"t": "Smoking", "b": 0}, {"t": "Pregnancy and regenerating liver", "b": 1}, {"t": "Endometriosis and menstruation", "b": 2}, {"t": "Prostatitis and benign hyperplasia", "b": 3}]},
+{"type": "flip", "q": "Which markers are measured for a suspected testicular germ cell tumor? Which tumor never makes AFP?",
+ "a": ["<b>AFP, β-hCG and LDH</b>.", "<b>Pure seminoma</b> does not produce AFP (it may produce β-hCG)."]},
+{"type": "flip", "q": "Why can some people with pancreatic cancer have a normal CA 19-9?",
+ "a": ["CA 19-9 is a <b>sialylated Le<sup>a</sup></b> antigen. <b>Le(a−b−)</b> people (5–10%) cannot make it: false negatives. It is also raised in cholestasis and pancreatitis."]},
+{"type": "flip", "q": "What is the ROMA index?",
+ "a": ["A combination of <b>CA 125 and HE4</b> to estimate the risk of malignancy of a <b>pelvic mass</b>."]},
+{"type": "flip", "q": "What CEA level is normal in smokers and non-smokers, and how is CEA used after colorectal surgery?",
+ "a": ["Upper limit about <b>5 ng/mL in smokers</b> versus 2.5–3 ng/mL in non-smokers.", "Serial CEA: a persistent rise means residual disease; a rise after normalizing suggests <b>recurrence</b>."]},
+{"type": "flip", "q": "When is the free/total PSA ratio useful, and what suggests cancer?",
+ "a": ["When total PSA is moderately raised (<b>4–10 ng/mL</b>).", "A <b>low free/total ratio</b> suggests cancer rather than benign hyperplasia. After radical prostatectomy PSA should be undetectable."]},
+{"type": "flip", "q": "In which diseases is β2-microglobulin raised, and why is it useful in myeloma?",
+ "a": ["Multiple myeloma, CLL and some lymphomas; also kidney disease (filtered by the kidney).", "It predicts prognosis: part of the myeloma <b>International Staging System</b> (with albumin)."]},
+{"type": "sort", "q": "Match each marker to its tumor.",
+ "bins": ["Pheochromocytoma", "Neuroendocrine tumors", "Hepatocellular carcinoma", "Non-small cell lung cancer"],
+ "items": [{"t": "Plasma or urine metanephrines", "b": 0}, {"t": "Chromogranin A", "b": 1}, {"t": "PIVKA-II (DCP)", "b": 2}, {"t": "Cyfra 21-1", "b": 3}]},
+{"type": "flip", "q": "What is the standard non-invasive screening test for colorectal cancer?",
+ "a": ["The <b>fecal immunochemical test (FIT)</b> for blood (not CEA)."]}
+]}]};
+const KEY = 'studycards-' + DECK.id;
+let status = {};
+try { status = JSON.parse(localStorage.getItem(KEY) || '{}') || {} } catch (e) { status = {} }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(status)) } catch (e) {} }
+const app = document.getElementById('app');
+const esc = s => String(s);
+const plain = s => String(s).replace(/<[^>]+>/g, '');
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] } return a }
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const rnd = (lo, hi, step) => { const n = Math.round((hi - lo) / step); return +(lo + step * Math.floor(Math.random() * (n + 1))).toFixed(4) };
+const fmt = (x, d) => (+x).toFixed(d);
+
+// every card gets a stable id: chapter key + position
+const ALL = [];
+DECK.chapters.forEach(ch => ch.cards.forEach((c, i) => { c._id = ch.key + '.' + (i + 1); c._ch = ch; ALL.push(c) }));
+
+let list = [], idx = 0, mode = '';
+
+function home() {
+  mode = 'home';
+  const again = ALL.filter(c => status[c._id] === 'again').length;
+  const done = ALL.filter(c => status[c._id] === 'done').length;
+  app.innerHTML = '<a class="eyebrow" href="../" style="text-decoration:none">← All books</a><header><div class="eyebrow">' + DECK.eyebrow + '</div><h1>' + DECK.title + '</h1><p class="sub">' + DECK.sub + '</p></header>' +
+    '<div class="toolbar"><button class="btn primary" id="mixed">Mixed review (all chapters)</button>' +
+    '<button class="btn warn" id="again"' + (again ? '' : ' disabled') + '>Review my “Again” cards (' + again + ')</button></div>' +
+    '<p class="sub">' + done + ' of ' + ALL.length + ' cards marked “Got it”.</p>' +
+    '<div class="chapters">' + DECK.chapters.map((ch, k) => {
+      const n = ch.cards.length, g = ch.cards.filter(c => status[c._id] === 'done').length, a = ch.cards.filter(c => status[c._id] === 'again').length;
+      return '<button class="chap-btn" data-k="' + k + '"><span class="chap-title">' + ch.title + '</span><span class="chap-count">' + g + '/' + n + '</span>' +
+        '<span class="bar"><i class="g" style="width:' + (100 * g / n) + '%"></i><i class="a" style="width:' + (100 * a / n) + '%"></i></span></button>';
+    }).join('') + '</div>' +
+    '<div class="toolbar"><button class="btn" id="reset">Clear my progress</button></div><div id="confirm"></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  app.querySelectorAll('.chap-btn').forEach(b => b.onclick = () => start(DECK.chapters[+b.dataset.k].cards, DECK.chapters[+b.dataset.k].title));
+  document.getElementById('mixed').onclick = () => start(shuffle(ALL).slice(0, 30), 'Mixed review · 30 random cards');
+  document.getElementById('again').onclick = () => start(ALL.filter(c => status[c._id] === 'again'), 'Cards marked “Again”');
+  document.getElementById('reset').onclick = () => {
+    document.getElementById('confirm').innerHTML = '<div class="feedback no"><p class="ink">Clear all your progress for this book? This cannot be undone.</p><div class="row"><button class="btn warn" id="yes">Clear progress</button><button class="btn" id="no">Keep it</button></div></div>';
+    document.getElementById('yes').onclick = () => { status = {}; save(); home() };
+    document.getElementById('no').onclick = () => document.getElementById('confirm').innerHTML = '';
+  };
+  window.scrollTo(0, 0);
+}
+
+let setTitle = '';
+function start(cards, title) { if (!cards.length) return; list = cards; idx = 0; setTitle = title; mode = 'study'; study() }
+
+function study() {
+  app.innerHTML = '<div class="topline"><button class="btn" id="back">← Chapters</button><h2>' + setTitle + '</h2></div>' +
+    '<div class="strip" id="strip"></div><section class="card" id="card" aria-live="polite"></section>' +
+    '<div class="nav"><button class="btn" id="prev">← Previous</button><button class="btn" id="next">Next →</button></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  document.getElementById('back').onclick = home;
+  document.getElementById('prev').onclick = () => go(idx - 1);
+  document.getElementById('next').onclick = () => go(idx + 1);
+  go(0);
+}
+function drawStrip() {
+  const strip = document.getElementById('strip'); if (!strip) return;
+  strip.innerHTML = list.map((c, i) => '<button class="dot' + (status[c._id] === 'done' ? ' done' : status[c._id] === 'again' ? ' again' : '') +
+    '" data-i="' + i + '" aria-label="Card ' + (i + 1) + '" aria-current="' + (i === idx) + '">' + (i + 1) + '</button>').join('') +
+    '<span class="score">' + list.filter(c => status[c._id] === 'done').length + ' / ' + list.length + ' got it</span>';
+  strip.querySelectorAll('.dot').forEach(b => b.onclick = () => go(+b.dataset.i));
+}
+function go(i) {
+  idx = Math.max(0, Math.min(list.length - 1, i));
+  const c = list[idx], el = document.getElementById('card');
+  (R[c.type] || R.flip)(c, el);
+  drawStrip();
+  document.getElementById('prev').disabled = idx === 0;
+  document.getElementById('next').disabled = idx === list.length - 1;
+}
+document.addEventListener('keydown', e => {
+  if (mode !== 'study' || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') go(idx + 1); if (e.key === 'ArrowLeft') go(idx - 1);
+});
+
+const LABEL = { flip: 'Flip', grid: 'Fill the grid', panel: 'Rule out', calc: 'Calculate', sort: 'Sort', order: 'Put in order' };
+function head(c) { return '<div class="meta"><span class="chip">' + LABEL[c.type] + '</span><span class="chap">' + c._ch.short + '</span></div>' }
+function rate(box) {
+  box.insertAdjacentHTML('beforeend', '<div class="row"><button class="btn good" data-r="done">Got it</button><button class="btn warn" data-r="again">Again</button></div>');
+  box.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { status[list[idx]._id] = b.dataset.r; save(); if (idx < list.length - 1) go(idx + 1); else drawStrip() });
+}
+function paras(a) { return (Array.isArray(a) ? a : [a]).map(p => '<p>' + p + '</p>').join('') }
+function fb(el, ok, html) { const f = el.querySelector('.fb'); f.innerHTML = '<div class="feedback ' + (ok ? 'ok' : 'no') + '">' + html + '</div>'; if (ok !== null) rate(f) }
+
+const R = {
+  flip(c, el) {
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Answer in your head, then flip the card.</p><div class="row"><button class="btn primary" id="flip">Show answer</button></div>';
+    el.querySelector('#flip').onclick = () => {
+      el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><div class="answer">' + paras(c.a) + '</div><div class="fb"></div>';
+      rate(el.querySelector('.fb'));
+    };
+  },
+  grid(c, el) {
+    const v = c.variants ? pick(c.variants) : c;
+    const sym = c.symbols || ['+', '0'];
+    const rows = v.answer.length, cols = c.cols.length;
+    const state = v.answer.map((r, i) => r.map((x, j) => (v.given && v.given[i] && v.given[i][j] != null) ? null : ''));
+    let h = head(c) + '<p class="q">' + (v.q || c.q) + '</p><p class="hint">' + (c.hint || 'Tap each empty cell to cycle through the possible results, then check.') + '</p>' +
+      '<div class="legend">Tap to cycle: ' + sym.map(s => '<span>' + s + '</span>').join('') + (c.legend ? ' · ' + c.legend : '') + '</div>' +
+      '<div class="scroll"><table class="grid"><thead>';
+    if (c.groups) h += '<tr>' + (c.rows ? '<th></th>' : '') + c.groups.map(g => '<th colspan="' + g[1] + '">' + g[0] + '</th>').join('') + '</tr>';
+    h += '<tr>' + (c.rows || v.rows ? '<th></th>' : '') + c.cols.map(x => '<th>' + x + '</th>').join('') + '</tr></thead><tbody>';
+    const rlab = v.rows || c.rows;
+    for (let i = 0; i < rows; i++) {
+      h += '<tr>' + (rlab ? '<th class="rowh">' + rlab[i] + '</th>' : '');
+      for (let j = 0; j < cols; j++) {
+        const g = v.given && v.given[i] && v.given[i][j] != null ? v.given[i][j] : null;
+        h += g !== null ? '<td class="given">' + g + '</td>' : '<td><button class="tap" data-i="' + i + '" data-j="' + j + '" aria-label="' + plain((rlab ? rlab[i] + ', ' : '') + c.cols[j]) + '">·</button></td>';
+      }
+      h += '</tr>';
+    }
+    h += '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check</button>' + (c.variants ? '<button class="btn" id="nw">New case</button>' : '') + '</div><div class="fb"></div>';
+    el.innerHTML = h;
+    el.querySelectorAll('.tap').forEach(b => b.onclick = () => {
+      const i = +b.dataset.i, j = +b.dataset.j; const k = sym.indexOf(state[i][j]);
+      state[i][j] = sym[(k + 1) % sym.length]; b.textContent = state[i][j]; b.classList.add('set'); b.classList.remove('right', 'wrong');
+    });
+    if (c.variants) el.querySelector('#nw').onclick = () => R.grid(c, el);
+    el.querySelector('#chk').onclick = () => {
+      if (state.some(r => r.includes(''))) { fb(el, null, '<p>Fill every empty cell first.</p>'); return }
+      let ok = true;
+      el.querySelectorAll('.tap').forEach(b => { const i = +b.dataset.i, j = +b.dataset.j; const r = state[i][j] === v.answer[i][j]; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Not quite: the red cells are wrong.') + '</b></p>' + paras(v.explain || c.explain));
+    };
+  },
+  panel(c, el) {
+    const out = new Set(), keep = [].concat(c.keep);
+    let h = head(c) + '<p class="q">' + c.q + '</p><p class="hint">' + (c.hint || 'Tap an antigen to cross it out when it is present on a cell that did <b>not</b> react (0). Prefer homozygous cells. Then check.') + '</p>' +
+      '<div class="scroll"><table class="grid pt"><thead><tr><th>Cell</th>' +
+      c.antigens.map((a, i) => '<th class="ag" data-a="' + i + '" tabindex="0" role="button" aria-pressed="false">' + a + '</th>').join('') + '<th>' + (c.phase || 'IAT') + '</th></tr></thead><tbody>' +
+      c.cells.map((r, k) => '<tr><th class="rowh">' + (k + 1) + '</th>' + r.c.split('').map((x, i) => '<td data-a="' + i + '">' + (x === '+' ? '+' : '0') + '</td>').join('') + '<td class="rx">' + r.rx + '</td></tr>').join('') +
+      '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check my rule-outs</button><button class="btn" id="clr">Clear</button></div><div class="fb"></div>';
+    el.innerHTML = h;
+    const paint = () => {
+      el.querySelectorAll('th.ag').forEach(x => { const on = out.has(+x.dataset.a); x.classList.toggle('out', on); x.setAttribute('aria-pressed', on) });
+      el.querySelectorAll('.pt td[data-a]').forEach(d => d.classList.toggle('out', out.has(+d.dataset.a)));
+    };
+    el.querySelectorAll('th.ag').forEach(x => { const t = () => { const a = +x.dataset.a; out.has(a) ? out.delete(a) : out.add(a); paint() };
+      x.onclick = t; x.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t() } } });
+    el.querySelector('#clr').onclick = () => { out.clear(); paint(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      const wrong = keep.filter(k => out.has(k));
+      const left = c.antigens.map((_, i) => i).filter(i => !out.has(i) && !keep.includes(i));
+      if (wrong.length) fb(el, null, '<p><b>' + wrong.map(k => plain(c.antigens[k])).join(', ') + ' cannot be ruled out.</b> Check again: is it present on any cell that did not react?</p>');
+      else if (left.length) fb(el, null, '<p><b>Keep going.</b> Still not ruled out: ' + left.map(i => plain(c.antigens[i])).join(', ') + '.</p><p>Cross out every antigen carried by a non-reacting cell.</p>');
+      else { keep.forEach(k => el.querySelector('th.ag[data-a="' + k + '"]').classList.add('keep')); fb(el, true, paras(c.explain)) }
+    };
+  },
+  calc(c, el) {
+    const k = CALC[c.kind]();
+    el.innerHTML = head(c) + '<p class="q">' + k.q + '</p><div class="facts">' + k.facts.map(f => '<span>' + f + '</span>').join('') + '</div>' +
+      '<div class="calc"><label for="ans">' + k.label + '</label><input id="ans" type="text" inputmode="decimal" autocomplete="off">' + (k.unit ? '<span>' + k.unit + '</span>' : '') +
+      '<button class="btn primary" id="chk">Check</button><button class="btn" id="nw">New case</button></div><div class="fb"></div>';
+    el.querySelector('#nw').onclick = () => R.calc(c, el);
+    const inp = el.querySelector('#ans'); inp.onkeydown = e => { if (e.key === 'Enter') el.querySelector('#chk').click() };
+    el.querySelector('#chk').onclick = () => {
+      const v = parseFloat(inp.value.replace(',', '.'));
+      if (isNaN(v)) { fb(el, null, '<p>Type a number first.</p>'); return }
+      const ok = Math.abs(v - k.answer) <= k.tol;
+      fb(el, ok, '<p><b>' + (ok ? 'Correct: ' : 'The answer is ') + k.show + '</b></p><ol class="steps">' + k.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>' + (k.note ? '<p>' + k.note + '</p>' : ''));
+    };
+  },
+  sort(c, el) {
+    const items = shuffle(c.items), st = items.map(() => -1);
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap each item to move it through the groups, then check.</p>' +
+      '<div class="legend">Groups: ' + c.bins.map(b => '<span>' + b + '</span>').join('') + '</div><div class="items">' +
+      items.map((it, i) => '<button class="item" data-i="' + i + '"><span>' + it.t + '</span><span class="tag">choose</span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i; st[i] = (st[i] + 1) % c.bins.length;
+      const t = b.querySelector('.tag'); t.textContent = plain(c.bins[st[i]]); t.classList.add('set'); b.classList.remove('right', 'wrong') });
+    el.querySelector('#chk').onclick = () => {
+      if (st.includes(-1)) { fb(el, null, '<p>Place every item in a group first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = st[i] === items[i].b; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Some items are in the wrong group (red).') + '</b></p>' + (ok ? '' : '<ul>' + items.filter((it, i) => st[i] !== it.b).map(it => '<li>' + it.t + ' → ' + c.bins[it.b] + '</li>').join('') + '</ul>') + (c.explain ? paras(c.explain) : ''));
+    };
+  },
+  order(c, el) {
+    const shown = shuffle(c.steps.map((s, i) => ({ s, i }))); let seq = [];
+    const draw = () => {
+      el.querySelectorAll('.item').forEach(b => { const p = seq.indexOf(+b.dataset.i); b.classList.toggle('picked', p >= 0); b.querySelector('.num').textContent = p >= 0 ? p + 1 : '' });
+    };
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap the steps in the right order. Tap a numbered step again to remove it.</p><div class="items">' +
+      shown.map(x => '<button class="item" data-i="' + x.i + '"><span>' + x.s + '</span><span class="num"></span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button><button class="btn" id="clr">Start again</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i, p = seq.indexOf(i); if (p >= 0) seq.splice(p, 1); else seq.push(i);
+      el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw() });
+    el.querySelector('#clr').onclick = () => { seq = []; el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      if (seq.length < c.steps.length) { fb(el, null, '<p>Number every step first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = seq.indexOf(i) === i; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct order.' : 'Not quite. The right order is:') + '</b></p>' + (ok ? '' : '<ol class="steps">' + c.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>') + (c.explain ? paras(c.explain) : ''));
+    };
+  }
+};
+
+const CALC = {
+  rhig() {
+    const kb = rnd(0.3, 3.0, 0.1), fetal = kb * 50, raw = fetal / 30, w = Math.floor(raw), d = raw - w, v = (d >= 0.5 ? w + 1 : w) + 1;
+    return { q: 'A D-negative mother delivers a D-positive baby. How many 300 µg vials of RhIG does she need?',
+      facts: ['Kleihauer–Betke: ' + fmt(kb, 1) + '% fetal cells', 'Maternal blood volume: 5000 mL'], label: 'Vials:', unit: '', answer: v, tol: 0, show: v + ' vials.',
+      steps: ['Fetal blood = ' + fmt(kb, 1) + '% × 5000 mL = ' + fmt(fetal, 0) + ' mL', fmt(fetal, 0) + ' ÷ 30 = ' + fmt(raw, 2), 'Decimal ' + (d >= 0.5 ? '≥ 0.5: round up to ' + (w + 1) : '< 0.5: round down to ' + w), 'Add one vial: <b>' + v + '</b>'] };
+  },
+  hw() {
+    const negPct = pick([9, 16, 25, 36, 49, 64, 4, 1]), q = Math.sqrt(negPct / 100), p = 1 - q, het = 2 * p * q * 100;
+    return { q: 'In a population, ' + (100 - negPct) + '% of people are antigen-positive and ' + negPct + '% are antigen-negative (homozygous for the silent/recessive allele). What percentage are heterozygous?',
+      facts: ['Hardy–Weinberg: p² + 2pq + q² = 1', 'Antigen-negative = q² = ' + (negPct / 100)], label: 'Heterozygous:', unit: '%', answer: het, tol: 0.6, show: fmt(het, 0) + '%.',
+      steps: ['q² = ' + (negPct / 100) + ' → q = ' + fmt(q, 2), 'p = 1 − q = ' + fmt(p, 2), '2pq = 2 × ' + fmt(p, 2) + ' × ' + fmt(q, 2) + ' = ' + fmt(het / 100, 2) + ' → <b>' + fmt(het, 0) + '%</b>'] };
+  },
+  antneg() {
+    const ab = [['anti-Fy<sup>a</sup>', 33], ['anti-S', 50], ['anti-E', 70], ['anti-K', 91], ['anti-c', 20], ['anti-Jk<sup>a</sup>', 23]];
+    const a = shuffle(ab).slice(0, 2), units = pick([2, 3, 4]), f = a[0][1] / 100 * a[1][1] / 100, n = units / f;
+    return { q: 'A patient has ' + a[0][0] + ' and ' + a[1][0] + '. The physician requests ' + units + ' units. About how many units must be screened?',
+      facts: ['Compatible (antigen-negative) donors: ' + plain(a[0][0]).replace('anti-', '') + '-negative ≈ ' + a[0][1] + '%; ' + plain(a[1][0]).replace('anti-', '') + '-negative ≈ ' + a[1][1] + '%'], label: 'Units to screen:', unit: '',
+      answer: n, tol: Math.max(1, n * 0.06), show: 'about ' + Math.round(n) + ' units.',
+      steps: ['Compatible fraction = ' + (a[0][1] / 100) + ' × ' + (a[1][1] / 100) + ' = ' + fmt(f, 3), units + ' ÷ ' + fmt(f, 3) + ' = ' + fmt(n, 1) + ' → about <b>' + Math.round(n) + ' units</b>'] };
+  },
+  cci() {
+    const pre = rnd(5, 15, 1) * 1000, inc = rnd(5, 40, 1) * 1000, post = pre + inc, bsa = rnd(1.5, 2.1, 0.1), dose = rnd(3, 4.5, 0.5), cci = inc * bsa / dose;
+    return { q: 'A patient receives an apheresis platelet unit. Calculate the 1-hour corrected count increment (CCI).',
+      facts: ['Pre-count: ' + pre.toLocaleString('en') + ' /µL', '1-hour post-count: ' + post.toLocaleString('en') + ' /µL', 'Body surface area: ' + fmt(bsa, 1) + ' m²', 'Platelets transfused: ' + fmt(dose, 1) + ' × 10¹¹'],
+      label: 'CCI:', unit: '', answer: cci, tol: Math.max(150, cci * 0.03), show: Math.round(cci).toLocaleString('en') + '.',
+      steps: ['Increment = ' + post.toLocaleString('en') + ' − ' + pre.toLocaleString('en') + ' = ' + inc.toLocaleString('en') + ' /µL', 'CCI = ' + inc.toLocaleString('en') + ' × ' + fmt(bsa, 1) + ' ÷ ' + fmt(dose, 1) + ' = <b>' + Math.round(cci).toLocaleString('en') + '</b>'],
+      note: cci >= 7500 ? 'A 1-hour CCI of 7,500 or more is an adequate response.' : 'Below 7,500: inadequate response. Two consecutive inadequate CCIs define refractoriness.' };
+  },
+  rbcdose() {
+    const kg = rnd(50, 90, 5), init = rnd(0.18, 0.24, 0.01), want = rnd(0.27, 0.32, 0.01), bv = kg * 70, n = bv * (want - init) / 200;
+    return { q: 'How many red cell units are needed to reach the desired hematocrit?',
+      facts: ['Weight: ' + kg + ' kg (blood volume ≈ 70 mL/kg)', 'Initial Hct: ' + fmt(init * 100, 0) + '%', 'Desired Hct: ' + fmt(want * 100, 0) + '%', 'Red cell volume per unit ≈ 200 mL'],
+      label: 'Units:', unit: '', answer: n, tol: 0.25, show: fmt(n, 1) + ' → ' + Math.ceil(n) + ' units.',
+      steps: ['Blood volume = ' + kg + ' × 70 = ' + bv + ' mL', bv + ' × (' + fmt(want, 2) + ' − ' + fmt(init, 2) + ') = ' + fmt(bv * (want - init), 0) + ' mL of red cells', fmt(bv * (want - init), 0) + ' ÷ 200 = <b>' + fmt(n, 1) + '</b>, so about ' + Math.ceil(n) + ' units'] };
+  },
+  indices() {
+    const rbc = rnd(2.8, 5.8, 0.1), mcv = rnd(62, 112, 1), hct = +(rbc * mcv / 10).toFixed(1), mchc = rnd(29, 36, 0.5), hb = +(hct * mchc / 100).toFixed(1);
+    const which = pick(['MCV', 'MCH', 'MCHC']);
+    const val = { MCV: hct / rbc * 10, MCH: hb / rbc * 10, MCHC: hb / hct * 100 }[which];
+    const unit = { MCV: 'fL', MCH: 'pg', MCHC: 'g/dL' }[which];
+    const step = { MCV: 'MCV = Hct ÷ RBC × 10 = ' + hct + ' ÷ ' + rbc + ' × 10', MCH: 'MCH = Hb ÷ RBC × 10 = ' + hb + ' ÷ ' + rbc + ' × 10', MCHC: 'MCHC = Hb ÷ Hct × 100 = ' + hb + ' ÷ ' + hct + ' × 100' }[which];
+    return { q: 'Calculate the <b>' + which + '</b>.', facts: ['RBC: ' + rbc + ' × 10¹²/L', 'Hemoglobin: ' + hb + ' g/dL', 'Hematocrit: ' + hct + '%'], label: which + ':', unit, answer: val, tol: which === 'MCHC' ? 0.3 : 0.6,
+      show: fmt(val, 1) + ' ' + unit + '.', steps: [step + ' = <b>' + fmt(val, 1) + ' ' + unit + '</b>'],
+      note: which === 'MCV' ? (val < 80 ? 'Microcytic.' : val > 100 ? 'Macrocytic.' : 'Normocytic.') : '' };
+  },
+  retic() {
+    const hct = rnd(14, 44, 1), ret = rnd(1, 12, 0.5), cor = ret * hct / 45, mf = hct >= 36 ? 1 : hct >= 26 ? 1.5 : hct >= 16 ? 2 : 2.5, rpi = cor / mf;
+    return { q: 'Calculate the reticulocyte production index (RPI).', facts: ['Reticulocytes: ' + ret + '%', 'Hematocrit: ' + hct + '%', 'Maturation correction: Hct 36–45 → 1.0; 26–35 → 1.5; 16–25 → 2.0; ≤ 15 → 2.5'],
+      label: 'RPI:', unit: '', answer: rpi, tol: 0.15, show: fmt(rpi, 1) + '.',
+      steps: ['Corrected retic = ' + ret + ' × ' + hct + ' ÷ 45 = ' + fmt(cor, 2) + '%', 'Maturation correction for Hct ' + hct + '% = ' + mf, 'RPI = ' + fmt(cor, 2) + ' ÷ ' + mf + ' = <b>' + fmt(rpi, 1) + '</b>'],
+      note: rpi >= 3 ? 'RPI ≥ 3: adequate marrow response (e.g. hemolysis or bleeding).' : rpi < 2 ? 'RPI < 2: inadequate response (hypoproliferative or ineffective erythropoiesis).' : 'Borderline response.' };
+  },
+  nrbc() {
+    const wbc = rnd(6, 30, 0.5), n = rnd(5, 60, 1), cor = wbc * 100 / (100 + n);
+    return { q: 'The analyzer counts nucleated red cells as white cells. Correct the WBC count.', facts: ['WBC (uncorrected): ' + wbc + ' × 10⁹/L', 'NRBC on the smear: ' + n + ' per 100 WBCs'],
+      label: 'Corrected WBC:', unit: '× 10⁹/L', answer: cor, tol: 0.15, show: fmt(cor, 1) + ' × 10⁹/L.', steps: ['Corrected WBC = ' + wbc + ' × 100 ÷ (100 + ' + n + ') = <b>' + fmt(cor, 1) + '</b>'] };
+  },
+  abs() {
+    const wbc = rnd(2, 25, 0.5), cell = pick([['neutrophils', 40, 85], ['lymphocytes', 15, 70], ['eosinophils', 2, 25], ['monocytes', 3, 15]]), pct = rnd(cell[1], cell[2], 1), a = wbc * pct / 100;
+    return { q: 'Calculate the absolute ' + cell[0] + ' count.', facts: ['WBC: ' + wbc + ' × 10⁹/L', cell[0][0].toUpperCase() + cell[0].slice(1) + ': ' + pct + '%'], label: 'Absolute count:', unit: '× 10⁹/L',
+      answer: a, tol: 0.06, show: fmt(a, 2) + ' × 10⁹/L.', steps: ['Absolute count = WBC × % = ' + wbc + ' × ' + (pct / 100) + ' = <b>' + fmt(a, 2) + '</b>'] };
+  },
+  mentzer() {
+    const thal = Math.random() < 0.5, rbc = thal ? rnd(5.2, 6.6, 0.1) : rnd(3.2, 4.4, 0.1), mcv = thal ? rnd(58, 70, 1) : rnd(66, 78, 1), idx = mcv / rbc;
+    return { q: 'A patient has a microcytic anemia. Calculate the Mentzer index.', facts: ['MCV: ' + mcv + ' fL', 'RBC: ' + rbc + ' × 10¹²/L'], label: 'Mentzer index:', unit: '',
+      answer: idx, tol: 0.15, show: fmt(idx, 1) + '.', steps: ['Mentzer index = MCV ÷ RBC = ' + mcv + ' ÷ ' + rbc + ' = <b>' + fmt(idx, 1) + '</b>'],
+      note: idx < 13 ? 'Below 13: favors β-thalassemia trait. Confirm with Hb A<sub>2</sub> (> 3.5%).' : 'Above 13: favors iron deficiency. Confirm with ferritin.' };
+  },
+  inr() {
+    const mn = rnd(11.5, 13, 0.5), pt = rnd(14, 40, 0.5), isi = pick([1.0, 1.1, 1.2, 1.3]), inr = Math.pow(pt / mn, isi);
+    return { q: 'A patient on warfarin (vitamin K antagonist) has the following results. Calculate the INR.', facts: ['Patient PT: ' + pt + ' s', 'Mean normal PT: ' + mn + ' s', 'ISI of the reagent: ' + fmt(isi, 1)],
+      label: 'INR:', unit: '', answer: inr, tol: 0.06, show: fmt(inr, 1) + '.', steps: ['Ratio = ' + pt + ' ÷ ' + mn + ' = ' + fmt(pt / mn, 2), 'INR = ' + fmt(pt / mn, 2) + '<sup>' + fmt(isi, 1) + '</sup> = <b>' + fmt(inr, 1) + '</b>'] };
+  }
+};
+
+home();
+</script>
+</body>
+</html>

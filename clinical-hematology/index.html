@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clinical Hematology & Hemostasis Study Cards</title>
+<style>
+/* Layout: chapter list (home) and one study card at a time; accent colour comes from each book's cover. */
+:root {
+  --bg: #F3F6F6; --surface: #FFFFFF; --ink: #15282C; --muted: #5A6E72; --line: #D5E0E1;
+  --accent: #9B1B30; --accent-soft: #F8E4E8; --red: #B8233A; --red-soft: #FBE7EA;
+  --good: #1E7A4C; --good-soft: #E2F3EA; --warn: #9A5B00; --warn-soft: #FDF1DC;
+  --f-display: "Segoe UI Variable Display", "SF Pro Display", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  --f-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", Consolas, "Roboto Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #F07A8C; --accent-soft: #3A1C22; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #F07A8C; --accent-soft: #3A1C22; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark }
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(20px, env(safe-area-inset-top, 0px)); padding-bottom: max(40px, env(safe-area-inset-bottom, 0px)) }
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 16px }
+header { display: grid; gap: 4px }
+.eyebrow { font: 700 12px/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent) }
+h1 { font: 700 clamp(26px, 6vw, 34px)/1.1 var(--f-display); margin: 0; text-wrap: balance }
+h2 { font: 700 20px/1.2 var(--f-display); margin: 0 }
+.sub { color: var(--muted); margin: 0 }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px }
+.chapters { display: grid; gap: 8px }
+.chap-btn { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; text-align: left; width: 100%;
+  padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit }
+.chap-btn:hover { border-color: var(--accent) }
+.chap-title { font-weight: 700; min-width: 0 }
+.chap-count { font: 500 13px var(--f-mono); color: var(--muted); white-space: nowrap }
+.bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; display: flex }
+.bar i { display: block; height: 100% } .bar .g { background: var(--good) } .bar .a { background: var(--warn) }
+.strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center }
+.dot { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  font: 700 12px var(--f-mono); cursor: pointer; display: grid; place-items: center; padding: 0 }
+.dot[aria-current="true"] { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent) }
+.dot.done { background: var(--good-soft); color: var(--good); border-color: transparent }
+.dot.again { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+.score { margin-left: auto; font: 500 13px var(--f-mono); color: var(--muted) }
+.topline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; min-width: 0 }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.chip { font: 700 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent) }
+.chap { font-size: 13px; color: var(--muted) }
+.q { font: 600 clamp(18px, 4.4vw, 22px)/1.35 var(--f-display); margin: 0; text-wrap: pretty }
+.hint { color: var(--muted); margin: 0; font-size: 15px }
+.answer { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 14px; border-radius: 0 8px 8px 0 }
+.answer p, .feedback p { margin: 0 0 6px } .answer p:last-child, .feedback p:last-child { margin: 0 }
+.answer ul, .feedback ul { margin: 4px 0 0; padding-left: 20px }
+.row { display: flex; gap: 10px; flex-wrap: wrap }
+button.btn { font: 700 15px var(--f-body); padding: 11px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer }
+button.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface) }
+button.btn.good { background: var(--good-soft); color: var(--good); border-color: transparent }
+button.btn.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+button.btn:disabled { opacity: .45; cursor: default }
+button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px }
+.nav { display: flex; justify-content: space-between; gap: 10px }
+.feedback { padding: 12px 14px; border-radius: 8px; font-size: 15px; display: grid; gap: 4px }
+.feedback.ok { background: var(--good-soft); color: var(--good) }
+.feedback.no { background: var(--red-soft); color: var(--red) }
+.feedback .ink { color: var(--ink) }
+.scroll { overflow-x: auto; min-width: 0 }
+table.grid { border-collapse: collapse; font: 500 14px var(--f-mono); width: 100% }
+.grid th, .grid td { border: 1px solid var(--line); padding: 0; text-align: center; min-width: 38px; height: 40px }
+.grid th { background: var(--bg); color: var(--muted); font-weight: 700; padding: 4px 6px; font-family: var(--f-body); font-size: 13px }
+.grid th.rowh { text-align: left; padding: 4px 10px; color: var(--ink) }
+.grid td.given { color: var(--ink); font-weight: 700; padding: 4px 6px }
+.grid td.rx { font-weight: 700; color: var(--red) }
+.tap { width: 100%; height: 100%; min-height: 40px; border: 0; background: transparent; color: var(--ink); font: 700 17px var(--f-mono); cursor: pointer; padding: 2px 6px }
+.tap.set { color: var(--red) }
+.tap.right { background: var(--good-soft) } .tap.wrong { background: var(--red-soft) }
+th.ag { cursor: pointer; user-select: none; color: var(--ink) }
+th.ag.out, td.out { text-decoration: line-through; color: var(--muted); background: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 7px) }
+th.ag.keep { background: var(--red-soft); color: var(--red) }
+.calc { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+.calc input { font: 700 18px var(--f-mono); width: 9ch; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink) }
+.facts { font: 500 15px var(--f-mono); background: var(--bg); border-radius: 8px; padding: 12px 14px; display: grid; gap: 2px }
+ol.steps { margin: 0; padding-left: 20px } ol.steps li { margin: 2px 0 }
+.items { display: grid; gap: 8px }
+.item { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; text-align: left;
+  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer }
+.item .tag { font: 700 12px/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); white-space: nowrap }
+.item .tag.set { background: var(--accent-soft); color: var(--accent) }
+.item.right { border-color: var(--good); background: var(--good-soft) } .item.wrong { border-color: var(--red); background: var(--red-soft) }
+.item .num { font: 700 13px var(--f-mono); min-width: 24px; height: 24px; border-radius: 12px; display: grid; place-items: center; background: var(--bg); color: var(--muted) }
+.item.picked .num { background: var(--accent); color: var(--surface) }
+.legend { display: flex; gap: 6px; flex-wrap: wrap; font-size: 13px; color: var(--muted) }
+.legend span { font: 700 12px var(--f-mono); padding: 4px 6px; border-radius: 6px; background: var(--bg); color: var(--ink) }
+footer { color: var(--muted); font-size: 13px; text-align: center }
+.empty { color: var(--muted); padding: 20px; text-align: center }
+@media (prefers-reduced-motion: no-preference) { .answer, .feedback { animation: in .18s ease-out } @keyframes in { from { opacity: .4; transform: translateY(3px) } } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const DECK = {"id":"clin","title":"Clinical Hematology &amp; Hemostasis","eyebrow":"Study cards for MLT students","sub":"Pick a chapter. Think of the answer first, then check yourself. Cards you mark Again come back in your review.","footer":"Clinical Hematology and Hemostasis for MLT Students &middot; Dr. Tarek Faour &middot; 221 cards","chapters":[{
+"key": "c0", "title": "Review: Lymphoid Tissue and Bone Marrow Examination", "short": "Review · Lymphoid tissue & marrow",
+"cards": [
+{"type": "sort", "q": "Primary or secondary lymphoid organ?",
+ "bins": ["Primary", "Secondary"],
+ "items": [{"t": "Thymus", "b": 0}, {"t": "Spleen", "b": 1}, {"t": "Lymph nodes", "b": 1}, {"t": "Tonsils, Peyer's patches (MALT)", "b": 1}],
+ "explain": ["The bone marrow is both a primary and a secondary lymphoid organ."]},
+{"type": "sort", "q": "Match each marker to its lymphocyte.",
+ "bins": ["T cell", "B cell", "NK cell"],
+ "items": [{"t": "TCR with CD3", "b": 0}, {"t": "Surface immunoglobulin (sIg)", "b": 1}, {"t": "CD19, CD20, CD22, CD79a", "b": 1}, {"t": "CD16 and CD56, no TCR or sIg", "b": 2}]},
+{"type": "grid", "q": "Fill in the share of each blood lymphocyte type.", "cols": ["% of lymphocytes"],
+ "rows": ["T cells", "B cells", "NK cells"], "symbols": ["70%", "15%", "10%"],
+ "answer": [["70%"], ["15%"], ["10%"]],
+ "explain": ["Normal CD4/CD8 ratio: 1.2–3."]},
+{"type": "flip", "q": "What proportion of marrow cells are lymphocytes in an adult, and when is it pathologic?",
+ "a": ["<b>5–15%</b>; above <b>20%</b> is pathologic."]},
+{"type": "flip", "q": "What happens in the thymic cortex and medulla, and how many cells survive?",
+ "a": ["<b>Cortex</b>: immature double-positive (CD4+CD8+) thymocytes. <b>Medulla</b>: they learn self from non-self.", "Only about <b>3%</b> leave as mature T cells; the rest die by apoptosis."]},
+{"type": "sort", "q": "Culling or pitting by the spleen?",
+ "bins": ["Culling", "Pitting"],
+ "items": [{"t": "Removal of senescent or damaged red cells", "b": 0}, {"t": "Removal of Howell–Jolly and Heinz bodies without destroying the cell", "b": 1}]},
+{"type": "sort", "q": "Where is each cell type found in the lymph node?",
+ "bins": ["Cortex (follicles)", "Paracortex", "Medullary cords"],
+ "items": [{"t": "B cells in primary and secondary follicles", "b": 0}, {"t": "Centroblasts and centrocytes (germinal center)", "b": 0}, {"t": "T lymphocytes", "b": 1}, {"t": "Plasma cells and macrophages", "b": 2}]},
+{"type": "sort", "q": "Centroblast or centrocyte?",
+ "bins": ["Centroblast (dark zone)", "Centrocyte (light zone)"],
+ "items": [{"t": "Rapidly dividing, large, non-cleaved nucleus", "b": 0}, {"t": "Small, cleaved nucleus, non-dividing", "b": 1}, {"t": "Lacks sIg", "b": 0}, {"t": "Selected by high-affinity sIg", "b": 1}]},
+{"type": "sort", "q": "Indication or contraindication for bone marrow aspiration?",
+ "bins": ["Indication", "Contraindication", "Not a contraindication"],
+ "items": [{"t": "Unexplained cytopenia", "b": 0}, {"t": "Suspected leukemia", "b": 0}, {"t": "Hemophilia without factor replacement", "b": 1}, {"t": "Previous irradiation of the site", "b": 1}, {"t": "Local skin infection", "b": 1}, {"t": "Thrombocytopenia", "b": 2}]},
+{"type": "flip", "q": "How do you estimate the normal marrow cellularity of an adult?",
+ "a": ["<b>100 − age (± 10%)</b>. A 70-year-old: 20–40%."]},
+{"type": "grid", "q": "Classify the marrow smear by cells per oil-immersion field.", "cols": ["Class"],
+ "rows": ["0 cells", "10 cells", "25 cells", "45 cells", "80 cells"], "symbols": ["Empty", "Poor", "Hypoplastic", "Normal", "Hyperplastic"],
+ "answer": [["Empty"], ["Poor"], ["Hypoplastic"], ["Normal"], ["Hyperplastic"]]},
+{"type": "grid", "q": "Fill in the normal bone marrow values.", "cols": ["Normal"],
+ "rows": ["Granulocytic lineage", "Erythroblastic lineage", "Monocytic lineage", "Lymphocytes", "M:E ratio"],
+ "symbols": ["45–75%", "15–25%", "< 5%", "< 15%", "2:1–4:1"],
+ "answer": [["45–75%"], ["15–25%"], ["< 5%"], ["< 15%"], ["2:1–4:1"]]},
+{"type": "sort", "q": "Does the M:E ratio shift toward erythropoiesis or granulopoiesis?",
+ "bins": ["Toward erythropoiesis (ratio falls)", "Toward granulopoiesis (ratio rises)"],
+ "items": [{"t": "Hemolysis", "b": 0}, {"t": "Megaloblastic anemia", "b": 0}, {"t": "Infection", "b": 1}, {"t": "Chronic myeloid leukemia", "b": 1}]},
+{"type": "sort", "q": "Is a bone marrow biopsy (trephine) needed?",
+ "bins": ["Biopsy indicated", "Aspirate usually enough"],
+ "items": [{"t": "Dry tap or poor aspirate", "b": 0}, {"t": "Myelofibrosis", "b": 0}, {"t": "Marrow infiltration by lymphoma or metastases", "b": 0}, {"t": "Megaloblastic anemia", "b": 1}]}
+]},{
+"key": "c1", "title": "Chapter One: Evaluating a Patient with Lymphadenopathy", "short": "Ch 1 · Lymphadenopathy",
+"cards": [
+{"type": "flip", "q": "Define lymphadenopathy, generalized lymphadenopathy and lymphadenitis.",
+ "a": ["Enlarged node <b>> 1 cm</b>; <b>generalized</b> when in ≥ 2 non-contiguous areas.", "<b>Lymphadenitis</b>: with pain or signs of inflammation."]},
+{"type": "sort", "q": "Classify each cause of lymphadenopathy.",
+ "bins": ["Reaction to infection", "Direct node infection", "Malignancy", "Miscellaneous"],
+ "items": [{"t": "Infectious mononucleosis", "b": 0}, {"t": "Toxoplasmosis", "b": 0}, {"t": "Cat-scratch disease (<i>Bartonella</i>)", "b": 1}, {"t": "Tuberculosis", "b": 1}, {"t": "Hodgkin lymphoma", "b": 2}, {"t": "Metastatic breast cancer", "b": 2}, {"t": "Sarcoidosis", "b": 3}, {"t": "Phenytoin", "b": 3}]},
+{"type": "sort", "q": "Benign or worrying feature of a lymph node?",
+ "bins": ["Worrying", "Usually benign"],
+ "items": [{"t": "Supraclavicular site", "b": 0}, {"t": "Stony-hard and fixed", "b": 0}, {"t": "Present ≥ 4–6 weeks or still growing", "b": 0}, {"t": "Patient aged 50 or more", "b": 0},
+  {"t": "Tender node with a nearby infection", "b": 1}, {"t": "Small inguinal node", "b": 1}, {"t": "Patient aged 30 or less", "b": 1}]},
+{"type": "flip", "q": "What size defines significant lymphadenopathy in adults and in children?",
+ "a": ["<b>≥ 1 cm</b> in adults and <b>≥ 2 cm</b> in children."]},
+{"type": "flip", "q": "How does the risk of malignancy change with age?",
+ "a": ["Age ≤ 30: about <b>80% benign</b>. Age ≥ 50: about <b>60% malignant</b>."]},
+{"type": "sort", "q": "How do the nodes feel?",
+ "bins": ["Metastatic carcinoma", "Lymphoma", "Infected node"],
+ "items": [{"t": "Stony-hard, fixed", "b": 0}, {"t": "Firm, rubbery, mobile", "b": 1}, {"t": "Tender or fluctuant, warm red skin", "b": 2}]},
+{"type": "flip", "q": "What is Virchow's node, and why does it matter?",
+ "a": ["The <b>left supraclavicular</b> node; it may reflect an <b>abdominal cancer</b>. Supraclavicular nodes are the most worrisome."]},
+{"type": "sort", "q": "Which region does each node group drain?",
+ "bins": ["Cervical", "Axillary", "Inguinal"],
+ "items": [{"t": "Scalp, ears, throat, teeth, sinuses", "b": 0}, {"t": "Hands, arms and breast", "b": 1}, {"t": "Feet, legs and genitals", "b": 2}]},
+{"type": "flip", "q": "What are the B symptoms, and what do they suggest?",
+ "a": ["Fever <b>> 38 °C</b>, drenching <b>night sweats</b>, <b>weight loss > 10% in 6 months</b>.", "They suggest <b>lymphoma</b> or tuberculosis."]},
+{"type": "sort", "q": "Fine-needle aspiration or excisional biopsy?",
+ "bins": ["Fine-needle aspiration", "Excisional biopsy"],
+ "items": [{"t": "Easy, safe screening and triage tool", "b": 0}, {"t": "Shows the node architecture", "b": 1}, {"t": "Preferred for definitive Hodgkin lymphoma diagnosis", "b": 1}, {"t": "With flow cytometry, good for reactive versus NHL", "b": 0}]},
+{"type": "flip", "q": "How must an excised lymph node be sent to the laboratory, and why?",
+ "a": ["<b>Intact and fresh</b> (not in formalin), immediately, so flow cytometry, cytogenetics and cultures remain possible."]},
+{"type": "flip", "q": "How do Hodgkin and non-Hodgkin lymphoma usually differ in node spread?",
+ "a": ["<b>NHL</b>: usually widespread. <b>Hodgkin</b>: often localized, spreading to <b>contiguous</b> node groups. Deep (mediastinal, abdominal) nodes may occur without peripheral nodes."]}
+]},{
+"key": "c2", "title": "Chapter Two: Acute Leukemias", "short": "Ch 2 · Acute leukemias",
+"cards": [
+{"type": "flip", "q": "Which three characteristics describe every hematopoietic and lymphoid neoplasm?",
+ "a": ["<b>Aggressiveness</b> (acute vs chronic), <b>lineage</b> (lymphoid vs myeloid), and <b>predominant site</b> (blood and marrow = leukemia; tissue = lymphoma or myeloid sarcoma)."]},
+{"type": "sort", "q": "Acute or chronic neoplasm?",
+ "bins": ["Acute", "Chronic"],
+ "items": [{"t": "Predominance of blasts", "b": 0}, {"t": "Predominance of mature cells", "b": 1}, {"t": "Untreated survival in weeks or months", "b": 0}, {"t": "Untreated survival in years", "b": 1}]},
+{"type": "sort", "q": "Which cell gives rise to each tumor?",
+ "bins": ["Plasma cell", "Germinal center B cell", "Myeloid cells in tissue"],
+ "items": [{"t": "Myeloma (marrow) or plasmacytoma (outside marrow)", "b": 0}, {"t": "Hodgkin lymphoma (Reed–Sternberg cell)", "b": 1}, {"t": "Myeloid sarcoma (chloroma)", "b": 2}]},
+{"type": "flip", "q": "How does leukemia start, and what is clonal evolution?",
+ "a": ["Somatic mutations in <b>one</b> stem or progenitor cell form a <b>clone</b>, usually after multiple hits (oncogenes on, tumor suppressors off).", "<b>Clonal evolution</b>: new mutations with a growth advantage replace the parent clone, making the disease more aggressive."]},
+{"type": "sort", "q": "CHIP or CCUS (WHO-HAEM5)?",
+ "bins": ["CHIP", "CCUS"],
+ "items": [{"t": "Somatic mutation (VAF ≥ 2%) without cytopenia", "b": 0}, {"t": "Same mutation plus unexplained persistent cytopenia", "b": 1}],
+ "explain": ["Both carry an increased risk of myeloid neoplasm (e.g. <i>DNMT3A</i>, <i>TET2</i>, <i>ASXL1</i>)."]},
+{"type": "flip", "q": "What is the leukemic hiatus?",
+ "a": ["In acute leukemia the marrow shows <b>many blasts</b> and <b>some mature cells</b> (from residual normal stem cells) but <b>very few intermediate stages</b>: the missing middle of the maturation pyramid."]},
+{"type": "grid", "q": "Name the leukemia for each lineage.", "cols": ["Acute", "Chronic"],
+ "rows": ["Lymphoid", "Myeloid"], "symbols": ["ALL", "AML", "CLL", "MPN"],
+ "answer": [["ALL", "CLL"], ["AML", "MPN"]],
+ "explain": ["Mixed lineage: mixed-phenotype acute leukemia (MPAL)."]},
+{"type": "flip", "q": "Which is the only morphologic feature that proves myeloid lineage?",
+ "a": ["<b>Auer rods</b>: linear stacks of fused primary granules in myeloblasts."]},
+{"type": "flip", "q": "Can acute leukemia exist without blasts in the blood?",
+ "a": ["<b>Yes</b>: \"aleukemic leukemia\". The bone marrow is essential for diagnosis."]},
+{"type": "sort", "q": "Risk factor for acute leukemia?",
+ "bins": ["Risk factor", "Not a risk factor"],
+ "items": [{"t": "Ionizing radiation", "b": 0}, {"t": "Benzene (smoking)", "b": 0}, {"t": "Alkylating agents", "b": 0}, {"t": "HTLV-1", "b": 0}, {"t": "Down syndrome", "b": 0}, {"t": "Iron deficiency", "b": 1}]},
+{"type": "sort", "q": "Match each complication of acute leukemia to its cause.",
+ "bins": ["Marrow failure", "High cell turnover", "Very high blast count", "Especially APL"],
+ "items": [{"t": "Infection, anemia, bleeding", "b": 0}, {"t": "Hyperuricemia, hyperkalemia, tumor lysis", "b": 1}, {"t": "Leukostasis (dyspnea, confusion)", "b": 2}, {"t": "DIC", "b": 3}]},
+{"type": "flip", "q": "At what count can leukostasis occur, and how is it urgently treated?",
+ "a": ["From ≥ 50,000/µL, risk rising sharply ≥ 100,000/µL; most common in AML with monocytic differentiation.", "A medical emergency: <b>leukapheresis</b> lowers the blast count rapidly."]},
+{"type": "sort", "q": "Is each finding typical of AML with monocytic differentiation?",
+ "bins": ["Suggests monocytic AML", "Not specific"],
+ "items": [{"t": "Gum hypertrophy", "b": 0}, {"t": "Skin infiltration (leukemia cutis)", "b": 0}, {"t": "Splenomegaly", "b": 0}, {"t": "Normocytic anemia", "b": 1}]},
+{"type": "sort", "q": "Which test answers each question in acute leukemia?",
+ "bins": ["Flow cytometry", "Karyotype", "Molecular tests (PCR, FISH, NGS)"],
+ "items": [{"t": "Gold standard for lineage", "b": 0}, {"t": "Essential for prognosis in every patient", "b": 1}, {"t": "Many WHO-HAEM5 types defined by a gene fusion or mutation", "b": 2}, {"t": "Measurable residual disease (with molecular methods)", "b": 0}]},
+{"type": "flip", "q": "Which conditions enter the differential diagnosis of acute leukemia?",
+ "a": ["Lymphomas, MDS, myeloma, aplastic anemia, severe B12 deficiency, infectious lymphocytosis (pertussis, IM), leukemoid reaction and <b>marrow recovery after chemotherapy or G-CSF</b>."]},
+{"type": "flip", "q": "Give the epidemiology of ALL.",
+ "a": ["The most common childhood cancer (~25%) and ~75% of childhood leukemias; peak at <b>2–5 years</b>.", "Cure about 90% in children versus 40–50% in adults. B-cell precursor 80–85%, T-cell 15–20%."]},
+{"type": "flip", "q": "Why is the old FAB L3 no longer classified as ALL?",
+ "a": ["It consists of <b>mature B cells</b>: it is disseminated <b>Burkitt lymphoma</b> (large cells, deeply basophilic vacuolated cytoplasm)."]},
+{"type": "sort", "q": "Which ALL immunophenotype?",
+ "bins": ["Pro-B ALL", "Common B-ALL", "Pre-B ALL", "T-ALL"],
+ "items": [{"t": "CD19+, TdT+, CD10 negative", "b": 0}, {"t": "CD10 positive", "b": 1}, {"t": "Cytoplasmic µ heavy chain, CD34 often negative", "b": 2}, {"t": "Cytoplasmic CD3, CD7; mediastinal mass in teenage boys", "b": 3}]},
+{"type": "flip", "q": "Which markers do most lymphoblasts share, and is sIg present in B-ALL?",
+ "a": ["<b>CD34 and TdT</b>; HLA-DR usually in B-ALL but not T-ALL.", "<b>No</b>: sIg is negative in all B-ALL subtypes. A third express aberrant myeloid markers (CD13 ± CD33)."]},
+{"type": "sort", "q": "Good or poor prognosis in B-ALL?",
+ "bins": ["Good", "Poor"],
+ "items": [{"t": "<i>ETV6::RUNX1</i> fusion", "b": 0}, {"t": "High hyperdiploidy (51–65 chromosomes)", "b": 0}, {"t": "<i>BCR::ABL1</i> (Ph+)", "b": 1}, {"t": "<i>KMT2A</i> rearrangement (infants)", "b": 1}, {"t": "Hypodiploidy", "b": 1}, {"t": "iAMP21", "b": 1}, {"t": "Ph-like (<i>BCR::ABL1</i>-like)", "b": 1}]},
+{"type": "grid", "q": "Which age group is each translocation typical of?", "cols": ["Typical age group"],
+ "rows": ["t(9;22) <i>BCR::ABL1</i>", "t(12;21) <i>ETV6::RUNX1</i>", "t(4;11) <i>KMT2A::AFF1</i>"], "symbols": ["Adults", "Children", "Infants"],
+ "answer": [["Adults"], ["Children"], ["Infants"]]},
+{"type": "sort", "q": "Good or poor prognostic factor in ALL?",
+ "bins": ["Good", "Poor"],
+ "items": [{"t": "Age 1–9 years", "b": 0}, {"t": "Infant under 1 year", "b": 1}, {"t": "WBC < 30 × 10<sup>9</sup>/L", "b": 0}, {"t": "WBC > 50 × 10<sup>9</sup>/L", "b": 1}, {"t": "Remission in under 4 weeks", "b": 0}, {"t": "CNS disease at presentation", "b": 1}, {"t": "MRD positive at end of induction", "b": 1}]},
+{"type": "flip", "q": "What is the strongest prognostic factor in ALL, and how sensitive is flow cytometric MRD?",
+ "a": ["<b>Measurable residual disease (MRD)</b> at the end of induction.", "Flow cytometry using the leukemia-associated immunophenotype detects about <b>1 leukemic cell in 10,000</b>."]},
+{"type": "sort", "q": "Hematologic, cytogenetic or molecular remission?",
+ "bins": ["Hematologic", "Cytogenetic", "Molecular"],
+ "items": [{"t": "No neoplastic cells in blood and marrow; normal counts", "b": 0}, {"t": "No known chromosomal abnormality detected", "b": 1}, {"t": "No abnormality detected by PCR", "b": 2}]},
+{"type": "flip", "q": "Which sites may be sanctuaries for ALL relapse?",
+ "a": ["The <b>CNS</b> (cerebrospinal fluid) and the <b>testes</b> (painless enlargement, usually followed by marrow relapse)."]},
+{"type": "flip", "q": "What blast percentage defines AML, and what changed in WHO-HAEM5?",
+ "a": ["Classically <b>≥ 20% blasts</b> in blood or marrow.", "In WHO-HAEM5 most AML types with <b>defining genetic abnormalities</b> need no 20% cut-off, except AML with <i>BCR::ABL1</i> and AML with <i>CEBPA</i> mutation."]},
+{"type": "sort", "q": "Type I myeloblast, type II myeloblast or promyelocyte?",
+ "bins": ["Type I blast", "Type II blast", "Promyelocyte"],
+ "items": [{"t": "No granules, high N/C ratio, prominent nucleoli", "b": 0}, {"t": "A few azurophilic granules or Auer rods", "b": 1}, {"t": "Eccentric nucleus, Golgi zone, more cytoplasm", "b": 2}]},
+{"type": "sort", "q": "De novo or secondary AML?",
+ "bins": ["De novo (primary)", "Secondary"],
+ "items": [{"t": "Younger patients, better response", "b": 0}, {"t": "Reciprocal translocations", "b": 0}, {"t": "After MDS or chemotherapy", "b": 1}, {"t": "Numerical chromosome abnormalities, poor prognosis", "b": 1}]},
+{"type": "sort", "q": "Match the FAB type of AML to its feature.",
+ "bins": ["M3 (APL)", "M4Eo", "M5", "M6", "M7"],
+ "items": [{"t": "Faggot cells and DIC; t(15;17)", "b": 0}, {"t": "Abnormal eosinophils; inv(16)", "b": 1}, {"t": "≥ 80% monocytic cells; gum infiltration", "b": 2}, {"t": "Erythroid ≥ 80% with ≥ 30% proerythroblasts", "b": 3}, {"t": "CD41, CD61 positive; myelofibrosis", "b": 4}]},
+{"type": "flip", "q": "Which cells are counted as blasts in AML, and as a percentage of what?",
+ "a": ["<b>Myeloblasts, monoblasts, promonocytes and megakaryoblasts</b>, always as a % of <b>total nucleated cells</b>.", "Erythroblasts are not counted (except proerythroblasts in acute erythroid leukemia)."]},
+{"type": "sort", "q": "Match each WHO-HAEM5 AML genetic type to its translocation or note.",
+ "bins": ["<i>PML::RARA</i>", "<i>RUNX1::RUNX1T1</i>", "<i>CBFB::MYH11</i>", "<i>NPM1</i> mutation"],
+ "items": [{"t": "t(15;17), acute promyelocytic leukemia", "b": 0}, {"t": "t(8;21), often FAB M2", "b": 1}, {"t": "inv(16), often FAB M4Eo", "b": 2}, {"t": "Most common genetic abnormality (~30% of adult AML)", "b": 3}]},
+{"type": "flip", "q": "What does AML, myelodysplasia-related (AML-MR) require in WHO-HAEM5?",
+ "a": ["<b>≥ 20% blasts</b> plus one of: history of MDS or MDS/MPN; an MDS-defining cytogenetic abnormality (e.g. complex karyotype, del(5q), −7); or a mutation in one of 8 genes (<i>ASXL1, BCOR, EZH2, SF3B1, SRSF2, STAG2, U2AF1, ZRSR2</i>). Dysplasia alone no longer suffices."]},
+{"type": "flip", "q": "What are the blood count criteria for complete remission in AML?",
+ "a": ["<b>Neutrophils ≥ 1 G/L</b> and <b>platelets ≥ 100 G/L</b>, with <b>no blasts</b> in the blood. No hemoglobin threshold is required.", "Marrow blasts < 5%, no Auer rods, no extramedullary disease, for at least 1 month."]}
+]},{
+"key": "c3", "title": "Chapter Three: Cytochemical Stains", "short": "Ch 3 · Cytochemical stains",
+"cards": [
+{"type": "grid", "q": "How does each cell react with MPO?", "cols": ["MPO"],
+ "rows": ["Neutrophils", "Monocytes", "Lymphocytes", "Basophils", "Auer rods"], "symbols": ["Strong +", "Weak +", "Negative"],
+ "answer": [["Strong +"], ["Weak +"], ["Negative"], ["Negative"], ["Strong +"]]},
+{"type": "flip", "q": "What MPO result indicates myeloid lineage, and how must MPO smears be handled?",
+ "a": ["<b>≥ 3% MPO-positive blasts</b> (cytochemistry).", "MPO is <b>light-sensitive</b>: stain immediately or protect from light; not on smears older than 3 weeks."]},
+{"type": "flip", "q": "What is the advantage of Sudan black B over MPO?",
+ "a": ["It can be used on <b>older</b> blood or marrow smears. Its pattern parallels MPO (blue-black granules in neutrophils, weak in monocytes, negative in lymphocytes)."]},
+{"type": "sort", "q": "Specific or non-specific esterase?",
+ "bins": ["Specific esterase", "Non-specific esterase"],
+ "items": [{"t": "Granulocytes and mast cells", "b": 0}, {"t": "Strong in monocytes", "b": 1}, {"t": "Inhibited by sodium fluoride (α-naphthyl acetate)", "b": 1}, {"t": "Confirms AML with monocytic differentiation (M4, M5)", "b": 1}]},
+{"type": "sort", "q": "PAS pattern: which cells show which?",
+ "bins": ["Coarse block positivity", "Diffuse fine blush"],
+ "items": [{"t": "Lymphoblasts in ALL", "b": 0}, {"t": "Erythroblasts in AML M6", "b": 0}, {"t": "Myeloblasts in AML", "b": 1}]},
+{"type": "order", "q": "Put the PAS reaction in order.",
+ "steps": ["Periodic acid oxidizes glycogen and mucoproteins", "Aldehydes are formed", "Schiff reagent reacts with them", "Red-pink color appears"]},
+{"type": "flip", "q": "What is the normal LAP score, and how does it separate CML from a leukemoid reaction?",
+ "a": ["Normal <b>20–130</b> (100 neutrophils scored 0–4+).", "<b>CML: low (< 20)</b>; <b>leukemoid reaction: high (> 130)</b>. Today CML is confirmed by <i>BCR::ABL1</i>."]},
+{"type": "flip", "q": "Which sample is needed for the LAP stain?",
+ "a": ["<b>Fresh capillary blood or heparinized blood</b>, within 48 hours: activity is lost rapidly in EDTA."]},
+{"type": "flip", "q": "Why are hairy cells TRAP-positive, and how is hairy cell leukemia diagnosed today?",
+ "a": ["They contain abundant <b>acid phosphatase isoenzyme 5</b>, which resists tartrate.", "Today: flow cytometry (<b>CD11c, CD25, CD103, CD123</b>) and the <b><i>BRAF</i> V600E</b> mutation."]},
+{"type": "sort", "q": "Which stain is most useful for each question?",
+ "bins": ["MPO or Sudan black B", "Non-specific esterase", "LAP", "TRAP"],
+ "items": [{"t": "Is this acute leukemia myeloid or lymphoid?", "b": 0}, {"t": "Are the blasts monocytic?", "b": 1}, {"t": "CML or leukemoid reaction?", "b": 2}, {"t": "Hairy cell leukemia?", "b": 3}]}
+]},{
+"key": "c4", "title": "Chapter Four: Immunophenotyping and Flow Cytometry", "short": "Ch 4 · Flow cytometry",
+"cards": [
+{"type": "flip", "q": "What is immunophenotyping, and how is a result written?",
+ "a": ["Identifying cells by their surface, cytoplasmic or nuclear <b>antigens (CD markers)</b>, by flow cytometry or immunohistochemistry.", "Written with + or −, e.g. <b>CD4−CD8+</b>; interpret by % positive, intensity and cut-offs."]},
+{"type": "order", "q": "Put the flow cytometry process in order.",
+ "steps": ["Stain the cell suspension with fluorochrome-labeled monoclonal antibodies", "Hydrodynamic focusing lines cells up in single file", "Each cell crosses the laser beam", "Detectors measure scatter and fluorescence", "Data are displayed as histograms and dot plots"]},
+{"type": "flip", "q": "What is hydrodynamic focusing?",
+ "a": ["The sample is injected into the center of a faster <b>sheath fluid</b>; the two do not mix, so cells pass <b>in single file</b> through the beam."]},
+{"type": "sort", "q": "What does each signal reflect?",
+ "bins": ["Forward scatter", "Side scatter", "Fluorescence intensity"],
+ "items": [{"t": "Cell size", "b": 0}, {"t": "Granularity and internal complexity", "b": 1}, {"t": "Antigen density of the marker", "b": 2}]},
+{"type": "sort", "q": "Is each an application of flow cytometry?",
+ "bins": ["Yes", "No"],
+ "items": [{"t": "Leukemia and lymphoma diagnosis and MRD", "b": 0}, {"t": "CD4/CD8 counts in HIV", "b": 0}, {"t": "CD34+ stem cell counts", "b": 0}, {"t": "Fetal cells in feto-maternal hemorrhage", "b": 0}, {"t": "PNH (CD55, CD59, FLAER)", "b": 0}, {"t": "Hemoglobin electrophoresis", "b": 1}]},
+{"type": "flip", "q": "Does a phenotypic aberrancy prove malignancy?",
+ "a": ["<b>No</b>: its presence does not prove malignancy, and its absence does not exclude it."]},
+{"type": "flip", "q": "What does DNA content analysis (propidium iodide) show, and is aneuploidy always bad?",
+ "a": ["It detects <b>aneuploidy</b>, which favors malignancy.", "<b>Not always</b>: high hyperdiploidy in childhood B-ALL is favorable."]},
+{"type": "flip", "q": "What is a fluorochrome, and which lasers are common in clinical cytometers?",
+ "a": ["A dye that absorbs light at one wavelength and <b>emits at a longer</b> wavelength (nanoseconds).", "Lasers: <b>488 nm (blue)</b>, 635 nm (red), 405 nm (violet); 8–10 or more colors at once."]},
+{"type": "grid", "q": "Interpret the B-cell κ:λ ratio.", "cols": ["Interpretation"],
+ "rows": ["κ:λ = 2:1", "κ:λ = 9:1", "κ:λ = 1:5", "No surface light chain on B cells"], "symbols": ["Normal", "Suggests clonality"],
+ "answer": [["Normal"], ["Suggests clonality"], ["Suggests clonality"], ["Suggests clonality"]],
+ "explain": ["Normal κ:λ is about 2:1. Suspicious: ≥ 4:1 or λ > κ; strongest evidence ≥ 8:1 or ≤ 1:4."]},
+{"type": "flip", "q": "Why can the CD4/CD8 ratio not prove T-cell clonality?",
+ "a": ["CD4 and CD8 are <b>not clonal markers</b> (unlike κ and λ). Clues to aberrant T cells: CD4/CD8 co-expression or absence on mature T cells, or loss of a pan-T antigen (CD2, CD3, CD5, CD7)."]},
+{"type": "flip", "q": "CD5 is expressed on more cells than CD3. What may this mean?",
+ "a": ["A <b>CD5+ B-cell</b> population, as in CLL/SLL or mantle cell lymphoma; confirm with B-cell markers (CD19, CD20)."]},
+{"type": "sort", "q": "Which cells do these markers identify?",
+ "bins": ["Immature (blast)", "B cells", "T cells", "Myeloid", "NK cells", "Plasma cells"],
+ "items": [{"t": "CD34, TdT, HLA-DR", "b": 0}, {"t": "CD19, CD20, CD79a", "b": 1}, {"t": "CD3, CD5, CD7", "b": 2}, {"t": "MPO, CD13, CD33", "b": 3}, {"t": "CD16, CD56", "b": 4}, {"t": "CD38, CD138", "b": 5}]},
+{"type": "sort", "q": "Which lineage do these markers identify?",
+ "bins": ["Megakaryocytic", "Erythroid", "Monocytic", "Hairy cell leukemia"],
+ "items": [{"t": "CD41, CD42b, CD61", "b": 0}, {"t": "CD235a (glycophorin A), CD71", "b": 1}, {"t": "CD14, CD64, CD36", "b": 2}, {"t": "CD103, CD11c, CD25, CD123", "b": 3}]},
+{"type": "flip", "q": "Which marker assigns T lineage, and which assigns myeloid lineage, in mixed-phenotype acute leukemia (WHO-HAEM5)?",
+ "a": ["<b>T</b>: cytoplasmic or surface <b>CD3</b> (intensity > 50% of mature T cells).", "<b>Myeloid</b>: <b>MPO</b> (intensity > 50% of mature neutrophils) or monocytic differentiation (≥ 2 of NSE, CD11c, CD14, CD64, lysozyme)."]}
+]},{
+"key": "c5", "title": "Chapter Five: Myelodysplastic Neoplasms (MDS)", "short": "Ch 5 · MDS",
+"cards": [
+{"type": "flip", "q": "Give the three defining features of MDS.",
+ "a": ["One or more <b>unexplained cytopenias</b> (ineffective hematopoiesis).", "A usually <b>hypercellular, dysplastic</b> marrow.", "Frequent transformation to <b>AML</b> (about 30%). Median age about 70."]},
+{"type": "flip", "q": "Why are there cytopenias in MDS despite a hypercellular marrow?",
+ "a": ["Abnormal maturation, <b>ineffective hematopoiesis</b> and <b>premature death</b> (apoptosis) of precursors in the marrow."]},
+{"type": "sort", "q": "Match each mutated gene to its function in MDS.",
+ "bins": ["RNA splicing", "Epigenetic regulation", "Transcription", "Signaling"],
+ "items": [{"t": "<i>SF3B1</i>, <i>SRSF2</i>, <i>U2AF1</i>", "b": 0}, {"t": "<i>TET2</i>, <i>ASXL1</i>, <i>DNMT3A</i>", "b": 1}, {"t": "<i>RUNX1</i>, <i>TP53</i>", "b": 2}, {"t": "<i>NRAS</i>, <i>KRAS</i>", "b": 3}]},
+{"type": "flip", "q": "Is a myeloid gene mutation alone enough to diagnose MDS?",
+ "a": ["<b>No.</b> Without cytopenia it is <b>CHIP</b>; with an unexplained cytopenia but without enough dysplasia or blasts it is <b>CCUS</b>."]},
+{"type": "flip", "q": "What is the most common cause of secondary MDS?",
+ "a": ["<b>Chemotherapy</b>, particularly alkylating agents (\"MDS post cytotoxic therapy\"). About 90% of MDS is primary."]},
+{"type": "grid", "q": "Fill in the WHO-HAEM5 cytopenia thresholds (CCUS, MDS, MDS/MPN).", "cols": ["Threshold"],
+ "rows": ["Hb in men", "Hb in women", "Neutrophils", "Platelets"], "symbols": ["< 13 g/dL", "< 12 g/dL", "< 1.8 × 10⁹/L", "< 150 × 10⁹/L"],
+ "answer": [["< 13 g/dL"], ["< 12 g/dL"], ["< 1.8 × 10⁹/L"], ["< 150 × 10⁹/L"]]},
+{"type": "flip", "q": "Which MDS presents with thrombocytosis?",
+ "a": ["<b>MDS with isolated del(5q)</b> (with monolobed megakaryocytes)."]},
+{"type": "flip", "q": "Is dysplasia specific for MDS?",
+ "a": ["<b>No</b>: it is seen in normal volunteers and in B12/folate or copper deficiency, alcohol, drugs and HIV. Exclude reversible causes, especially in young patients."]},
+{"type": "sort", "q": "Which lineage does each dysplastic feature belong to?",
+ "bins": ["Dyserythropoiesis", "Dysgranulopoiesis", "Dysmegakaryopoiesis"],
+ "items": [{"t": "Ring sideroblasts", "b": 0}, {"t": "Multinuclear erythroblasts, megaloblastoid change", "b": 0}, {"t": "Pseudo-Pelger–Hüet neutrophils", "b": 1}, {"t": "Hypogranular neutrophils", "b": 1}, {"t": "Micromegakaryocytes", "b": 2}, {"t": "Giant or agranular platelets", "b": 2}]},
+{"type": "flip", "q": "What percentage of abnormal cells defines dysplasia of a lineage (WHO)?",
+ "a": ["<b>10% or more</b> of that lineage's cells. Do not report dysplasia below 10%."]},
+{"type": "sort", "q": "Are these cytogenetic changes MDS-defining?",
+ "bins": ["MDS-defining", "Common but not MDS-defining"],
+ "items": [{"t": "del(5q)", "b": 0}, {"t": "del(7q) or −7", "b": 0}, {"t": "Complex karyotype", "b": 0}, {"t": "+8", "b": 1}, {"t": "−Y", "b": 1}, {"t": "del(20q)", "b": 1}]},
+{"type": "flip", "q": "How is an excess of blasts defined in MDS?",
+ "a": ["<b>≥ 5% in the marrow</b> or <b>≥ 2% in the blood</b> (\"MDS with increased blasts\"); always below 20%."]},
+{"type": "grid", "q": "Classify the MDS by blasts (WHO-HAEM5).", "cols": ["Type"],
+ "rows": ["< 5% marrow, < 2% blood", "5–9% marrow or 2–4% blood", "10–19% marrow, 5–19% blood, or Auer rods"], "symbols": ["MDS-LB", "MDS-IB1", "MDS-IB2"],
+ "answer": [["MDS-LB"], ["MDS-IB1"], ["MDS-IB2"]]},
+{"type": "sort", "q": "Match each genetically defined MDS to its feature.",
+ "bins": ["MDS-5q", "MDS-SF3B1", "MDS-biTP53"],
+ "items": [{"t": "del(5q) alone or with one other (not −7)", "b": 0}, {"t": "≥ 15% ring sideroblasts may substitute for the mutation", "b": 1}, {"t": "Two TP53 hits, complex karyotype, very poor prognosis", "b": 2}]},
+{"type": "flip", "q": "What defines hypoplastic MDS?",
+ "a": ["Marrow cellularity <b>≤ 25%</b> (age-adjusted); it must be distinguished from aplastic anemia and hypocellular AML."]},
+{"type": "flip", "q": "Which parameters make up the IPSS-R, and what does IPSS-M add?",
+ "a": ["<b>Cytopenias</b>, <b>karyotype</b> (5 groups) and <b>marrow blast %</b>.", "IPSS-M (2022) adds the mutation status of about 30 genes."]},
+{"type": "flip", "q": "Which recurring AML abnormalities define AML even with a low blast count?",
+ "a": ["Most WHO-HAEM5 defining abnormalities: t(8;21), t(15;17), inv(16), <i>NPM1</i>, <i>KMT2A</i>, <i>MECOM</i>, <i>NUP98</i>…", "<b>Not</b> <i>BCR::ABL1</i> or <i>CEBPA</i>, which still need ≥ 20% blasts."]},
+{"type": "sort", "q": "Which conditions are in the differential diagnosis of MDS?",
+ "bins": ["Differential of MDS", "Not relevant"],
+ "items": [{"t": "B12 or folate deficiency", "b": 0}, {"t": "Copper deficiency", "b": 0}, {"t": "Parvovirus B19", "b": 0}, {"t": "Aplastic anemia and PNH", "b": 0}, {"t": "CCUS", "b": 0}, {"t": "Hereditary spherocytosis", "b": 1}]}
+]},{
+"key": "c6", "title": "Chapter Six: Myeloproliferative Neoplasms (MPNs)", "short": "Ch 6 · MPNs",
+"cards": [
+{"type": "flip", "q": "What characterizes the myeloproliferative neoplasms?",
+ "a": ["Clonal stem cell disorders with <b>excess production of mature</b> red cells, granulocytes and/or platelets, from hypersensitivity to or independence from cytokines.", "Hypercellular marrow (panmyelosis); classified by the most affected line; may progress to a blast phase."]},
+{"type": "sort", "q": "Match each MPN to its main genetic marker.",
+ "bins": ["CML", "Polycythemia vera", "Chronic neutrophilic leukemia", "JMML"],
+ "items": [{"t": "<i>BCR::ABL1</i> (100%)", "b": 0}, {"t": "<i>JAK2</i> V617F (> 95%) or exon 12", "b": 1}, {"t": "<i>CSF3R</i> mutation", "b": 2}, {"t": "RAS-pathway activation", "b": 3}]},
+{"type": "grid", "q": "Fill in the driver mutation frequencies.", "cols": ["<i>JAK2</i>", "<i>CALR</i>", "<i>MPL</i>"],
+ "rows": ["Essential thrombocythemia", "Primary myelofibrosis"], "symbols": ["~55%", "~50–60%", "~25%", "~3%", "~10%"],
+ "answer": [["~55%", "~25%", "~3%"], ["~50–60%", "~25%", "~10%"]],
+ "explain": ["About 10–15% of ET and 10% of PMF are \"triple-negative\"."]},
+{"type": "flip", "q": "What is the Philadelphia chromosome, and which protein does it produce?",
+ "a": ["A short chromosome 22 from <b>t(9;22)(q34;q11)</b>, creating the <b><i>BCR::ABL1</i></b> fusion.", "Mostly <b>p210</b>, a constitutively active <b>tyrosine kinase</b> (oncogene)."]},
+{"type": "sort", "q": "Is each finding typical of CML in chronic phase?",
+ "bins": ["Typical", "Not typical"],
+ "items": [{"t": "WBC > 50 G/L, often > 100 G/L", "b": 0}, {"t": "Myelocyte bulge with all maturation stages", "b": 0}, {"t": "Basophilia", "b": 0}, {"t": "Massive splenomegaly", "b": 0}, {"t": "Low LAP score", "b": 0}, {"t": "Very high serum B12", "b": 0}, {"t": "Leukemic hiatus", "b": 1}, {"t": "Marked dysgranulopoiesis", "b": 1}]},
+{"type": "flip", "q": "Why is serum B12 so high in CML?",
+ "a": ["Promyelocytes and myelocytes produce <b>transcobalamins I and III (haptocorrins)</b>, which bind B12 (up to 10× normal)."]},
+{"type": "flip", "q": "Which in vitro artifacts can extreme leukocytosis cause in chemistry?",
+ "a": ["<b>Pseudo-hyperkalemia</b> and <b>pseudo-hypoglycemia</b>."]},
+{"type": "sort", "q": "CML chronic phase or blast phase?",
+ "bins": ["Chronic phase", "Blast phase"],
+ "items": [{"t": "Blasts < 10%", "b": 0}, {"t": "≥ 20% myeloid blasts", "b": 1}, {"t": "Extramedullary blast proliferation", "b": 1}, {"t": "Increased lymphoblasts (even < 20%)", "b": 1}]},
+{"type": "sort", "q": "CML or leukemoid reaction?",
+ "bins": ["CML", "Leukemoid reaction"],
+ "items": [{"t": "Basophilia", "b": 0}, {"t": "Splenomegaly", "b": 0}, {"t": "High LAP score", "b": 1}, {"t": "Mostly mature neutrophils, toxic granulation", "b": 1}, {"t": "<i>BCR::ABL1</i> positive", "b": 0}]},
+{"type": "flip", "q": "What is a complete hematologic response in CML?",
+ "a": ["<b>WBC < 10 G/L</b>, <b>platelets < 450 G/L</b>, no immature granulocytes, spleen not palpable. Molecular response is followed by quantitative RT-PCR for <i>BCR::ABL1</i>."]},
+{"type": "sort", "q": "Is each a classic feature of polycythemia vera?",
+ "bins": ["Typical of PV", "Not typical"],
+ "items": [{"t": "Aquagenic pruritus", "b": 0}, {"t": "Erythromelalgia", "b": 0}, {"t": "Low EPO", "b": 0}, {"t": "Splenomegaly", "b": 0}, {"t": "Absent marrow iron", "b": 0}, {"t": "High EPO", "b": 1}, {"t": "Raised ESR", "b": 1}]},
+{"type": "flip", "q": "What changed in the WHO-HAEM5 diagnostic criteria for PV, and what is the hematocrit target?",
+ "a": ["<b>Red cell mass</b> measurement was removed from the major criteria.", "Phlebotomy keeps <b>Hct < 45%</b> (CYTO-PV trial)."]},
+{"type": "flip", "q": "Is <i>JAK2</i> V617F specific for PV?",
+ "a": ["<b>No</b>: present in > 95% of PV but also in about 50–60% of ET and PMF. Homozygous (high allele burden) cells are more frequent in PV."]},
+{"type": "flip", "q": "What causes the fibrosis in primary myelofibrosis?",
+ "a": ["It is <b>reactive</b>: fibroblasts are stimulated by megakaryocyte cytokines (<b>PDGF, TGF-β</b>). Extramedullary hematopoiesis causes massive splenomegaly."]},
+{"type": "sort", "q": "Which features are typical of primary myelofibrosis?",
+ "bins": ["Typical", "Not typical"],
+ "items": [{"t": "Leukoerythroblastic blood film", "b": 0}, {"t": "Tear-drop red cells", "b": 0}, {"t": "Dry tap on aspiration", "b": 0}, {"t": "Massive splenomegaly", "b": 0}, {"t": "Generalized lymphadenopathy", "b": 1}]},
+{"type": "flip", "q": "Which test is advised in myelofibrosis without splenomegaly?",
+ "a": ["An <b>ANA</b> test, to rule out SLE (autoimmune myelofibrosis)."]},
+{"type": "flip", "q": "Which platelet count defines ET, and when does bleeding occur?",
+ "a": ["Sustained <b>≥ 450 G/L</b>, confirmed on 2 CBCs 1–2 months apart, with clusters of large hyperlobulated megakaryocytes.", "Bleeding mainly above <b>1500 G/L</b> (acquired von Willebrand syndrome)."]},
+{"type": "sort", "q": "Reactive thrombocytosis cause?",
+ "bins": ["Causes reactive thrombocytosis", "Does not"],
+ "items": [{"t": "Bleeding", "b": 0}, {"t": "Post-splenectomy", "b": 0}, {"t": "Chronic infection", "b": 0}, {"t": "Iron deficiency", "b": 0}, {"t": "Malignancy", "b": 0}, {"t": "Aplastic anemia", "b": 1}]},
+{"type": "sort", "q": "MPN, MDS or AML?",
+ "bins": ["MPN", "MDS", "AML"],
+ "items": [{"t": "Effective hematopoiesis; increased counts", "b": 0}, {"t": "Ineffective hematopoiesis; cytopenias with dysplasia", "b": 1}, {"t": "Blasts ≥ 20%, minimal maturation", "b": 2}, {"t": "Splenomegaly common", "b": 0}]}
+]},{
+"key": "c7", "title": "Chapter Seven: Chronic Lymphocytic Leukemia/Small Lymphocytic Lymphoma", "short": "Ch 7 · CLL",
+"cards": [
+{"type": "flip", "q": "How do CLL and SLL differ?",
+ "a": ["One disease (clonal CD5+ mature B cells) with different presentations: <b>CLL</b> mainly in blood and marrow; <b>SLL</b> mainly in lymph nodes, with < 5 G/L circulating clonal B cells."]},
+{"type": "flip", "q": "Give the three main features of CLL, and why the cells live long.",
+ "a": ["<b>Apoptosis defect</b>, <b>immune deficiency</b>, and <b>autoimmune phenomena</b> (AIHA, ITP).", "<b>BCL2</b> is overexpressed (partly through del(13q14))."]},
+{"type": "flip", "q": "What lymphocyte count is needed to diagnose CLL (iwCLL 2018)?",
+ "a": ["At least <b>5 G/L monoclonal B cells</b> in the blood, sustained for <b>3 months</b>. Marrow examination is not needed."]},
+{"type": "grid", "q": "Classify the clonal B-cell finding (no symptoms or organomegaly).", "cols": ["Category"],
+ "rows": ["0.3 × 10⁹/L clonal B cells", "2 × 10⁹/L clonal B cells", "7 × 10⁹/L for 3 months"], "symbols": ["Low-count MBL", "CLL/SLL-type MBL", "CLL"],
+ "answer": [["Low-count MBL"], ["CLL/SLL-type MBL"], ["CLL"]],
+ "explain": ["CLL/SLL-type MBL progresses to CLL needing treatment at about 1–2% per year."]},
+{"type": "sort", "q": "Is each smear finding typical of CLL?",
+ "bins": ["Typical", "Not typical"],
+ "items": [{"t": "Small mature lymphocytes", "b": 0}, {"t": "Clumped \"soccer ball\" chromatin", "b": 0}, {"t": "Smudge (basket) cells", "b": 0}, {"t": "Blasts with Auer rods", "b": 1}]},
+{"type": "flip", "q": "Why may the anemia of CLL be regenerative or aregenerative?",
+ "a": ["<b>Regenerative</b> (high reticulocytes): autoimmune hemolytic anemia.", "<b>Aregenerative</b>: marrow infiltration or pure red cell aplasia."]},
+{"type": "flip", "q": "What is the typical immunophenotype of CLL?",
+ "a": ["<b>CD19+, CD5+, CD23+</b>, CD200 strong; CD20, CD22 and CD79b <b>weak</b>; weak sIg with κ or λ restriction; <b>FMC7 negative</b>."]},
+{"type": "grid", "q": "Score each marker in the Matutes score (1 point for the CLL-like result).", "cols": ["CLL-like result"],
+ "rows": ["Surface Ig", "CD5", "CD23", "FMC7", "CD79b or CD22"], "symbols": ["Weak", "Positive", "Negative"],
+ "answer": [["Weak"], ["Positive"], ["Positive"], ["Negative"], ["Weak"]],
+ "explain": ["Typical CLL scores 4–5; a score below 3 excludes CLL."]},
+{"type": "flip", "q": "How is the CLLflow score calculated, and what supports CLL?",
+ "a": ["<b>%CD200+ + %CD5/CD23 double-positive − %CD79b+ − %FMC7+</b> (within the clonal B cells).", "A score <b>greater than 0</b> supports CLL."]},
+{"type": "flip", "q": "Which marker helps separate CLL from mantle cell lymphoma?",
+ "a": ["<b>CD200</b>: strongly positive in CLL, negative in mantle cell lymphoma (which is also CD23− with cyclin D1 / t(11;14))."]},
+{"type": "sort", "q": "Good or poor prognosis in CLL?",
+ "bins": ["Good", "Poor"],
+ "items": [{"t": "Isolated del(13q14)", "b": 0}, {"t": "del(17p) or <i>TP53</i> mutation", "b": 1}, {"t": "Unmutated <i>IGHV</i>", "b": 1}, {"t": "ZAP-70 or CD38 expression", "b": 1}, {"t": "Lymphocyte doubling time < 12 months", "b": 1}, {"t": "High β2-microglobulin", "b": 1}, {"t": "Binet stage A", "b": 0}]},
+{"type": "flip", "q": "What is Richter syndrome?",
+ "a": ["Transformation of CLL into an aggressive <b>large-cell lymphoma</b>, with extranodal disease and a <b>sharp rise in LDH</b>. CLL with ≥ 15% prolymphocytes is \"prolymphocytic progression\"."]},
+{"type": "sort", "q": "B-PLL or T-PLL?",
+ "bins": ["B-PLL", "T-PLL"],
+ "items": [{"t": "No longer a distinct entity in WHO-HAEM5", "b": 0}, {"t": "Cytoplasmic blebs; inv(14) with <i>TCL1A</i>", "b": 1}, {"t": "> 55% prolymphocytes with prominent nucleolus (ICC)", "b": 0}, {"t": "CD2, CD3, CD5, CD7; often CD4", "b": 1}]},
+{"type": "sort", "q": "Is each finding typical of hairy cell leukemia?",
+ "bins": ["Typical", "Not typical"],
+ "items": [{"t": "Marked monocytopenia", "b": 0}, {"t": "Massive splenomegaly", "b": 0}, {"t": "Dry tap; \"fried-egg\" biopsy", "b": 0}, {"t": "<i>BRAF</i> V600E (≥ 95%)", "b": 0}, {"t": "Annexin A1 positive", "b": 0}, {"t": "CD5+ CD23+", "b": 1}, {"t": "Bulky lymphadenopathy", "b": 1}]},
+{"type": "flip", "q": "Which four markers form the HCL immunophenotypic score?",
+ "a": ["<b>CD11c, CD25, CD103, CD123</b> (1 point each). About 98% of classical HCL score 3 or 4."]}
+]},{
+"key": "c8", "title": "Chapter Eight: Plasma Cell Neoplasms", "short": "Ch 8 · Plasma cell neoplasms",
+"cards": [
+{"type": "flip", "q": "What is an M-protein?",
+ "a": ["A <b>homogeneous monoclonal immunoglobulin</b> (or light chain) made by a single clone of plasma cells (or B cells)."]},
+{"type": "flip", "q": "What does CRAB stand for in multiple myeloma?",
+ "a": ["<b>C</b>alcium > 11 mg/dL; <b>R</b>enal failure (creatinine > 2 mg/dL or clearance < 40 mL/min); <b>A</b>nemia (Hb < 10 g/dL or > 2 g/dL below normal); <b>B</b>one lesions (≥ 1 osteolytic lesion)."]},
+{"type": "flip", "q": "Give the IMWG diagnostic criteria for multiple myeloma.",
+ "a": ["Clonal marrow plasma cells <b>≥ 10%</b> (or a plasmacytoma) plus at least one myeloma-defining event:", "<b>CRAB</b>, or ≥ 60% clonal plasma cells, involved/uninvolved free light chain ratio <b>≥ 100</b>, or > 1 focal MRI lesion."]},
+{"type": "grid", "q": "Complete the plasma cell disorder criteria.", "cols": ["Serum M protein", "Marrow plasma cells", "CRAB / defining event"],
+ "rows": ["MGUS (non-IgM)", "Smoldering myeloma", "Multiple myeloma"], "symbols": ["< 30 g/L", "≥ 30 g/L", "Usually present", "< 10%", "10–59%", "≥ 10%", "Absent", "Present"],
+ "answer": [["< 30 g/L", "< 10%", "Absent"], ["≥ 30 g/L", "10–59%", "Absent"], ["Usually present", "≥ 10%", "Present"]],
+ "explain": ["Smoldering myeloma: M protein ≥ 30 g/L <b>and/or</b> 10–59% plasma cells, without CRAB."]},
+{"type": "flip", "q": "What are the most common causes of death in myeloma?",
+ "a": ["<b>Infections</b> (suppressed polyclonal Ig; encapsulated bacteria such as pneumococcus), then <b>renal disease</b>."]},
+{"type": "sort", "q": "Is each a mechanism of kidney damage in myeloma?",
+ "bins": ["Yes", "No"],
+ "items": [{"t": "Light chain cast nephropathy (Bence Jones)", "b": 0}, {"t": "Hypercalcemia", "b": 0}, {"t": "AL amyloidosis", "b": 0}, {"t": "NSAIDs and contrast agents", "b": 0}, {"t": "Iron overload", "b": 1}]},
+{"type": "flip", "q": "Describe the bone lesions of myeloma and their mechanism.",
+ "a": ["Sharp <b>\"punched-out\" lytic lesions</b> (vertebrae, ribs, skull, pelvis, femurs) or diffuse osteoporosis (~40%).", "Plasma cells release <b>osteoclast-activating factors</b>."]},
+{"type": "grid", "q": "Fill in the frequency of each myeloma isotype.", "cols": ["Frequency"],
+ "rows": ["IgG", "IgA", "Light chain only", "Non-secretory"], "symbols": ["~50%", "~20%", "15–20%", "1–3%"],
+ "answer": [["~50%"], ["~20%"], ["15–20%"], ["1–3%"]]},
+{"type": "flip", "q": "Why can serum protein electrophoresis miss light chain myeloma, and what must always be done?",
+ "a": ["Light chains are small, <b>filtered into the urine</b>, and do not accumulate in serum.", "Always test <b>serum and urine</b> (electrophoresis and immunofixation) plus the <b>serum free light chain assay</b>."]},
+{"type": "flip", "q": "How is the free light chain ratio calculated?",
+ "a": ["<b>Involved ÷ uninvolved</b> light chain: the monoclonal one (above normal) over the polyclonal one."]},
+{"type": "sort", "q": "Is each finding expected in multiple myeloma?",
+ "bins": ["Expected", "Not expected"],
+ "items": [{"t": "Rouleaux", "b": 0}, {"t": "ESR > 60 mm/hour", "b": 0}, {"t": "Hypercalcemia", "b": 0}, {"t": "Raised β2-microglobulin", "b": 0}, {"t": "Low ESR", "b": 1}]},
+{"type": "flip", "q": "What defines primary plasma cell leukemia?",
+ "a": ["Circulating plasma cells <b>≥ 5% of leukocytes</b> at diagnosis (about 2% of cases)."]},
+{"type": "flip", "q": "What is the immunophenotype of myeloma plasma cells, and how do they differ from normal plasma cells?",
+ "a": ["<b>CD38+, CD138+</b>, CD19− CD20−, with cytoplasmic κ or λ restriction.", "Aberrant <b>CD56</b> and loss of <b>CD19 and CD45</b> distinguish neoplastic from normal plasma cells."]},
+{"type": "sort", "q": "High-risk or standard-risk myeloma genetics?",
+ "bins": ["High risk", "Standard risk"],
+ "items": [{"t": "t(4;14)", "b": 0}, {"t": "t(14;16)", "b": 0}, {"t": "del(17p)", "b": 0}, {"t": "Gain or amplification of 1q", "b": 0}, {"t": "Trisomies (hyperdiploid)", "b": 1}]},
+{"type": "sort", "q": "Which morphologic finding fits each description?",
+ "bins": ["Flaming plasma cells", "Russell bodies / Mott cells", "Dutcher bodies"],
+ "items": [{"t": "Most frequent with IgA myeloma", "b": 0}, {"t": "Cytoplasmic immunoglobulin inclusions", "b": 1}, {"t": "Inclusions overlying the nucleus", "b": 2}]},
+{"type": "flip", "q": "How common is MGUS, and what is its risk?",
+ "a": ["About <b>3% at age 70</b> and ≥ 10% over 90.", "About <b>25%</b> eventually progress to myeloma: monitor periodically."]}
+]},{
+"key": "c10a", "title": "Chapter Ten (A): Normal Hemostasis and Coagulation Tests", "short": "Ch 10 · Hemostasis & tests",
+"cards": [
+{"type": "order", "q": "Put the stages of hemostasis in order.",
+ "steps": ["Vasoconstriction (endothelin)", "Primary hemostasis: platelet plug", "Secondary hemostasis: fibrin reinforces the plug", "Fibrinolysis: the clot is dissolved as the wound heals"]},
+{"type": "flip", "q": "What are the four parts of the coagulation \"quaternary complex\"?",
+ "a": ["<b>Enzyme</b> (VIIa, IXa, Xa, IIa…), <b>cofactor</b> (V, VIII, tissue factor, protein S), <b>calcium</b>, and a negatively charged <b>phospholipid surface</b>."]},
+{"type": "flip", "q": "Why are citrate and EDTA used as anticoagulants in sample tubes?",
+ "a": ["Coagulation is <b>calcium-dependent</b>; both chelate calcium (citrate for coagulation tests, EDTA for CBCs)."]},
+{"type": "sort", "q": "Primary or secondary hemostasis disorder?",
+ "bins": ["Primary (platelets, vWF)", "Secondary (coagulation factors)"],
+ "items": [{"t": "Petechiae and mucosal bleeding", "b": 0}, {"t": "Immediate bleeding after a cut", "b": 0}, {"t": "Hemarthroses and muscle hematomas", "b": 1}, {"t": "Delayed bleeding after injury", "b": 1}, {"t": "Menorrhagia and epistaxis in von Willebrand disease", "b": 0}]},
+{"type": "sort", "q": "Alpha granule or dense body content?",
+ "bins": ["Alpha granules", "Dense bodies"],
+ "items": [{"t": "Platelet factor 4", "b": 0}, {"t": "β-thromboglobulin", "b": 0}, {"t": "Fibrinogen and vWF", "b": 0}, {"t": "Factors V, XI, XIII", "b": 0}, {"t": "ADP and ATP", "b": 1}, {"t": "Serotonin", "b": 1}, {"t": "Calcium", "b": 1}]},
+{"type": "sort", "q": "Match each platelet receptor to its ligand.",
+ "bins": ["Collagen", "von Willebrand factor", "Fibrinogen", "ADP"],
+ "items": [{"t": "GP VI and GP Ia-IIa", "b": 0}, {"t": "GP Ib-IX-V", "b": 1}, {"t": "GP IIb-IIIa", "b": 2}, {"t": "P2Y12 (clopidogrel target)", "b": 3}]},
+{"type": "sort", "q": "Anticoagulant or procoagulant product?",
+ "bins": ["Endothelial anticoagulant", "Procoagulant (subendothelium)"],
+ "items": [{"t": "Prostacyclin (PGI2)", "b": 0}, {"t": "Nitric oxide", "b": 0}, {"t": "Thrombomodulin", "b": 0}, {"t": "t-PA", "b": 0}, {"t": "TFPI", "b": 0}, {"t": "Tissue factor on fibroblasts", "b": 1}, {"t": "Collagen", "b": 1}]},
+{"type": "flip", "q": "Which vessel wall disorders cause bleeding with normal platelet count, PT and PTT?",
+ "a": ["Scurvy, corticosteroid excess, vasculitis, senile purpura, <b>IgA vasculitis</b> (Henoch–Schönlein), <b>hereditary hemorrhagic telangiectasia</b> (Rendu–Osler–Weber), Ehlers–Danlos syndrome."]},
+{"type": "flip", "q": "Give the two roles of von Willebrand factor.",
+ "a": ["<b>Primary hemostasis</b>: platelet adhesion and aggregation (only the largest multimers are active).", "<b>Secondary hemostasis</b>: carries and protects <b>factor VIII</b> (half-life 12 h with vWF, 1–2 h without)."]},
+{"type": "sort", "q": "Does each factor raise or lower vWF levels?",
+ "bins": ["Raises vWF", "Lowers vWF"],
+ "items": [{"t": "Pregnancy", "b": 0}, {"t": "Stress, surgery, inflammation", "b": 0}, {"t": "Hyperthyroidism", "b": 0}, {"t": "Blood group O", "b": 1}, {"t": "Hypothyroidism", "b": 1}]},
+{"type": "order", "q": "Put the steps of platelet plug formation in order.",
+ "steps": ["Adhesion to collagen via vWF–GP Ib-IX-V", "Degranulation (ADP, TxA2, serotonin)", "Aggregation via fibrinogen bridging GP IIb-IIIa", "Phosphatidylserine exposure and fibrin stabilization"]},
+{"type": "flip", "q": "How does aspirin inhibit platelets?",
+ "a": ["It <b>irreversibly inhibits cyclooxygenase</b>, blocking thromboxane A2 synthesis (a vasoconstrictor and platelet agonist)."]},
+{"type": "sort", "q": "Match each inherited platelet disorder to its defect.",
+ "bins": ["Bernard–Soulier", "Glanzmann thrombasthenia", "Storage pool disease", "Gray platelet syndrome"],
+ "items": [{"t": "GP Ib-IX-V missing; giant platelets", "b": 0}, {"t": "GP IIb-IIIa missing; normal size and count", "b": 1}, {"t": "Dense granule deficiency", "b": 2}, {"t": "Alpha granule deficiency (<i>NBEAL2</i>)", "b": 3}]},
+{"type": "sort", "q": "Intrinsic, extrinsic or common pathway factor?",
+ "bins": ["Intrinsic (PTT)", "Extrinsic (PT)", "Common (PT and PTT)"],
+ "items": [{"t": "XII, XI, IX, VIII", "b": 0}, {"t": "Prekallikrein and HMWK", "b": 0}, {"t": "VII", "b": 1}, {"t": "X, V, II, fibrinogen", "b": 2}]},
+{"type": "flip", "q": "In the cell-based model, why does factor XII deficiency cause no bleeding?",
+ "a": ["Factor XI is activated mainly by <b>thrombin feedback</b>, not by XIIa. The key start is tissue factor–VIIa activating IX (and X)."]},
+{"type": "sort", "q": "Which complex activates what?",
+ "bins": ["Extrinsic tenase (TF–VIIa)", "Intrinsic tenase (IXa–VIIIa)", "Prothrombinase (Xa–Va)"],
+ "items": [{"t": "Activates X and IX", "b": 0}, {"t": "Activates X (on platelet phospholipid)", "b": 1}, {"t": "Converts prothrombin to thrombin", "b": 2}]},
+{"type": "sort", "q": "Is each a property of the coagulation factor?",
+ "bins": ["Vitamin K-dependent", "Not vitamin K-dependent"],
+ "items": [{"t": "II", "b": 0}, {"t": "VII", "b": 0}, {"t": "IX", "b": 0}, {"t": "X", "b": 0}, {"t": "Proteins C and S", "b": 0}, {"t": "V", "b": 1}, {"t": "VIII", "b": 1}]},
+{"type": "sort", "q": "Shortest or longest in vivo half-life?",
+ "bins": ["Shortest (4–6 hours)", "Longest (9–14 days)"],
+ "items": [{"t": "Factor VII", "b": 0}, {"t": "Factor XIII", "b": 1}]},
+{"type": "flip", "q": "Which factor deficiency is not detected by PT or PTT?",
+ "a": ["<b>Factor XIII</b> (fibrin-stabilizing factor), which cross-links fibrin."]},
+{"type": "sort", "q": "Match each natural inhibitor to its action.",
+ "bins": ["Antithrombin", "Protein C + S", "TFPI"],
+ "items": [{"t": "Inhibits IIa and Xa; activity × 1000 with heparin", "b": 0}, {"t": "Inactivates Va and VIIIa (activated by thrombin–thrombomodulin)", "b": 1}, {"t": "Inhibits Xa then the TF–VIIa complex", "b": 2}]},
+{"type": "sort", "q": "Activator or inhibitor of fibrinolysis?",
+ "bins": ["Promotes fibrinolysis", "Inhibits fibrinolysis"],
+ "items": [{"t": "t-PA", "b": 0}, {"t": "Urokinase", "b": 0}, {"t": "PAI-1", "b": 1}, {"t": "α2-antiplasmin", "b": 1}, {"t": "TAFI", "b": 1}]},
+{"type": "flip", "q": "How do D-dimers differ from FDPs?",
+ "a": ["<b>FDPs</b> come from fibrin <b>or fibrinogen</b>.", "<b>D-dimers</b> come only from <b>cross-linked fibrin</b> (XIIIa): proof that thrombin and plasmin were both active. A normal D-dimer with low probability excludes VTE."]},
+{"type": "flip", "q": "Give the anticoagulant and ratio for coagulation samples.",
+ "a": ["<b>3.2% buffered sodium citrate</b>, <b>9 parts blood : 1 part citrate</b>, tube filled to at least 90%. Adjust citrate if Hct > 55%."]},
+{"type": "sort", "q": "Correct coagulation sample practice?",
+ "bins": ["Correct", "Incorrect"],
+ "items": [{"t": "Discard tube first when using a butterfly needle", "b": 0}, {"t": "Fill the citrate tube after an EDTA tube", "b": 1}, {"t": "Centrifuge within 60 minutes to platelet-poor plasma", "b": 0}, {"t": "Refrigerate whole blood before processing", "b": 1}, {"t": "Thaw frozen plasma rapidly at 37 °C", "b": 0}],
+ "explain": ["Cold activates factor VII (short PT) and loses factor VIII and vWF."]},
+{"type": "grid", "q": "Fill in the maximum delay before testing.", "cols": ["Test within"],
+ "rows": ["APTT (heparin samples)", "Fibrinogen and TT", "PT on warfarin, D-dimer"], "symbols": ["4 hours", "8 hours", "24 hours"],
+ "answer": [["4 hours"], ["8 hours"], ["24 hours"]]},
+{"type": "grid", "q": "Predict the screening tests (Prolonged or Normal).", "cols": ["PT", "APTT", "TT"],
+ "rows": ["Factor VII deficiency", "Hemophilia A", "Factor X deficiency", "Afibrinogenemia", "Factor XIII deficiency"], "symbols": ["Prolonged", "Normal"],
+ "answer": [["Prolonged", "Normal", "Normal"], ["Normal", "Prolonged", "Normal"], ["Prolonged", "Prolonged", "Normal"], ["Prolonged", "Prolonged", "Prolonged"], ["Normal", "Normal", "Normal"]]},
+{"type": "calc", "kind": "inr"},
+{"type": "flip", "q": "How is PT activity (Quick %) determined, and when is it abnormal?",
+ "a": ["From the <b>Thivolle line</b>: PT of serial dilutions of normal plasma plotted against % activity.", "Abnormal below <b>70%</b>."]},
+{"type": "flip", "q": "When is the APTT considered prolonged in adults, children, infants and newborns?",
+ "a": ["Patient/control ratio above <b>1.2</b> (adults), 1.3 (children), 1.5 (infants), 1.6 (newborns)."]},
+{"type": "flip", "q": "How is unfractionated heparin monitored now, and what must be checked from day 5?",
+ "a": ["<b>Anti-Xa</b> (preferred) or APTT (ISTH 2026 guidance).", "The <b>platelet count</b> (heparin-induced thrombocytopenia)."]},
+{"type": "sort", "q": "Thrombin time or reptilase time?",
+ "bins": ["Thrombin time", "Reptilase time", "Both"],
+ "items": [{"t": "Prolonged by heparin", "b": 0}, {"t": "Very sensitive to dabigatran", "b": 0}, {"t": "Uses <i>Bothrops atrox</i> venom; not affected by heparin", "b": 1}, {"t": "Prolonged by low fibrinogen or dysfibrinogenemia", "b": 2}],
+ "explain": ["Prolonged TT with normal RT indicates heparin."]},
+{"type": "sort", "q": "Interpret the 50:50 mixing study.",
+ "bins": ["Factor deficiency", "Inhibitor"],
+ "items": [{"t": "Prolonged PTT corrects on mixing", "b": 0}, {"t": "PTT fails to correct (ratio stays > 1.2)", "b": 1}, {"t": "Corrects immediately but prolongs after 1–2 h at 37 °C", "b": 1}]},
+{"type": "grid", "q": "Which factors are missing from each mixing reagent?", "cols": ["Deficient in"],
+ "rows": ["Aged plasma", "Aged serum", "Adsorbed plasma", "Oxalated plasma"], "symbols": ["V and VIII", "VIII, V, II, I", "II, VII, IX, X", "V only"],
+ "answer": [["V and VIII"], ["VIII, V, II, I"], ["II, VII, IX, X"], ["V only"]]},
+{"type": "flip", "q": "Why is the bleeding time no longer recommended, and what replaced it?",
+ "a": ["It is <b>poorly reproducible and insensitive</b>.", "Replaced by the <b>PFA-100/200 closure time</b> (collagen/epinephrine or collagen/ADP), prolonged in vWD, platelet defects and with aspirin."]},
+{"type": "flip", "q": "Why must platelet-rich plasma be stirred during light transmission aggregometry?",
+ "a": ["Platelets aggregate only when <b>activated and in contact</b>; without stirring there is little or no aggregation. PRP is made at 150–200 g for 10–20 minutes."]},
+{"type": "sort", "q": "Platelet aggregation patterns: Glanzmann or Bernard–Soulier?",
+ "bins": ["Glanzmann thrombasthenia", "Bernard–Soulier syndrome"],
+ "items": [{"t": "No aggregation with ADP, epinephrine, collagen, arachidonic acid", "b": 0}, {"t": "Normal response to ristocetin", "b": 0}, {"t": "No response to ristocetin, not corrected by normal plasma", "b": 1}, {"t": "Normal response to ADP and collagen", "b": 1}]},
+{"type": "flip", "q": "How is fibrinogen measured by the Clauss method?",
+ "a": ["A <b>high concentration of thrombin</b> is added; the clotting time is <b>inversely proportional</b> to fibrinogen, read from a calibration curve. Reference 2–4 g/L."]},
+{"type": "sort", "q": "Does each condition lower or raise fibrinogen?",
+ "bins": ["Lowers fibrinogen", "Raises fibrinogen"],
+ "items": [{"t": "DIC", "b": 0}, {"t": "Liver disease", "b": 0}, {"t": "Massive transfusion", "b": 0}, {"t": "After thrombolytic therapy", "b": 0}, {"t": "Pregnancy", "b": 1}, {"t": "Inflammation (acute phase)", "b": 1}]},
+{"type": "flip", "q": "How do the vWF:RCo and vWF:Ag tests differ in qualitative and quantitative vWD?",
+ "a": ["vWF:RCo (ristocetin cofactor) measures <b>function</b>; vWF:Ag measures <b>amount</b>.", "Qualitative defects: Ag higher than RCo (ratio <b>< 0.7</b>). Quantitative: parallel (ratio ≥ 0.7)."]}
+]},{
+"key": "c10b", "title": "Chapter Ten (B): Bleeding Disorders, Thrombophilia and Anticoagulants", "short": "Ch 10 · Disorders & anticoagulants",
+"cards": [
+{"type": "flip", "q": "What is the most common inherited bleeding disorder, and how is it inherited?",
+ "a": ["<b>Von Willebrand disease</b>: about 1% of people (symptomatic in about 1 in 1,000); mostly <b>autosomal dominant</b>, so both sexes are affected."]},
+{"type": "sort", "q": "Match each vWD type to its defect.",
+ "bins": ["Type 1", "Type 2A", "Type 2B", "Type 2M", "Type 2N", "Type 3"],
+ "items": [{"t": "Partial quantitative deficiency (~75%)", "b": 0}, {"t": "Loss of high-molecular-weight multimers", "b": 1}, {"t": "Gain of function: increased binding to GP Ib; mild thrombocytopenia", "b": 2},
+  {"t": "Decreased platelet binding with normal multimers", "b": 3}, {"t": "Decreased binding of factor VIII; mimics hemophilia A", "b": 4}, {"t": "Near-total absence of vWF; autosomal recessive", "b": 5}]},
+{"type": "flip", "q": "Which vWD type shows increased aggregation with low-dose ristocetin (RIPA)?",
+ "a": ["<b>Type 2B</b> (and platelet-type pseudo-vWD). Low-dose RIPA is absent in types 1, 2A, 2M, 2N and 3."]},
+{"type": "flip", "q": "A man has hemophilia-like bleeding with low factor VIII, but the family history is not X-linked. What should you consider, and which test confirms it?",
+ "a": ["<b>Type 2N von Willebrand disease</b>; confirm with the <b>vWF:FVIII binding assay</b>."]},
+{"type": "flip", "q": "Why may a vWF test be falsely normal or falsely low?",
+ "a": ["<b>Falsely normal</b>: pregnancy, stress, inflammation (repeat weeks after delivery).", "<b>Lower</b> in blood group O: be cautious diagnosing vWD in group O people."]},
+{"type": "grid", "q": "Fill in the hemophilia types.", "cols": ["Deficient factor", "Inheritance"],
+ "rows": ["Hemophilia A (85%)", "Hemophilia B (15%)", "Hemophilia C"], "symbols": ["VIII", "IX", "XI", "X-linked recessive", "Autosomal recessive"],
+ "answer": [["VIII", "X-linked recessive"], ["IX", "X-linked recessive"], ["XI", "Autosomal recessive"]],
+ "explain": ["About one-third of hemophilia A and B cases arise from new mutations."]},
+{"type": "grid", "q": "Classify hemophilia severity by factor level (ISTH).", "cols": ["Severity"],
+ "rows": ["0.5%", "3%", "20%"], "symbols": ["Severe", "Moderate", "Mild"],
+ "answer": [["Severe"], ["Moderate"], ["Mild"]],
+ "explain": ["Severe < 1%; moderate 1–5%; mild > 5% to < 40%."]},
+{"type": "flip", "q": "Give the laboratory pattern of hemophilia A.",
+ "a": ["<b>Prolonged PTT</b> that <b>corrects on mixing</b>, normal PT, and low <b>factor VIII</b> assay (factor IX for hemophilia B)."]},
+{"type": "flip", "q": "What proportion of severe hemophilia patients develop inhibitors?",
+ "a": ["About <b>25–30%</b> in severe hemophilia A, and 3–5% in severe hemophilia B."]},
+{"type": "flip", "q": "How does factor VIII help distinguish liver disease from DIC?",
+ "a": ["Factor VIII is <b>normal or high in liver disease</b> (made outside hepatocytes) but <b>low in DIC</b> (consumed)."]},
+{"type": "flip", "q": "What is the key pathologic event in DIC?",
+ "a": ["Excess <b>tissue factor</b> activity: uncontrolled thrombin generation, consumption of factors and platelets, microvascular fibrin and secondary fibrinolysis: <b>bleeding plus thrombosis</b>."]},
+{"type": "sort", "q": "Is each a cause of DIC?",
+ "bins": ["Cause of DIC", "Not a cause"],
+ "items": [{"t": "Sepsis", "b": 0}, {"t": "Placental abruption or amniotic fluid embolism", "b": 0}, {"t": "Acute promyelocytic leukemia", "b": 0}, {"t": "Acute hemolytic transfusion reaction", "b": 0}, {"t": "Snake venom", "b": 0}, {"t": "Hemophilia A", "b": 1}]},
+{"type": "grid", "q": "Fill in the acute DIC profile.", "cols": ["Result"],
+ "rows": ["PT, PTT, TT", "Fibrinogen", "Platelets", "D-dimers", "Factors V and VIII"], "symbols": ["↑", "↓"],
+ "answer": [["↑"], ["↓"], ["↓"], ["↑"], ["↓"]],
+ "explain": ["Schistocytes on the smear. ISTH DIC score ≥ 5 = overt DIC. In chronic compensated DIC, the D-dimer may be the only abnormal test."]},
+{"type": "sort", "q": "Is each a cause of vitamin K deficiency?",
+ "bins": ["Yes", "No"],
+ "items": [{"t": "Biliary obstruction", "b": 0}, {"t": "Malabsorption", "b": 0}, {"t": "Antibiotic therapy", "b": 0}, {"t": "Newborn without vitamin K at birth", "b": 0}, {"t": "Iron deficiency", "b": 1}]},
+{"type": "flip", "q": "What is Virchow's triad?",
+ "a": ["<b>Endothelial injury</b>, <b>hypercoagulability</b> and <b>stasis</b>. Arterial thrombi: platelets and endothelium; venous thrombi: stasis and coagulation."]},
+{"type": "sort", "q": "Clue to inherited thrombophilia?",
+ "bins": ["Suggests inherited thrombophilia", "Does not"],
+ "items": [{"t": "Thrombosis before 40–50 years", "b": 0}, {"t": "Unprovoked thrombosis", "b": 0}, {"t": "Unusual site (cerebral, mesenteric veins)", "b": 0}, {"t": "Family history", "b": 0}, {"t": "Warfarin-induced skin necrosis", "b": 0}, {"t": "Thrombosis after hip surgery at 80", "b": 1}]},
+{"type": "sort", "q": "Match each thrombophilia to its feature.",
+ "bins": ["Antithrombin deficiency", "Protein C deficiency", "Factor V Leiden", "Prothrombin G20210A"],
+ "items": [{"t": "Most thrombogenic; heparin resistance", "b": 0}, {"t": "Homozygous: neonatal purpura fulminans", "b": 1}, {"t": "Arg506Gln; resists activated protein C", "b": 2}, {"t": "Prothrombin about 130%; venous risk 2–3×", "b": 3}]},
+{"type": "flip", "q": "How common is factor V Leiden, and how much does it raise the risk of thrombosis?",
+ "a": ["<b>3–8%</b> of Caucasians (also common in the Middle East); the most common inherited thrombophilia in Europeans.", "Heterozygotes <b>5–10×</b>, homozygotes <b>50–100×</b>."]},
+{"type": "flip", "q": "How does the APC resistance test work?",
+ "a": ["A PTT on patient plasma mixed with <b>factor V-deficient plasma</b>, with and without activated protein C. If the PTT does not prolong appropriately with APC, the patient is <b>resistant</b> (likely factor V Leiden; confirm genetically)."]},
+{"type": "flip", "q": "Which tests make up an inherited thrombophilia screen?",
+ "a": ["<b>APC resistance</b> (confirmed by genetics), <b>antithrombin</b>, <b>protein C and S</b>, <b>prothrombin G20210A</b>, factor VIII; antiphospholipid antibodies and lupus anticoagulant are also always tested."]},
+{"type": "sort", "q": "Inherited or acquired hypercoagulable state?",
+ "bins": ["Inherited", "Acquired"],
+ "items": [{"t": "Factor V Leiden", "b": 0}, {"t": "Protein S deficiency", "b": 0}, {"t": "Cancer", "b": 1}, {"t": "Pregnancy and oral contraceptives", "b": 1}, {"t": "Antiphospholipid syndrome", "b": 1}, {"t": "Nephrotic syndrome", "b": 1}, {"t": "Paroxysmal nocturnal hemoglobinuria", "b": 1}]},
+{"type": "sort", "q": "Which antiphospholipid test fits each description?",
+ "bins": ["Anticardiolipin", "Lupus anticoagulant", "Triple positivity"],
+ "items": [{"t": "Most sensitive test", "b": 0}, {"t": "Most specific; best correlated with thrombosis and fetal loss", "b": 1}, {"t": "LA + aCL + anti-β2GPI: highest risk", "b": 2}]},
+{"type": "flip", "q": "Why must antiphospholipid tests be repeated after 12 weeks?",
+ "a": ["Most lupus anticoagulants are <b>transient</b> (infection, inflammation) and disappear within 6–8 weeks. Only <b>persistent</b> positivity is significant."]},
+{"type": "order", "q": "Put the ISTH steps for detecting a lupus anticoagulant in order.",
+ "steps": ["Prolonged screen with low-phospholipid PTT and dRVVT", "Mixing with normal plasma fails to correct", "Excess phospholipid shortens or corrects the time (confirm)", "Exclude other coagulopathies"]},
+{"type": "flip", "q": "In a dRVVT, the patient/control ratio is 1.82 without and 1.21 with added phospholipid. What is the correction, and what does it mean?",
+ "a": ["(1.82 − 1.21) ÷ 1.82 × 100 = <b>33.5%</b>.", "More than 10% correction with phospholipid = <b>lupus anticoagulant</b>."]},
+{"type": "flip", "q": "How do you prove an unexpected long APTT is due to heparin contamination?",
+ "a": ["Repeat the APTT after <b>heparinase</b> (Hepzyme) treatment: it normalizes if heparin is the cause (39% of unexpected prolongations in one study)."]},
+{"type": "flip", "q": "How do anti-factor VIII inhibitors differ clinically from lupus anticoagulants, and how is the Rosner index interpreted?",
+ "a": ["Anti-VIII inhibitors cause <b>bleeding</b> (LA causes thrombosis). Mix patient + control, incubate 2 h, repeat APTT.", "Rosner index = [PTT(P+C) − PTT(C)] ÷ PTT(P) × 100: <b>> 15 positive</b>, < 12 negative."]},
+{"type": "sort", "q": "Unfractionated heparin or LMWH?",
+ "bins": ["Unfractionated heparin", "Low-molecular-weight heparin"],
+ "items": [{"t": "Inhibits IIa and Xa equally (chains ≥ 18 sugars)", "b": 0}, {"t": "Inhibits mainly Xa", "b": 1}, {"t": "Monitored by anti-Xa or APTT", "b": 0}, {"t": "Anti-Xa monitoring only in renal failure, pregnancy, extremes of weight", "b": 1}, {"t": "Agent of choice for DVT in pregnancy and cancer", "b": 1}]},
+{"type": "flip", "q": "Why does the PT change before the PTT when warfarin is started, and why give heparin at the same time?",
+ "a": ["<b>Factor VII</b> has the shortest half-life, so the PT (INR) is affected first.", "<b>Protein C</b> falls as fast as VII: without heparin cover, a transient hypercoagulable state can cause <b>skin necrosis</b>."]},
+{"type": "flip", "q": "How long does clopidogrel's effect last, and why?",
+ "a": ["About <b>10 days</b>: it irreversibly blocks the P2Y12 receptor, so the effect lasts the platelet lifespan."]},
+{"type": "flip", "q": "Why do DOACs matter for the coagulation laboratory?",
+ "a": ["They interfere with <b>PT, APTT, TT, lupus anticoagulant and thrombophilia tests</b>. Routine monitoring is not needed; drug levels can be measured. Not used for mechanical valves or APS."]}
+]}]};
+const KEY = 'studycards-' + DECK.id;
+let status = {};
+try { status = JSON.parse(localStorage.getItem(KEY) || '{}') || {} } catch (e) { status = {} }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(status)) } catch (e) {} }
+const app = document.getElementById('app');
+const esc = s => String(s);
+const plain = s => String(s).replace(/<[^>]+>/g, '');
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] } return a }
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const rnd = (lo, hi, step) => { const n = Math.round((hi - lo) / step); return +(lo + step * Math.floor(Math.random() * (n + 1))).toFixed(4) };
+const fmt = (x, d) => (+x).toFixed(d);
+
+// every card gets a stable id: chapter key + position
+const ALL = [];
+DECK.chapters.forEach(ch => ch.cards.forEach((c, i) => { c._id = ch.key + '.' + (i + 1); c._ch = ch; ALL.push(c) }));
+
+let list = [], idx = 0, mode = '';
+
+function home() {
+  mode = 'home';
+  const again = ALL.filter(c => status[c._id] === 'again').length;
+  const done = ALL.filter(c => status[c._id] === 'done').length;
+  app.innerHTML = '<a class="eyebrow" href="../" style="text-decoration:none">← All books</a><header><div class="eyebrow">' + DECK.eyebrow + '</div><h1>' + DECK.title + '</h1><p class="sub">' + DECK.sub + '</p></header>' +
+    '<div class="toolbar"><button class="btn primary" id="mixed">Mixed review (all chapters)</button>' +
+    '<button class="btn warn" id="again"' + (again ? '' : ' disabled') + '>Review my “Again” cards (' + again + ')</button></div>' +
+    '<p class="sub">' + done + ' of ' + ALL.length + ' cards marked “Got it”.</p>' +
+    '<div class="chapters">' + DECK.chapters.map((ch, k) => {
+      const n = ch.cards.length, g = ch.cards.filter(c => status[c._id] === 'done').length, a = ch.cards.filter(c => status[c._id] === 'again').length;
+      return '<button class="chap-btn" data-k="' + k + '"><span class="chap-title">' + ch.title + '</span><span class="chap-count">' + g + '/' + n + '</span>' +
+        '<span class="bar"><i class="g" style="width:' + (100 * g / n) + '%"></i><i class="a" style="width:' + (100 * a / n) + '%"></i></span></button>';
+    }).join('') + '</div>' +
+    '<div class="toolbar"><button class="btn" id="reset">Clear my progress</button></div><div id="confirm"></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  app.querySelectorAll('.chap-btn').forEach(b => b.onclick = () => start(DECK.chapters[+b.dataset.k].cards, DECK.chapters[+b.dataset.k].title));
+  document.getElementById('mixed').onclick = () => start(shuffle(ALL).slice(0, 30), 'Mixed review · 30 random cards');
+  document.getElementById('again').onclick = () => start(ALL.filter(c => status[c._id] === 'again'), 'Cards marked “Again”');
+  document.getElementById('reset').onclick = () => {
+    document.getElementById('confirm').innerHTML = '<div class="feedback no"><p class="ink">Clear all your progress for this book? This cannot be undone.</p><div class="row"><button class="btn warn" id="yes">Clear progress</button><button class="btn" id="no">Keep it</button></div></div>';
+    document.getElementById('yes').onclick = () => { status = {}; save(); home() };
+    document.getElementById('no').onclick = () => document.getElementById('confirm').innerHTML = '';
+  };
+  window.scrollTo(0, 0);
+}
+
+let setTitle = '';
+function start(cards, title) { if (!cards.length) return; list = cards; idx = 0; setTitle = title; mode = 'study'; study() }
+
+function study() {
+  app.innerHTML = '<div class="topline"><button class="btn" id="back">← Chapters</button><h2>' + setTitle + '</h2></div>' +
+    '<div class="strip" id="strip"></div><section class="card" id="card" aria-live="polite"></section>' +
+    '<div class="nav"><button class="btn" id="prev">← Previous</button><button class="btn" id="next">Next →</button></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  document.getElementById('back').onclick = home;
+  document.getElementById('prev').onclick = () => go(idx - 1);
+  document.getElementById('next').onclick = () => go(idx + 1);
+  go(0);
+}
+function drawStrip() {
+  const strip = document.getElementById('strip'); if (!strip) return;
+  strip.innerHTML = list.map((c, i) => '<button class="dot' + (status[c._id] === 'done' ? ' done' : status[c._id] === 'again' ? ' again' : '') +
+    '" data-i="' + i + '" aria-label="Card ' + (i + 1) + '" aria-current="' + (i === idx) + '">' + (i + 1) + '</button>').join('') +
+    '<span class="score">' + list.filter(c => status[c._id] === 'done').length + ' / ' + list.length + ' got it</span>';
+  strip.querySelectorAll('.dot').forEach(b => b.onclick = () => go(+b.dataset.i));
+}
+function go(i) {
+  idx = Math.max(0, Math.min(list.length - 1, i));
+  const c = list[idx], el = document.getElementById('card');
+  (R[c.type] || R.flip)(c, el);
+  drawStrip();
+  document.getElementById('prev').disabled = idx === 0;
+  document.getElementById('next').disabled = idx === list.length - 1;
+}
+document.addEventListener('keydown', e => {
+  if (mode !== 'study' || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') go(idx + 1); if (e.key === 'ArrowLeft') go(idx - 1);
+});
+
+const LABEL = { flip: 'Flip', grid: 'Fill the grid', panel: 'Rule out', calc: 'Calculate', sort: 'Sort', order: 'Put in order' };
+function head(c) { return '<div class="meta"><span class="chip">' + LABEL[c.type] + '</span><span class="chap">' + c._ch.short + '</span></div>' }
+function rate(box) {
+  box.insertAdjacentHTML('beforeend', '<div class="row"><button class="btn good" data-r="done">Got it</button><button class="btn warn" data-r="again">Again</button></div>');
+  box.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { status[list[idx]._id] = b.dataset.r; save(); if (idx < list.length - 1) go(idx + 1); else drawStrip() });
+}
+function paras(a) { return (Array.isArray(a) ? a : [a]).map(p => '<p>' + p + '</p>').join('') }
+function fb(el, ok, html) { const f = el.querySelector('.fb'); f.innerHTML = '<div class="feedback ' + (ok ? 'ok' : 'no') + '">' + html + '</div>'; if (ok !== null) rate(f) }
+
+const R = {
+  flip(c, el) {
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Answer in your head, then flip the card.</p><div class="row"><button class="btn primary" id="flip">Show answer</button></div>';
+    el.querySelector('#flip').onclick = () => {
+      el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><div class="answer">' + paras(c.a) + '</div><div class="fb"></div>';
+      rate(el.querySelector('.fb'));
+    };
+  },
+  grid(c, el) {
+    const v = c.variants ? pick(c.variants) : c;
+    const sym = c.symbols || ['+', '0'];
+    const rows = v.answer.length, cols = c.cols.length;
+    const state = v.answer.map((r, i) => r.map((x, j) => (v.given && v.given[i] && v.given[i][j] != null) ? null : ''));
+    let h = head(c) + '<p class="q">' + (v.q || c.q) + '</p><p class="hint">' + (c.hint || 'Tap each empty cell to cycle through the possible results, then check.') + '</p>' +
+      '<div class="legend">Tap to cycle: ' + sym.map(s => '<span>' + s + '</span>').join('') + (c.legend ? ' · ' + c.legend : '') + '</div>' +
+      '<div class="scroll"><table class="grid"><thead>';
+    if (c.groups) h += '<tr>' + (c.rows ? '<th></th>' : '') + c.groups.map(g => '<th colspan="' + g[1] + '">' + g[0] + '</th>').join('') + '</tr>';
+    h += '<tr>' + (c.rows || v.rows ? '<th></th>' : '') + c.cols.map(x => '<th>' + x + '</th>').join('') + '</tr></thead><tbody>';
+    const rlab = v.rows || c.rows;
+    for (let i = 0; i < rows; i++) {
+      h += '<tr>' + (rlab ? '<th class="rowh">' + rlab[i] + '</th>' : '');
+      for (let j = 0; j < cols; j++) {
+        const g = v.given && v.given[i] && v.given[i][j] != null ? v.given[i][j] : null;
+        h += g !== null ? '<td class="given">' + g + '</td>' : '<td><button class="tap" data-i="' + i + '" data-j="' + j + '" aria-label="' + plain((rlab ? rlab[i] + ', ' : '') + c.cols[j]) + '">·</button></td>';
+      }
+      h += '</tr>';
+    }
+    h += '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check</button>' + (c.variants ? '<button class="btn" id="nw">New case</button>' : '') + '</div><div class="fb"></div>';
+    el.innerHTML = h;
+    el.querySelectorAll('.tap').forEach(b => b.onclick = () => {
+      const i = +b.dataset.i, j = +b.dataset.j; const k = sym.indexOf(state[i][j]);
+      state[i][j] = sym[(k + 1) % sym.length]; b.textContent = state[i][j]; b.classList.add('set'); b.classList.remove('right', 'wrong');
+    });
+    if (c.variants) el.querySelector('#nw').onclick = () => R.grid(c, el);
+    el.querySelector('#chk').onclick = () => {
+      if (state.some(r => r.includes(''))) { fb(el, null, '<p>Fill every empty cell first.</p>'); return }
+      let ok = true;
+      el.querySelectorAll('.tap').forEach(b => { const i = +b.dataset.i, j = +b.dataset.j; const r = state[i][j] === v.answer[i][j]; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Not quite: the red cells are wrong.') + '</b></p>' + paras(v.explain || c.explain));
+    };
+  },
+  panel(c, el) {
+    const out = new Set(), keep = [].concat(c.keep);
+    let h = head(c) + '<p class="q">' + c.q + '</p><p class="hint">' + (c.hint || 'Tap an antigen to cross it out when it is present on a cell that did <b>not</b> react (0). Prefer homozygous cells. Then check.') + '</p>' +
+      '<div class="scroll"><table class="grid pt"><thead><tr><th>Cell</th>' +
+      c.antigens.map((a, i) => '<th class="ag" data-a="' + i + '" tabindex="0" role="button" aria-pressed="false">' + a + '</th>').join('') + '<th>' + (c.phase || 'IAT') + '</th></tr></thead><tbody>' +
+      c.cells.map((r, k) => '<tr><th class="rowh">' + (k + 1) + '</th>' + r.c.split('').map((x, i) => '<td data-a="' + i + '">' + (x === '+' ? '+' : '0') + '</td>').join('') + '<td class="rx">' + r.rx + '</td></tr>').join('') +
+      '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check my rule-outs</button><button class="btn" id="clr">Clear</button></div><div class="fb"></div>';
+    el.innerHTML = h;
+    const paint = () => {
+      el.querySelectorAll('th.ag').forEach(x => { const on = out.has(+x.dataset.a); x.classList.toggle('out', on); x.setAttribute('aria-pressed', on) });
+      el.querySelectorAll('.pt td[data-a]').forEach(d => d.classList.toggle('out', out.has(+d.dataset.a)));
+    };
+    el.querySelectorAll('th.ag').forEach(x => { const t = () => { const a = +x.dataset.a; out.has(a) ? out.delete(a) : out.add(a); paint() };
+      x.onclick = t; x.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t() } } });
+    el.querySelector('#clr').onclick = () => { out.clear(); paint(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      const wrong = keep.filter(k => out.has(k));
+      const left = c.antigens.map((_, i) => i).filter(i => !out.has(i) && !keep.includes(i));
+      if (wrong.length) fb(el, null, '<p><b>' + wrong.map(k => plain(c.antigens[k])).join(', ') + ' cannot be ruled out.</b> Check again: is it present on any cell that did not react?</p>');
+      else if (left.length) fb(el, null, '<p><b>Keep going.</b> Still not ruled out: ' + left.map(i => plain(c.antigens[i])).join(', ') + '.</p><p>Cross out every antigen carried by a non-reacting cell.</p>');
+      else { keep.forEach(k => el.querySelector('th.ag[data-a="' + k + '"]').classList.add('keep')); fb(el, true, paras(c.explain)) }
+    };
+  },
+  calc(c, el) {
+    const k = CALC[c.kind]();
+    el.innerHTML = head(c) + '<p class="q">' + k.q + '</p><div class="facts">' + k.facts.map(f => '<span>' + f + '</span>').join('') + '</div>' +
+      '<div class="calc"><label for="ans">' + k.label + '</label><input id="ans" type="text" inputmode="decimal" autocomplete="off">' + (k.unit ? '<span>' + k.unit + '</span>' : '') +
+      '<button class="btn primary" id="chk">Check</button><button class="btn" id="nw">New case</button></div><div class="fb"></div>';
+    el.querySelector('#nw').onclick = () => R.calc(c, el);
+    const inp = el.querySelector('#ans'); inp.onkeydown = e => { if (e.key === 'Enter') el.querySelector('#chk').click() };
+    el.querySelector('#chk').onclick = () => {
+      const v = parseFloat(inp.value.replace(',', '.'));
+      if (isNaN(v)) { fb(el, null, '<p>Type a number first.</p>'); return }
+      const ok = Math.abs(v - k.answer) <= k.tol;
+      fb(el, ok, '<p><b>' + (ok ? 'Correct: ' : 'The answer is ') + k.show + '</b></p><ol class="steps">' + k.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>' + (k.note ? '<p>' + k.note + '</p>' : ''));
+    };
+  },
+  sort(c, el) {
+    const items = shuffle(c.items), st = items.map(() => -1);
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap each item to move it through the groups, then check.</p>' +
+      '<div class="legend">Groups: ' + c.bins.map(b => '<span>' + b + '</span>').join('') + '</div><div class="items">' +
+      items.map((it, i) => '<button class="item" data-i="' + i + '"><span>' + it.t + '</span><span class="tag">choose</span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i; st[i] = (st[i] + 1) % c.bins.length;
+      const t = b.querySelector('.tag'); t.textContent = plain(c.bins[st[i]]); t.classList.add('set'); b.classList.remove('right', 'wrong') });
+    el.querySelector('#chk').onclick = () => {
+      if (st.includes(-1)) { fb(el, null, '<p>Place every item in a group first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = st[i] === items[i].b; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Some items are in the wrong group (red).') + '</b></p>' + (ok ? '' : '<ul>' + items.filter((it, i) => st[i] !== it.b).map(it => '<li>' + it.t + ' → ' + c.bins[it.b] + '</li>').join('') + '</ul>') + (c.explain ? paras(c.explain) : ''));
+    };
+  },
+  order(c, el) {
+    const shown = shuffle(c.steps.map((s, i) => ({ s, i }))); let seq = [];
+    const draw = () => {
+      el.querySelectorAll('.item').forEach(b => { const p = seq.indexOf(+b.dataset.i); b.classList.toggle('picked', p >= 0); b.querySelector('.num').textContent = p >= 0 ? p + 1 : '' });
+    };
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap the steps in the right order. Tap a numbered step again to remove it.</p><div class="items">' +
+      shown.map(x => '<button class="item" data-i="' + x.i + '"><span>' + x.s + '</span><span class="num"></span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button><button class="btn" id="clr">Start again</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i, p = seq.indexOf(i); if (p >= 0) seq.splice(p, 1); else seq.push(i);
+      el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw() });
+    el.querySelector('#clr').onclick = () => { seq = []; el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      if (seq.length < c.steps.length) { fb(el, null, '<p>Number every step first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = seq.indexOf(i) === i; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct order.' : 'Not quite. The right order is:') + '</b></p>' + (ok ? '' : '<ol class="steps">' + c.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>') + (c.explain ? paras(c.explain) : ''));
+    };
+  }
+};
+
+const CALC = {
+  rhig() {
+    const kb = rnd(0.3, 3.0, 0.1), fetal = kb * 50, raw = fetal / 30, w = Math.floor(raw), d = raw - w, v = (d >= 0.5 ? w + 1 : w) + 1;
+    return { q: 'A D-negative mother delivers a D-positive baby. How many 300 µg vials of RhIG does she need?',
+      facts: ['Kleihauer–Betke: ' + fmt(kb, 1) + '% fetal cells', 'Maternal blood volume: 5000 mL'], label: 'Vials:', unit: '', answer: v, tol: 0, show: v + ' vials.',
+      steps: ['Fetal blood = ' + fmt(kb, 1) + '% × 5000 mL = ' + fmt(fetal, 0) + ' mL', fmt(fetal, 0) + ' ÷ 30 = ' + fmt(raw, 2), 'Decimal ' + (d >= 0.5 ? '≥ 0.5: round up to ' + (w + 1) : '< 0.5: round down to ' + w), 'Add one vial: <b>' + v + '</b>'] };
+  },
+  hw() {
+    const negPct = pick([9, 16, 25, 36, 49, 64, 4, 1]), q = Math.sqrt(negPct / 100), p = 1 - q, het = 2 * p * q * 100;
+    return { q: 'In a population, ' + (100 - negPct) + '% of people are antigen-positive and ' + negPct + '% are antigen-negative (homozygous for the silent/recessive allele). What percentage are heterozygous?',
+      facts: ['Hardy–Weinberg: p² + 2pq + q² = 1', 'Antigen-negative = q² = ' + (negPct / 100)], label: 'Heterozygous:', unit: '%', answer: het, tol: 0.6, show: fmt(het, 0) + '%.',
+      steps: ['q² = ' + (negPct / 100) + ' → q = ' + fmt(q, 2), 'p = 1 − q = ' + fmt(p, 2), '2pq = 2 × ' + fmt(p, 2) + ' × ' + fmt(q, 2) + ' = ' + fmt(het / 100, 2) + ' → <b>' + fmt(het, 0) + '%</b>'] };
+  },
+  antneg() {
+    const ab = [['anti-Fy<sup>a</sup>', 33], ['anti-S', 50], ['anti-E', 70], ['anti-K', 91], ['anti-c', 20], ['anti-Jk<sup>a</sup>', 23]];
+    const a = shuffle(ab).slice(0, 2), units = pick([2, 3, 4]), f = a[0][1] / 100 * a[1][1] / 100, n = units / f;
+    return { q: 'A patient has ' + a[0][0] + ' and ' + a[1][0] + '. The physician requests ' + units + ' units. About how many units must be screened?',
+      facts: ['Compatible (antigen-negative) donors: ' + plain(a[0][0]).replace('anti-', '') + '-negative ≈ ' + a[0][1] + '%; ' + plain(a[1][0]).replace('anti-', '') + '-negative ≈ ' + a[1][1] + '%'], label: 'Units to screen:', unit: '',
+      answer: n, tol: Math.max(1, n * 0.06), show: 'about ' + Math.round(n) + ' units.',
+      steps: ['Compatible fraction = ' + (a[0][1] / 100) + ' × ' + (a[1][1] / 100) + ' = ' + fmt(f, 3), units + ' ÷ ' + fmt(f, 3) + ' = ' + fmt(n, 1) + ' → about <b>' + Math.round(n) + ' units</b>'] };
+  },
+  cci() {
+    const pre = rnd(5, 15, 1) * 1000, inc = rnd(5, 40, 1) * 1000, post = pre + inc, bsa = rnd(1.5, 2.1, 0.1), dose = rnd(3, 4.5, 0.5), cci = inc * bsa / dose;
+    return { q: 'A patient receives an apheresis platelet unit. Calculate the 1-hour corrected count increment (CCI).',
+      facts: ['Pre-count: ' + pre.toLocaleString('en') + ' /µL', '1-hour post-count: ' + post.toLocaleString('en') + ' /µL', 'Body surface area: ' + fmt(bsa, 1) + ' m²', 'Platelets transfused: ' + fmt(dose, 1) + ' × 10¹¹'],
+      label: 'CCI:', unit: '', answer: cci, tol: Math.max(150, cci * 0.03), show: Math.round(cci).toLocaleString('en') + '.',
+      steps: ['Increment = ' + post.toLocaleString('en') + ' − ' + pre.toLocaleString('en') + ' = ' + inc.toLocaleString('en') + ' /µL', 'CCI = ' + inc.toLocaleString('en') + ' × ' + fmt(bsa, 1) + ' ÷ ' + fmt(dose, 1) + ' = <b>' + Math.round(cci).toLocaleString('en') + '</b>'],
+      note: cci >= 7500 ? 'A 1-hour CCI of 7,500 or more is an adequate response.' : 'Below 7,500: inadequate response. Two consecutive inadequate CCIs define refractoriness.' };
+  },
+  rbcdose() {
+    const kg = rnd(50, 90, 5), init = rnd(0.18, 0.24, 0.01), want = rnd(0.27, 0.32, 0.01), bv = kg * 70, n = bv * (want - init) / 200;
+    return { q: 'How many red cell units are needed to reach the desired hematocrit?',
+      facts: ['Weight: ' + kg + ' kg (blood volume ≈ 70 mL/kg)', 'Initial Hct: ' + fmt(init * 100, 0) + '%', 'Desired Hct: ' + fmt(want * 100, 0) + '%', 'Red cell volume per unit ≈ 200 mL'],
+      label: 'Units:', unit: '', answer: n, tol: 0.25, show: fmt(n, 1) + ' → ' + Math.ceil(n) + ' units.',
+      steps: ['Blood volume = ' + kg + ' × 70 = ' + bv + ' mL', bv + ' × (' + fmt(want, 2) + ' − ' + fmt(init, 2) + ') = ' + fmt(bv * (want - init), 0) + ' mL of red cells', fmt(bv * (want - init), 0) + ' ÷ 200 = <b>' + fmt(n, 1) + '</b>, so about ' + Math.ceil(n) + ' units'] };
+  },
+  indices() {
+    const rbc = rnd(2.8, 5.8, 0.1), mcv = rnd(62, 112, 1), hct = +(rbc * mcv / 10).toFixed(1), mchc = rnd(29, 36, 0.5), hb = +(hct * mchc / 100).toFixed(1);
+    const which = pick(['MCV', 'MCH', 'MCHC']);
+    const val = { MCV: hct / rbc * 10, MCH: hb / rbc * 10, MCHC: hb / hct * 100 }[which];
+    const unit = { MCV: 'fL', MCH: 'pg', MCHC: 'g/dL' }[which];
+    const step = { MCV: 'MCV = Hct ÷ RBC × 10 = ' + hct + ' ÷ ' + rbc + ' × 10', MCH: 'MCH = Hb ÷ RBC × 10 = ' + hb + ' ÷ ' + rbc + ' × 10', MCHC: 'MCHC = Hb ÷ Hct × 100 = ' + hb + ' ÷ ' + hct + ' × 100' }[which];
+    return { q: 'Calculate the <b>' + which + '</b>.', facts: ['RBC: ' + rbc + ' × 10¹²/L', 'Hemoglobin: ' + hb + ' g/dL', 'Hematocrit: ' + hct + '%'], label: which + ':', unit, answer: val, tol: which === 'MCHC' ? 0.3 : 0.6,
+      show: fmt(val, 1) + ' ' + unit + '.', steps: [step + ' = <b>' + fmt(val, 1) + ' ' + unit + '</b>'],
+      note: which === 'MCV' ? (val < 80 ? 'Microcytic.' : val > 100 ? 'Macrocytic.' : 'Normocytic.') : '' };
+  },
+  retic() {
+    const hct = rnd(14, 44, 1), ret = rnd(1, 12, 0.5), cor = ret * hct / 45, mf = hct >= 36 ? 1 : hct >= 26 ? 1.5 : hct >= 16 ? 2 : 2.5, rpi = cor / mf;
+    return { q: 'Calculate the reticulocyte production index (RPI).', facts: ['Reticulocytes: ' + ret + '%', 'Hematocrit: ' + hct + '%', 'Maturation correction: Hct 36–45 → 1.0; 26–35 → 1.5; 16–25 → 2.0; ≤ 15 → 2.5'],
+      label: 'RPI:', unit: '', answer: rpi, tol: 0.15, show: fmt(rpi, 1) + '.',
+      steps: ['Corrected retic = ' + ret + ' × ' + hct + ' ÷ 45 = ' + fmt(cor, 2) + '%', 'Maturation correction for Hct ' + hct + '% = ' + mf, 'RPI = ' + fmt(cor, 2) + ' ÷ ' + mf + ' = <b>' + fmt(rpi, 1) + '</b>'],
+      note: rpi >= 3 ? 'RPI ≥ 3: adequate marrow response (e.g. hemolysis or bleeding).' : rpi < 2 ? 'RPI < 2: inadequate response (hypoproliferative or ineffective erythropoiesis).' : 'Borderline response.' };
+  },
+  nrbc() {
+    const wbc = rnd(6, 30, 0.5), n = rnd(5, 60, 1), cor = wbc * 100 / (100 + n);
+    return { q: 'The analyzer counts nucleated red cells as white cells. Correct the WBC count.', facts: ['WBC (uncorrected): ' + wbc + ' × 10⁹/L', 'NRBC on the smear: ' + n + ' per 100 WBCs'],
+      label: 'Corrected WBC:', unit: '× 10⁹/L', answer: cor, tol: 0.15, show: fmt(cor, 1) + ' × 10⁹/L.', steps: ['Corrected WBC = ' + wbc + ' × 100 ÷ (100 + ' + n + ') = <b>' + fmt(cor, 1) + '</b>'] };
+  },
+  abs() {
+    const wbc = rnd(2, 25, 0.5), cell = pick([['neutrophils', 40, 85], ['lymphocytes', 15, 70], ['eosinophils', 2, 25], ['monocytes', 3, 15]]), pct = rnd(cell[1], cell[2], 1), a = wbc * pct / 100;
+    return { q: 'Calculate the absolute ' + cell[0] + ' count.', facts: ['WBC: ' + wbc + ' × 10⁹/L', cell[0][0].toUpperCase() + cell[0].slice(1) + ': ' + pct + '%'], label: 'Absolute count:', unit: '× 10⁹/L',
+      answer: a, tol: 0.06, show: fmt(a, 2) + ' × 10⁹/L.', steps: ['Absolute count = WBC × % = ' + wbc + ' × ' + (pct / 100) + ' = <b>' + fmt(a, 2) + '</b>'] };
+  },
+  mentzer() {
+    const thal = Math.random() < 0.5, rbc = thal ? rnd(5.2, 6.6, 0.1) : rnd(3.2, 4.4, 0.1), mcv = thal ? rnd(58, 70, 1) : rnd(66, 78, 1), idx = mcv / rbc;
+    return { q: 'A patient has a microcytic anemia. Calculate the Mentzer index.', facts: ['MCV: ' + mcv + ' fL', 'RBC: ' + rbc + ' × 10¹²/L'], label: 'Mentzer index:', unit: '',
+      answer: idx, tol: 0.15, show: fmt(idx, 1) + '.', steps: ['Mentzer index = MCV ÷ RBC = ' + mcv + ' ÷ ' + rbc + ' = <b>' + fmt(idx, 1) + '</b>'],
+      note: idx < 13 ? 'Below 13: favors β-thalassemia trait. Confirm with Hb A<sub>2</sub> (> 3.5%).' : 'Above 13: favors iron deficiency. Confirm with ferritin.' };
+  },
+  inr() {
+    const mn = rnd(11.5, 13, 0.5), pt = rnd(14, 40, 0.5), isi = pick([1.0, 1.1, 1.2, 1.3]), inr = Math.pow(pt / mn, isi);
+    return { q: 'A patient on warfarin (vitamin K antagonist) has the following results. Calculate the INR.', facts: ['Patient PT: ' + pt + ' s', 'Mean normal PT: ' + mn + ' s', 'ISI of the reagent: ' + fmt(isi, 1)],
+      label: 'INR:', unit: '', answer: inr, tol: 0.06, show: fmt(inr, 1) + '.', steps: ['Ratio = ' + pt + ' ÷ ' + mn + ' = ' + fmt(pt / mn, 2), 'INR = ' + fmt(pt / mn, 2) + '<sup>' + fmt(isi, 1) + '</sup> = <b>' + fmt(inr, 1) + '</b>'] };
+  }
+};
+
+home();
+</script>
+</body>
+</html>
