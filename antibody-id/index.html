@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Antibody Screening & Identification Study Cards</title>
+<style>
+/* Layout: chapter list (home) and one study card at a time; accent colour comes from each book's cover. */
+:root {
+  --bg: #F3F6F6; --surface: #FFFFFF; --ink: #15282C; --muted: #5A6E72; --line: #D5E0E1;
+  --accent: #5B3A8C; --accent-soft: #ECE5F5; --red: #B8233A; --red-soft: #FBE7EA;
+  --good: #1E7A4C; --good-soft: #E2F3EA; --warn: #9A5B00; --warn-soft: #FDF1DC;
+  --f-display: "Segoe UI Variable Display", "SF Pro Display", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  --f-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", Consolas, "Roboto Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #B9A0E6; --accent-soft: #2C2140; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #B9A0E6; --accent-soft: #2C2140; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark }
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(20px, env(safe-area-inset-top, 0px)); padding-bottom: max(40px, env(safe-area-inset-bottom, 0px)) }
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 16px }
+header { display: grid; gap: 4px }
+.eyebrow { font: 700 12px/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent) }
+h1 { font: 700 clamp(26px, 6vw, 34px)/1.1 var(--f-display); margin: 0; text-wrap: balance }
+h2 { font: 700 20px/1.2 var(--f-display); margin: 0 }
+.sub { color: var(--muted); margin: 0 }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px }
+.chapters { display: grid; gap: 8px }
+.chap-btn { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; text-align: left; width: 100%;
+  padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit }
+.chap-btn:hover { border-color: var(--accent) }
+.chap-title { font-weight: 700; min-width: 0 }
+.chap-count { font: 500 13px var(--f-mono); color: var(--muted); white-space: nowrap }
+.bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; display: flex }
+.bar i { display: block; height: 100% } .bar .g { background: var(--good) } .bar .a { background: var(--warn) }
+.strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center }
+.dot { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  font: 700 12px var(--f-mono); cursor: pointer; display: grid; place-items: center; padding: 0 }
+.dot[aria-current="true"] { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent) }
+.dot.done { background: var(--good-soft); color: var(--good); border-color: transparent }
+.dot.again { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+.score { margin-left: auto; font: 500 13px var(--f-mono); color: var(--muted) }
+.topline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; min-width: 0 }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.chip { font: 700 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent) }
+.chap { font-size: 13px; color: var(--muted) }
+.q { font: 600 clamp(18px, 4.4vw, 22px)/1.35 var(--f-display); margin: 0; text-wrap: pretty }
+.hint { color: var(--muted); margin: 0; font-size: 15px }
+.answer { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 14px; border-radius: 0 8px 8px 0 }
+.answer p, .feedback p { margin: 0 0 6px } .answer p:last-child, .feedback p:last-child { margin: 0 }
+.answer ul, .feedback ul { margin: 4px 0 0; padding-left: 20px }
+.row { display: flex; gap: 10px; flex-wrap: wrap }
+button.btn { font: 700 15px var(--f-body); padding: 11px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer }
+button.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface) }
+button.btn.good { background: var(--good-soft); color: var(--good); border-color: transparent }
+button.btn.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+button.btn:disabled { opacity: .45; cursor: default }
+button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px }
+.nav { display: flex; justify-content: space-between; gap: 10px }
+.feedback { padding: 12px 14px; border-radius: 8px; font-size: 15px; display: grid; gap: 4px }
+.feedback.ok { background: var(--good-soft); color: var(--good) }
+.feedback.no { background: var(--red-soft); color: var(--red) }
+.feedback .ink { color: var(--ink) }
+.scroll { overflow-x: auto; min-width: 0 }
+table.grid { border-collapse: collapse; font: 500 14px var(--f-mono); width: 100% }
+.grid th, .grid td { border: 1px solid var(--line); padding: 0; text-align: center; min-width: 38px; height: 40px }
+.grid th { background: var(--bg); color: var(--muted); font-weight: 700; padding: 4px 6px; font-family: var(--f-body); font-size: 13px }
+.grid th.rowh { text-align: left; padding: 4px 10px; color: var(--ink) }
+.grid td.given { color: var(--ink); font-weight: 700; padding: 4px 6px }
+.grid td.rx { font-weight: 700; color: var(--red) }
+.tap { width: 100%; height: 100%; min-height: 40px; border: 0; background: transparent; color: var(--ink); font: 700 17px var(--f-mono); cursor: pointer; padding: 2px 6px }
+.tap.set { color: var(--red) }
+.tap.right { background: var(--good-soft) } .tap.wrong { background: var(--red-soft) }
+th.ag { cursor: pointer; user-select: none; color: var(--ink) }
+th.ag.out, td.out { text-decoration: line-through; color: var(--muted); background: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 7px) }
+th.ag.keep { background: var(--red-soft); color: var(--red) }
+.calc { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+.calc input { font: 700 18px var(--f-mono); width: 9ch; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink) }
+.facts { font: 500 15px var(--f-mono); background: var(--bg); border-radius: 8px; padding: 12px 14px; display: grid; gap: 2px }
+ol.steps { margin: 0; padding-left: 20px } ol.steps li { margin: 2px 0 }
+.items { display: grid; gap: 8px }
+.item { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; text-align: left;
+  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer }
+.item .tag { font: 700 12px/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); white-space: nowrap }
+.item .tag.set { background: var(--accent-soft); color: var(--accent) }
+.item.right { border-color: var(--good); background: var(--good-soft) } .item.wrong { border-color: var(--red); background: var(--red-soft) }
+.item .num { font: 700 13px var(--f-mono); min-width: 24px; height: 24px; border-radius: 12px; display: grid; place-items: center; background: var(--bg); color: var(--muted) }
+.item.picked .num { background: var(--accent); color: var(--surface) }
+.legend { display: flex; gap: 6px; flex-wrap: wrap; font-size: 13px; color: var(--muted) }
+.legend span { font: 700 12px var(--f-mono); padding: 4px 6px; border-radius: 6px; background: var(--bg); color: var(--ink) }
+footer { color: var(--muted); font-size: 13px; text-align: center }
+.empty { color: var(--muted); padding: 20px; text-align: center }
+@media (prefers-reduced-motion: no-preference) { .answer, .feedback { animation: in .18s ease-out } @keyframes in { from { opacity: .4; transform: translateY(3px) } } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const DECK = {"id":"abid","title":"Antibody Screening &amp; Identification","eyebrow":"Workshop cards for MLT students","sub":"Pick a chapter. Think of the answer first, then check yourself. Cards you mark Again come back in your review.","footer":"Cases adapted from Harmening, Modern Blood Banking &amp; Transfusion Practices, 7th ed., Figs 10&ndash;4 and 10&ndash;6 &middot; Dr. Tarek Faour &middot; 17 cards &middot; Anonymous usage statistics, no personal data","chapters":[{
+"key": "a1", "title": "Part 1: Antibody Screen Interpretation", "short": "Antibody screen",
+"cards": [
+{"type": "flip", "q": "Screen case 1.<div class='scroll'><table class='grid'><tr><th></th><th>IS</th><th>37 °C</th><th>AHG (poly)</th></tr><tr><th>SC I</th><td>0</td><td>0</td><td>0</td></tr><tr><th>SC II</th><td>0</td><td>0</td><td>2+</td></tr><tr><th>Auto</th><td>0</td><td>0</td><td>0</td></tr></table></div>(1) Is the autocontrol positive or negative, and what does it mean?<br>(2) In which phase is the reaction, and which immunoglobulin class is likely?<br>(3) What are the possible interpretations?<br>(4) What do you do next?",
+ "a": ["(1) Autocontrol <b>negative</b>: the patient's own cells are not coated, so this is an <b>alloantibody</b>, not an autoantibody.",
+  "(2) AHG only: a warm-reacting, probably <b>IgG</b> antibody (potentially clinically significant).",
+  "(3) A <b>single alloantibody</b> to an antigen on cell II but not on cell I, or <b>two alloantibodies</b> whose antigens are both present only on cell II.",
+  "(4) Look at the screen antigram: antigens on cell II and absent from cell I are the candidates. Then test an <b>identification panel</b> by the same method."]},
+{"type": "flip", "q": "Screen case 2.<div class='scroll'><table class='grid'><tr><th></th><th>IS</th><th>37 °C</th><th>AHG (poly)</th></tr><tr><th>SC I</th><td>0</td><td>1+</td><td>3+</td></tr><tr><th>SC II</th><td>0</td><td>0</td><td>1+</td></tr><tr><th>Auto</th><td>0</td><td>0</td><td>0</td></tr></table></div>(1) Autocontrol?<br>(2) Phase and immunoglobulin class?<br>(3) Why might cell I react more strongly than cell II?<br>(4) Possible interpretations?",
+ "a": ["(1) <b>Negative</b>: alloantibody (or antibodies).",
+  "(2) Starting at 37 °C and strongest at AHG: probably <b>IgG</b>. (Some IgG antibodies, e.g. Rh, can agglutinate at 37 °C in LISS or albumin.)",
+  "(3) <b>Dosage</b>: cell I may be <b>homozygous</b> (double dose) for the antigen and cell II <b>heterozygous</b> (single dose). Typical of Rh, Kidd, Duffy and MNS antibodies.",
+  "(4) <b>Multiple alloantibodies</b> (more of them react with cell I), or a <b>single alloantibody showing dosage</b>. A panel decides."]},
+{"type": "flip", "q": "Screen case 3.<div class='scroll'><table class='grid'><tr><th></th><th>IS</th><th>37 °C</th><th>AHG (poly)</th></tr><tr><th>SC I</th><td>1+</td><td>0</td><td>0</td></tr><tr><th>SC II</th><td>2+</td><td>0</td><td>0</td></tr><tr><th>Auto</th><td>0</td><td>0</td><td>0</td></tr></table></div>(1) Autocontrol?<br>(2) Phase and immunoglobulin class?<br>(3) Which antibodies are typical?<br>(4) Is it usually clinically significant, and how can you avoid it?",
+ "a": ["(1) <b>Negative</b>: a cold <b>alloantibody</b>, not a cold autoantibody (anti-I would usually also react with the patient's own cells).",
+  "(2) Immediate spin only: probably <b>IgM</b>, a cold antibody.",
+  "(3) <b>Single or multiple</b> cold antibodies, e.g. anti-M, anti-N, anti-P1, anti-Le<sup>a</sup>, anti-Le<sup>b</sup>. (The 1+ vs 2+ difference may again be dosage, e.g. anti-M.)",
+  "(4) Usually <b>not clinically significant</b> if it does not react at 37 °C or AHG. Avoid it with the <b>prewarm technique</b> or by omitting the IS reading; identify it with a panel read at IS / room temperature."]},
+{"type": "flip", "q": "Screen case 4.<div class='scroll'><table class='grid'><tr><th></th><th>IS</th><th>37 °C</th><th>AHG (poly)</th></tr><tr><th>SC I</th><td>2+</td><td>0</td><td>1+</td></tr><tr><th>SC II</th><td>3+</td><td>1+</td><td>2+</td></tr><tr><th>Auto</th><td>0</td><td>0</td><td>0</td></tr></table></div>(1) Autocontrol?<br>(2) Possible interpretations?<br>(3) Why can a cold antibody give a positive AHG with polyspecific reagent?<br>(4) How do you tell the two possibilities apart?",
+ "a": ["(1) <b>Negative</b>: alloantibody (or antibodies).",
+  "(2) <b>Multiple alloantibodies, warm and cold</b> (an IgM at IS plus an IgG at AHG), or a <b>potent cold alloantibody binding complement</b> that is detected at AHG.",
+  "(3) The cold IgM binds at low temperature and <b>fixes complement</b>; polyspecific AHG contains <b>anti-C3d</b>, which detects the complement left on the cells.",
+  "(4) Repeat with <b>monospecific anti-IgG</b> and/or the <b>prewarm technique</b>. If the AHG reactions disappear, they were due to the cold antibody; if they remain, a warm IgG antibody is also present. Then test a panel."]},
+{"type": "flip", "q": "Screen case 5.<div class='scroll'><table class='grid'><tr><th></th><th>IS</th><th>37 °C</th><th>AHG (poly)</th></tr><tr><th>SC I</th><td>0</td><td>0</td><td>1+</td></tr><tr><th>SC II</th><td>0</td><td>0</td><td>1+</td></tr><tr><th>Auto</th><td>0</td><td>0</td><td>0</td></tr></table></div>(1) Autocontrol?<br>(2) Possible interpretations?<br>(3) If every panel cell also reacts and the autocontrol stays negative, what do you suspect, and how do you find blood?",
+ "a": ["(1) <b>Negative</b>: alloantibody.",
+  "(2) A <b>single warm alloantibody</b> whose antigen is on both screening cells; an antibody to a <b>high-prevalence antigen</b>; or <b>complement binding by a cold alloantibody</b> not detected at IS (check with anti-IgG / prewarm).",
+  "(3) An antibody to a <b>high-prevalence antigen</b> (e.g. anti-k, anti-Kp<sup>b</sup>, anti-Vel): the patient lacks an antigen almost everyone has. Phenotype the patient, test <b>siblings</b> and search the <b>rare donor registry</b>; frozen rare units may be needed."]},
+{"type": "flip", "q": "Screen case 6.<div class='scroll'><table class='grid'><tr><th></th><th>IS</th><th>37 °C</th><th>AHG (poly)</th></tr><tr><th>SC I</th><td>0</td><td>0</td><td>3+</td></tr><tr><th>SC II</th><td>0</td><td>0</td><td>3+</td></tr><tr><th>Auto</th><td>0</td><td>0</td><td>3+</td></tr></table></div>(1) Autocontrol?<br>(2) Possible interpretations?<br>(3) Which question about the patient's history is essential, and why?<br>(4) What tests follow?",
+ "a": ["(1) <b>Positive</b> at AHG: the patient's own cells are coated with IgG (and/or complement).",
+  "(2) A <b>warm autoantibody</b> (e.g. warm AIHA); <b>warm alloantibodies</b> together with coated transfused cells; a <b>transfusion reaction</b> (delayed hemolytic or serologic). Probably <b>IgG</b>.",
+  "(3) <b>Transfusion in the last 3 months?</b> If yes, the positive autocontrol may be an alloantibody coating the <b>donor cells</b> still in circulation (often mixed field). If not transfused, an <b>autoantibody</b> is more likely.",
+  "(4) <b>DAT</b> with anti-IgG and anti-C3d, <b>elution</b> to identify the coating antibody, and <b>adsorption</b> (autologous or allogeneic) to remove the autoantibody so that hidden <b>alloantibodies</b> can be detected."]},
+{"type": "sort", "q": "Match each antibody screen pattern to its most likely meaning.",
+ "bins": ["Cold (IgM) alloantibody", "Warm (IgG) alloantibody", "Autoantibody or transfusion reaction", "Single antibody showing dosage"],
+ "items": [{"t": "SC I and II react at IS only; auto negative", "b": 0}, {"t": "SC II reacts 2+ at AHG only; auto negative", "b": 1},
+  {"t": "Both cells and auto react 3+ at AHG", "b": 2}, {"t": "SC I 3+, SC II 1+ at AHG; SC I homozygous, SC II heterozygous for the same antigen", "b": 3}],
+ "explain": ["Screen patterns based on Harmening, Modern Blood Banking &amp; Transfusion Practices, 7th ed., Fig. 10–4."]}
+]},{
+"key": "a2", "title": "Part 2: Antibody Identification Panel", "short": "Identification panel",
+"cards": [
+{"type": "panel", "q": "Panel workshop (Harmening 7th ed., Fig. 10–6). IS and 37 °C are negative with all cells. Autocontrol: 0 at IS, 37 °C and AHG (check cells 3+). Which antibodies can you rule out?",
+ "antigens": ["D", "C", "c", "E", "e", "C<sup>w</sup>", "K", "k", "Kp<sup>a</sup>", "Kp<sup>b</sup>", "Js<sup>a</sup>", "Js<sup>b</sup>", "Fy<sup>a</sup>", "Fy<sup>b</sup>", "Jk<sup>a</sup>", "Jk<sup>b</sup>", "Le<sup>a</sup>", "Le<sup>b</sup>", "P<sub>1</sub>", "M", "N", "S", "s", "Lu<sup>a</sup>", "Lu<sup>b</sup>", "Xg<sup>a</sup>"],
+ "cells": [
+  {"c": "++00+00+0+0++++00++++++0++", "rx": "2+"},
+  {"c": "++00++++0+0+0++000++0+00++", "rx": "0 (CC 3+)"},
+  {"c": "++0++00+0+0++0++0++0+0+0++", "rx": "3+"},
+  {"c": "+0++000+0+0++0+++0++0+00++", "rx": "3+"},
+  {"c": "0++0+00+0+0+000+0+++0++0+0", "rx": "0 (CC 3+)"},
+  {"c": "00+++00+0+0+++0+00+0+0+0++", "rx": "2+"},
+  {"c": "00+0+0++0+0+++0+0++0+0+0++", "rx": "2+"},
+  {"c": "00+0+00+0+0+0++0+00+0+00++", "rx": "0 (CC 3+)"},
+  {"c": "0++++00+0+0+0++00++0+0+0+0", "rx": "0 (CC 3+)"},
+  {"c": "00+0+00+0+0++0++0+++00+0++", "rx": "3+"},
+  {"c": "+0+0+00+0+0+++0+0+++00+0++", "rx": "2+"}],
+ "phase": "AHG", "keep": [3, 8, 10, 12, 23],
+ "hint": "Tap an antigen to cross it out when a non-reacting cell (0) carries it. For Rh (C, c, E, e), Duffy, Kidd and MNS antigens, use only a <b>homozygous</b> cell (antigen + and its antithetical antigen 0). Then check.",
+ "keepNote": "Check again: for dosage antigens, was the non-reacting cell homozygous? Antigens absent from every cell can never be ruled out.",
+ "explain": ["<b>Anti-Fy<sup>a</sup></b>: all 7 Fy(a+) cells react and all 4 Fy(a−) cells (2, 5, 8, 9) do not, a perfect match.",
+  "Not ruled out: <b>anti-E</b> (the only non-reacting E+ cell, cell 9 r′r″, is heterozygous E+e+) and <b>anti-Kp<sup>a</sup>, anti-Js<sup>a</sup>, anti-Lu<sup>a</sup></b> (no panel cell carries these low-prevalence antigens)."]},
+{"type": "flip", "q": "In the Fig. 10–6 panel, why do cells 3, 4 and 10 react 3+ while cells 1, 6, 7 and 11 react only 2+?",
+ "a": ["<b>Dosage effect.</b> Cells 3, 4 and 10 are <b>Fy(a+b−)</b>: homozygous, a double dose of Fy<sup>a</sup>, so more antigen sites and a stronger reaction.",
+  "Cells 1, 6, 7 and 11 are <b>Fy(a+b+)</b>: heterozygous, a single dose, so a weaker reaction.",
+  "Duffy, Kidd, Rh and MNS antibodies typically show dosage. A weak antibody may react <b>only</b> with homozygous cells, which is why rule-outs for these systems use homozygous cells."]},
+{"type": "flip", "q": "In the Fig. 10–6 panel, which antibodies cannot be ruled out, and why?",
+ "a": ["<b>Anti-E</b>: the only E+ cell that did not react is cell 9 (r′r″), which is <b>heterozygous</b> (E+e+); a weak anti-E showing dosage could miss it. The only homozygous E+e− cell, cell 4 (R<sub>2</sub>R<sub>2</sub>), is also Fy(a+), so its reaction is explained by anti-Fy<sup>a</sup>.",
+  "<b>Anti-Kp<sup>a</sup>, anti-Js<sup>a</sup>, anti-Lu<sup>a</sup></b>: low-prevalence antigens absent from <b>every</b> panel cell, so they can never be excluded with this panel. They are rarely a practical problem because almost all donor units lack these antigens."]},
+{"type": "flip", "q": "How would you exclude anti-E in the Fig. 10–6 case?",
+ "a": ["Test a <b>selected cell</b> that is <b>E+e− (homozygous) and Fy(a−)</b>. No reaction rules out anti-E; a reaction means anti-E is also present.",
+  "An <b>enzyme-treated panel</b> also helps: enzymes <b>destroy Fy<sup>a</sup></b> (anti-Fy<sup>a</sup> stops reacting) but <b>enhance Rh</b> antigens, so any remaining reaction with E+ cells points to anti-E."]},
+{"type": "flip", "q": "In the Fig. 10–6 case, is the autocontrol positive or negative, and why are the check cells important?",
+ "a": ["Autocontrol <b>negative</b> at IS, 37 °C and AHG: the patient's own cells are not coated, so the antibody is an <b>alloantibody</b>, not an autoantibody (and no delayed transfusion reaction is evident).",
+  "<b>Check cells (IgG-coated) reacted 3+</b> in every negative AHG tube (cells 2, 5, 8, 9 and the autocontrol). This proves the AHG reagent was added and active and the washing was adequate, so the <b>negative results are valid</b>. If check cells fail to react, the test must be repeated."]},
+{"type": "flip", "q": "In the Fig. 10–6 case, the reactions appear only at the AHG phase. What does this tell you about the antibody and its clinical significance?",
+ "a": ["Negative at IS and 37 °C, positive at AHG: a <b>warm IgG</b> antibody (anti-Fy<sup>a</sup> is typically IgG).",
+  "Anti-Fy<sup>a</sup> is <b>clinically significant</b>: it can cause <b>hemolytic transfusion reactions</b> (often delayed) and <b>HDFN</b> (usually mild to moderate). Antigen-negative blood is required."]},
+{"type": "flip", "q": "Is the rule of three satisfied for anti-Fy<sup>a</sup> in the Fig. 10–6 panel?",
+ "a": ["<b>Yes.</b> 7 Fy(a+) cells reacted (1, 3, 4, 6, 7, 10, 11) and 4 Fy(a−) cells did not (2, 5, 8, 9): well above 3 positive and 3 negative, p ≤ 0.05."]},
+{"type": "flip", "q": "In the Fig. 10–6 panel, cell 5 is Fy(a−b−). How common is this phenotype, and why is it interesting?",
+ "a": ["Fy(a−b−) is rare in Caucasians but found in about <b>68%</b> of Black people (GATA promoter mutation: no Duffy glycoprotein on red cells).",
+  "Duffy-null cells resist invasion by <b>Plasmodium vivax</b>. Such a cell is useful in a panel as a negative cell for both anti-Fy<sup>a</sup> and anti-Fy<sup>b</sup>."]},
+{"type": "flip", "q": "After identifying anti-Fy<sup>a</sup> (Fig. 10–6), what should the laboratory do before transfusion?",
+ "a": ["<b>Exclude anti-E</b> with a selected E+e−, Fy(a−) cell.",
+  "<b>Phenotype the patient's red cells</b> for Fy<sup>a</sup> (pretransfusion sample): they should be <b>Fy(a−)</b>. If Fy(a+), suspect an autoantibody with apparent specificity or recently transfused donor cells.",
+  "Select <b>Fy(a−) units</b> (antigen-typed with anti-Fy<sup>a</sup> antisera) and perform an <b>AHG crossmatch</b>. Record the antibody so that antigen-negative blood is given in the future, even if it becomes undetectable."]},
+{"type": "flip", "q": "About 34% of Caucasian donors are Fy(a−). How many units must be typed to find 2 Fy(a−) units for this patient?",
+ "a": ["2 ÷ 0.34 ≈ <b>6 units</b> (5.9, rounded up)."]}
+]}]};
+const KEY = 'studycards-' + DECK.id;
+let status = {};
+try { status = JSON.parse(localStorage.getItem(KEY) || '{}') || {} } catch (e) { status = {} }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(status)) } catch (e) {} }
+// Anonymous usage statistics (GoatCounter, no cookies, no personal data).
+function track(path, title, ev) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: DECK.id + '/' + path, title: String(title).replace(/<[^>]+>/g, '').slice(0, 120), event: !!ev }) } catch (e) {} }
+const app = document.getElementById('app');
+const esc = s => String(s);
+const plain = s => String(s).replace(/<[^>]+>/g, '');
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] } return a }
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const rnd = (lo, hi, step) => { const n = Math.round((hi - lo) / step); return +(lo + step * Math.floor(Math.random() * (n + 1))).toFixed(4) };
+const fmt = (x, d) => (+x).toFixed(d);
+
+// every card gets a stable id: chapter key + position
+const ALL = [];
+DECK.chapters.forEach(ch => ch.cards.forEach((c, i) => { c._id = ch.key + '.' + (i + 1); c._ch = ch; ALL.push(c) }));
+
+let list = [], idx = 0, mode = '';
+
+function home() {
+  mode = 'home';
+  const again = ALL.filter(c => status[c._id] === 'again').length;
+  const done = ALL.filter(c => status[c._id] === 'done').length;
+  app.innerHTML = '<a class="eyebrow" href="../" style="text-decoration:none">← All books</a><header><div class="eyebrow">' + DECK.eyebrow + '</div><h1>' + DECK.title + '</h1><p class="sub">' + DECK.sub + '</p></header>' +
+    '<div class="toolbar"><button class="btn primary" id="mixed">Mixed review (all chapters)</button>' +
+    '<button class="btn warn" id="again"' + (again ? '' : ' disabled') + '>Review my “Again” cards (' + again + ')</button></div>' +
+    '<p class="sub">' + done + ' of ' + ALL.length + ' cards marked “Got it”.</p>' +
+    '<div class="chapters">' + DECK.chapters.map((ch, k) => {
+      const n = ch.cards.length, g = ch.cards.filter(c => status[c._id] === 'done').length, a = ch.cards.filter(c => status[c._id] === 'again').length;
+      return '<button class="chap-btn" data-k="' + k + '"><span class="chap-title">' + ch.title + '</span><span class="chap-count">' + g + '/' + n + '</span>' +
+        '<span class="bar"><i class="g" style="width:' + (100 * g / n) + '%"></i><i class="a" style="width:' + (100 * a / n) + '%"></i></span></button>';
+    }).join('') + '</div>' +
+    '<div class="toolbar"><button class="btn" id="reset">Clear my progress</button></div><div id="confirm"></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  app.querySelectorAll('.chap-btn').forEach(b => b.onclick = () => start(DECK.chapters[+b.dataset.k].cards, DECK.chapters[+b.dataset.k].title, 'chapter/' + DECK.chapters[+b.dataset.k].key));
+  document.getElementById('mixed').onclick = () => start(shuffle(ALL).slice(0, 30), 'Mixed review · 30 random cards', 'mixed-review');
+  document.getElementById('again').onclick = () => start(ALL.filter(c => status[c._id] === 'again'), 'Cards marked “Again”', 'again-review');
+  document.getElementById('reset').onclick = () => {
+    document.getElementById('confirm').innerHTML = '<div class="feedback no"><p class="ink">Clear all your progress for this book? This cannot be undone.</p><div class="row"><button class="btn warn" id="yes">Clear progress</button><button class="btn" id="no">Keep it</button></div></div>';
+    document.getElementById('yes').onclick = () => { status = {}; save(); home() };
+    document.getElementById('no').onclick = () => document.getElementById('confirm').innerHTML = '';
+  };
+  window.scrollTo(0, 0);
+}
+
+let setTitle = '';
+function start(cards, title, path) { if (!cards.length) return; if (path) track(path, title, false); list = cards; idx = 0; setTitle = title; mode = 'study'; study() }
+
+function study() {
+  app.innerHTML = '<div class="topline"><button class="btn" id="back">← Chapters</button><h2>' + setTitle + '</h2></div>' +
+    '<div class="strip" id="strip"></div><section class="card" id="card" aria-live="polite"></section>' +
+    '<div class="nav"><button class="btn" id="prev">← Previous</button><button class="btn" id="next">Next →</button></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  document.getElementById('back').onclick = home;
+  document.getElementById('prev').onclick = () => go(idx - 1);
+  document.getElementById('next').onclick = () => go(idx + 1);
+  go(0);
+}
+function drawStrip() {
+  const strip = document.getElementById('strip'); if (!strip) return;
+  strip.innerHTML = list.map((c, i) => '<button class="dot' + (status[c._id] === 'done' ? ' done' : status[c._id] === 'again' ? ' again' : '') +
+    '" data-i="' + i + '" aria-label="Card ' + (i + 1) + '" aria-current="' + (i === idx) + '">' + (i + 1) + '</button>').join('') +
+    '<span class="score">' + list.filter(c => status[c._id] === 'done').length + ' / ' + list.length + ' got it</span>';
+  strip.querySelectorAll('.dot').forEach(b => b.onclick = () => go(+b.dataset.i));
+}
+function go(i) {
+  idx = Math.max(0, Math.min(list.length - 1, i));
+  const c = list[idx], el = document.getElementById('card');
+  (R[c.type] || R.flip)(c, el);
+  drawStrip();
+  document.getElementById('prev').disabled = idx === 0;
+  document.getElementById('next').disabled = idx === list.length - 1;
+}
+document.addEventListener('keydown', e => {
+  if (mode !== 'study' || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') go(idx + 1); if (e.key === 'ArrowLeft') go(idx - 1);
+});
+
+const LABEL = { flip: 'Flip', grid: 'Fill the grid', panel: 'Rule out', calc: 'Calculate', sort: 'Sort', order: 'Put in order' };
+function head(c) { return '<div class="meta"><span class="chip">' + LABEL[c.type] + '</span><span class="chap">' + c._ch.short + '</span></div>' }
+function rate(box) {
+  box.insertAdjacentHTML('beforeend', '<div class="row"><button class="btn good" data-r="done">Got it</button><button class="btn warn" data-r="again">Again</button></div>');
+  box.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { const c = list[idx]; status[c._id] = b.dataset.r; save(); track((b.dataset.r === 'done' ? 'got-it/' : 'again/') + c._id, c._ch.short + ' · ' + (c.q || LABEL[c.type] + ' card'), true); if (idx < list.length - 1) go(idx + 1); else drawStrip() });
+}
+function paras(a) { return (Array.isArray(a) ? a : [a]).map(p => '<p>' + p + '</p>').join('') }
+function fb(el, ok, html) { const f = el.querySelector('.fb'); f.innerHTML = '<div class="feedback ' + (ok ? 'ok' : 'no') + '">' + html + '</div>'; if (ok !== null) rate(f) }
+
+const R = {
+  flip(c, el) {
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Answer in your head, then flip the card.</p><div class="row"><button class="btn primary" id="flip">Show answer</button></div>';
+    el.querySelector('#flip').onclick = () => {
+      el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><div class="answer">' + paras(c.a) + '</div><div class="fb"></div>';
+      rate(el.querySelector('.fb'));
+    };
+  },
+  grid(c, el) {
+    const v = c.variants ? pick(c.variants) : c;
+    const sym = c.symbols || ['+', '0'];
+    const rows = v.answer.length, cols = c.cols.length;
+    const state = v.answer.map((r, i) => r.map((x, j) => (v.given && v.given[i] && v.given[i][j] != null) ? null : ''));
+    let h = head(c) + '<p class="q">' + (v.q || c.q) + '</p><p class="hint">' + (c.hint || 'Tap each empty cell to cycle through the possible results, then check.') + '</p>' +
+      '<div class="legend">Tap to cycle: ' + sym.map(s => '<span>' + s + '</span>').join('') + (c.legend ? ' · ' + c.legend : '') + '</div>' +
+      '<div class="scroll"><table class="grid"><thead>';
+    if (c.groups) h += '<tr>' + (c.rows ? '<th></th>' : '') + c.groups.map(g => '<th colspan="' + g[1] + '">' + g[0] + '</th>').join('') + '</tr>';
+    h += '<tr>' + (c.rows || v.rows ? '<th></th>' : '') + c.cols.map(x => '<th>' + x + '</th>').join('') + '</tr></thead><tbody>';
+    const rlab = v.rows || c.rows;
+    for (let i = 0; i < rows; i++) {
+      h += '<tr>' + (rlab ? '<th class="rowh">' + rlab[i] + '</th>' : '');
+      for (let j = 0; j < cols; j++) {
+        const g = v.given && v.given[i] && v.given[i][j] != null ? v.given[i][j] : null;
+        h += g !== null ? '<td class="given">' + g + '</td>' : '<td><button class="tap" data-i="' + i + '" data-j="' + j + '" aria-label="' + plain((rlab ? rlab[i] + ', ' : '') + c.cols[j]) + '">·</button></td>';
+      }
+      h += '</tr>';
+    }
+    h += '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check</button>' + (c.variants ? '<button class="btn" id="nw">New case</button>' : '') + '</div><div class="fb"></div>';
+    el.innerHTML = h;
+    el.querySelectorAll('.tap').forEach(b => b.onclick = () => {
+      const i = +b.dataset.i, j = +b.dataset.j; const k = sym.indexOf(state[i][j]);
+      state[i][j] = sym[(k + 1) % sym.length]; b.textContent = state[i][j]; b.classList.add('set'); b.classList.remove('right', 'wrong');
+    });
+    if (c.variants) el.querySelector('#nw').onclick = () => R.grid(c, el);
+    el.querySelector('#chk').onclick = () => {
+      if (state.some(r => r.includes(''))) { fb(el, null, '<p>Fill every empty cell first.</p>'); return }
+      let ok = true;
+      el.querySelectorAll('.tap').forEach(b => { const i = +b.dataset.i, j = +b.dataset.j; const r = state[i][j] === v.answer[i][j]; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Not quite: the red cells are wrong.') + '</b></p>' + paras(v.explain || c.explain));
+    };
+  },
+  panel(c, el) {
+    const out = new Set(), keep = [].concat(c.keep);
+    let h = head(c) + '<p class="q">' + c.q + '</p><p class="hint">' + (c.hint || 'Tap an antigen to cross it out when it is present on a cell that did <b>not</b> react (0). Prefer homozygous cells. Then check.') + '</p>' +
+      '<div class="scroll"><table class="grid pt"><thead><tr><th>Cell</th>' +
+      c.antigens.map((a, i) => '<th class="ag" data-a="' + i + '" tabindex="0" role="button" aria-pressed="false">' + a + '</th>').join('') + '<th>' + (c.phase || 'IAT') + '</th></tr></thead><tbody>' +
+      c.cells.map((r, k) => '<tr><th class="rowh">' + (k + 1) + '</th>' + r.c.split('').map((x, i) => '<td data-a="' + i + '">' + (x === '+' ? '+' : '0') + '</td>').join('') + '<td class="rx">' + r.rx + '</td></tr>').join('') +
+      '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check my rule-outs</button><button class="btn" id="clr">Clear</button></div><div class="fb"></div>';
+    el.innerHTML = h;
+    const paint = () => {
+      el.querySelectorAll('th.ag').forEach(x => { const on = out.has(+x.dataset.a); x.classList.toggle('out', on); x.setAttribute('aria-pressed', on) });
+      el.querySelectorAll('.pt td[data-a]').forEach(d => d.classList.toggle('out', out.has(+d.dataset.a)));
+    };
+    el.querySelectorAll('th.ag').forEach(x => { const t = () => { const a = +x.dataset.a; out.has(a) ? out.delete(a) : out.add(a); paint() };
+      x.onclick = t; x.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t() } } });
+    el.querySelector('#clr').onclick = () => { out.clear(); paint(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      const wrong = keep.filter(k => out.has(k));
+      const left = c.antigens.map((_, i) => i).filter(i => !out.has(i) && !keep.includes(i));
+      if (wrong.length) fb(el, null, '<p><b>' + wrong.map(k => plain(c.antigens[k])).join(', ') + ' cannot be ruled out.</b> ' + (c.keepNote || 'Check again: is it present on any cell that did not react?') + '</p>');
+      else if (left.length) fb(el, null, '<p><b>Keep going.</b> Still not ruled out: ' + left.map(i => plain(c.antigens[i])).join(', ') + '.</p><p>Cross out every antigen carried by a non-reacting cell.</p>');
+      else { keep.forEach(k => el.querySelector('th.ag[data-a="' + k + '"]').classList.add('keep')); fb(el, true, paras(c.explain)) }
+    };
+  },
+  calc(c, el) {
+    const k = CALC[c.kind]();
+    el.innerHTML = head(c) + '<p class="q">' + k.q + '</p><div class="facts">' + k.facts.map(f => '<span>' + f + '</span>').join('') + '</div>' +
+      '<div class="calc"><label for="ans">' + k.label + '</label><input id="ans" type="text" inputmode="decimal" autocomplete="off">' + (k.unit ? '<span>' + k.unit + '</span>' : '') +
+      '<button class="btn primary" id="chk">Check</button><button class="btn" id="nw">New case</button></div><div class="fb"></div>';
+    el.querySelector('#nw').onclick = () => R.calc(c, el);
+    const inp = el.querySelector('#ans'); inp.onkeydown = e => { if (e.key === 'Enter') el.querySelector('#chk').click() };
+    el.querySelector('#chk').onclick = () => {
+      const v = parseFloat(inp.value.replace(',', '.'));
+      if (isNaN(v)) { fb(el, null, '<p>Type a number first.</p>'); return }
+      const ok = Math.abs(v - k.answer) <= k.tol;
+      fb(el, ok, '<p><b>' + (ok ? 'Correct: ' : 'The answer is ') + k.show + '</b></p><ol class="steps">' + k.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>' + (k.note ? '<p>' + k.note + '</p>' : ''));
+    };
+  },
+  sort(c, el) {
+    const items = shuffle(c.items), st = items.map(() => -1);
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap each item to move it through the groups, then check.</p>' +
+      '<div class="legend">Groups: ' + c.bins.map(b => '<span>' + b + '</span>').join('') + '</div><div class="items">' +
+      items.map((it, i) => '<button class="item" data-i="' + i + '"><span>' + it.t + '</span><span class="tag">choose</span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i; st[i] = (st[i] + 1) % c.bins.length;
+      const t = b.querySelector('.tag'); t.textContent = plain(c.bins[st[i]]); t.classList.add('set'); b.classList.remove('right', 'wrong') });
+    el.querySelector('#chk').onclick = () => {
+      if (st.includes(-1)) { fb(el, null, '<p>Place every item in a group first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = st[i] === items[i].b; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Some items are in the wrong group (red).') + '</b></p>' + (ok ? '' : '<ul>' + items.filter((it, i) => st[i] !== it.b).map(it => '<li>' + it.t + ' → ' + c.bins[it.b] + '</li>').join('') + '</ul>') + (c.explain ? paras(c.explain) : ''));
+    };
+  },
+  order(c, el) {
+    const shown = shuffle(c.steps.map((s, i) => ({ s, i }))); let seq = [];
+    const draw = () => {
+      el.querySelectorAll('.item').forEach(b => { const p = seq.indexOf(+b.dataset.i); b.classList.toggle('picked', p >= 0); b.querySelector('.num').textContent = p >= 0 ? p + 1 : '' });
+    };
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap the steps in the right order. Tap a numbered step again to remove it.</p><div class="items">' +
+      shown.map(x => '<button class="item" data-i="' + x.i + '"><span>' + x.s + '</span><span class="num"></span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button><button class="btn" id="clr">Start again</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i, p = seq.indexOf(i); if (p >= 0) seq.splice(p, 1); else seq.push(i);
+      el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw() });
+    el.querySelector('#clr').onclick = () => { seq = []; el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      if (seq.length < c.steps.length) { fb(el, null, '<p>Number every step first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = seq.indexOf(i) === i; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct order.' : 'Not quite. The right order is:') + '</b></p>' + (ok ? '' : '<ol class="steps">' + c.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>') + (c.explain ? paras(c.explain) : ''));
+    };
+  }
+};
+
+const CALC = {
+  rhig() {
+    const kb = rnd(0.3, 3.0, 0.1), fetal = kb * 50, raw = fetal / 30, w = Math.floor(raw), d = raw - w, v = (d >= 0.5 ? w + 1 : w) + 1;
+    return { q: 'A D-negative mother delivers a D-positive baby. How many 300 µg vials of RhIG does she need?',
+      facts: ['Kleihauer–Betke: ' + fmt(kb, 1) + '% fetal cells', 'Maternal blood volume: 5000 mL'], label: 'Vials:', unit: '', answer: v, tol: 0, show: v + ' vials.',
+      steps: ['Fetal blood = ' + fmt(kb, 1) + '% × 5000 mL = ' + fmt(fetal, 0) + ' mL', fmt(fetal, 0) + ' ÷ 30 = ' + fmt(raw, 2), 'Decimal ' + (d >= 0.5 ? '≥ 0.5: round up to ' + (w + 1) : '< 0.5: round down to ' + w), 'Add one vial: <b>' + v + '</b>'] };
+  },
+  hw() {
+    const negPct = pick([9, 16, 25, 36, 49, 64, 4, 1]), q = Math.sqrt(negPct / 100), p = 1 - q, het = 2 * p * q * 100;
+    return { q: 'In a population, ' + (100 - negPct) + '% of people are antigen-positive and ' + negPct + '% are antigen-negative (homozygous for the silent/recessive allele). What percentage are heterozygous?',
+      facts: ['Hardy–Weinberg: p² + 2pq + q² = 1', 'Antigen-negative = q² = ' + (negPct / 100)], label: 'Heterozygous:', unit: '%', answer: het, tol: 0.6, show: fmt(het, 0) + '%.',
+      steps: ['q² = ' + (negPct / 100) + ' → q = ' + fmt(q, 2), 'p = 1 − q = ' + fmt(p, 2), '2pq = 2 × ' + fmt(p, 2) + ' × ' + fmt(q, 2) + ' = ' + fmt(het / 100, 2) + ' → <b>' + fmt(het, 0) + '%</b>'] };
+  },
+  antneg() {
+    const ab = [['anti-Fy<sup>a</sup>', 33], ['anti-S', 50], ['anti-E', 70], ['anti-K', 91], ['anti-c', 20], ['anti-Jk<sup>a</sup>', 23]];
+    const a = shuffle(ab).slice(0, 2), units = pick([2, 3, 4]), f = a[0][1] / 100 * a[1][1] / 100, n = units / f;
+    return { q: 'A patient has ' + a[0][0] + ' and ' + a[1][0] + '. The physician requests ' + units + ' units. About how many units must be screened?',
+      facts: ['Compatible (antigen-negative) donors: ' + plain(a[0][0]).replace('anti-', '') + '-negative ≈ ' + a[0][1] + '%; ' + plain(a[1][0]).replace('anti-', '') + '-negative ≈ ' + a[1][1] + '%'], label: 'Units to screen:', unit: '',
+      answer: n, tol: Math.max(1, n * 0.06), show: 'about ' + Math.round(n) + ' units.',
+      steps: ['Compatible fraction = ' + (a[0][1] / 100) + ' × ' + (a[1][1] / 100) + ' = ' + fmt(f, 3), units + ' ÷ ' + fmt(f, 3) + ' = ' + fmt(n, 1) + ' → about <b>' + Math.round(n) + ' units</b>'] };
+  },
+  cci() {
+    const pre = rnd(5, 15, 1) * 1000, inc = rnd(5, 40, 1) * 1000, post = pre + inc, bsa = rnd(1.5, 2.1, 0.1), dose = rnd(3, 4.5, 0.5), cci = inc * bsa / dose;
+    return { q: 'A patient receives an apheresis platelet unit. Calculate the 1-hour corrected count increment (CCI).',
+      facts: ['Pre-count: ' + pre.toLocaleString('en') + ' /µL', '1-hour post-count: ' + post.toLocaleString('en') + ' /µL', 'Body surface area: ' + fmt(bsa, 1) + ' m²', 'Platelets transfused: ' + fmt(dose, 1) + ' × 10¹¹'],
+      label: 'CCI:', unit: '', answer: cci, tol: Math.max(150, cci * 0.03), show: Math.round(cci).toLocaleString('en') + '.',
+      steps: ['Increment = ' + post.toLocaleString('en') + ' − ' + pre.toLocaleString('en') + ' = ' + inc.toLocaleString('en') + ' /µL', 'CCI = ' + inc.toLocaleString('en') + ' × ' + fmt(bsa, 1) + ' ÷ ' + fmt(dose, 1) + ' = <b>' + Math.round(cci).toLocaleString('en') + '</b>'],
+      note: cci >= 7500 ? 'A 1-hour CCI of 7,500 or more is an adequate response.' : 'Below 7,500: inadequate response. Two consecutive inadequate CCIs define refractoriness.' };
+  },
+  rbcdose() {
+    const kg = rnd(50, 90, 5), init = rnd(0.18, 0.24, 0.01), want = rnd(0.27, 0.32, 0.01), bv = kg * 70, n = bv * (want - init) / 200;
+    return { q: 'How many red cell units are needed to reach the desired hematocrit?',
+      facts: ['Weight: ' + kg + ' kg (blood volume ≈ 70 mL/kg)', 'Initial Hct: ' + fmt(init * 100, 0) + '%', 'Desired Hct: ' + fmt(want * 100, 0) + '%', 'Red cell volume per unit ≈ 200 mL'],
+      label: 'Units:', unit: '', answer: n, tol: 0.25, show: fmt(n, 1) + ' → ' + Math.ceil(n) + ' units.',
+      steps: ['Blood volume = ' + kg + ' × 70 = ' + bv + ' mL', bv + ' × (' + fmt(want, 2) + ' − ' + fmt(init, 2) + ') = ' + fmt(bv * (want - init), 0) + ' mL of red cells', fmt(bv * (want - init), 0) + ' ÷ 200 = <b>' + fmt(n, 1) + '</b>, so about ' + Math.ceil(n) + ' units'] };
+  },
+  indices() {
+    const rbc = rnd(2.8, 5.8, 0.1), mcv = rnd(62, 112, 1), hct = +(rbc * mcv / 10).toFixed(1), mchc = rnd(29, 36, 0.5), hb = +(hct * mchc / 100).toFixed(1);
+    const which = pick(['MCV', 'MCH', 'MCHC']);
+    const val = { MCV: hct / rbc * 10, MCH: hb / rbc * 10, MCHC: hb / hct * 100 }[which];
+    const unit = { MCV: 'fL', MCH: 'pg', MCHC: 'g/dL' }[which];
+    const step = { MCV: 'MCV = Hct ÷ RBC × 10 = ' + hct + ' ÷ ' + rbc + ' × 10', MCH: 'MCH = Hb ÷ RBC × 10 = ' + hb + ' ÷ ' + rbc + ' × 10', MCHC: 'MCHC = Hb ÷ Hct × 100 = ' + hb + ' ÷ ' + hct + ' × 100' }[which];
+    return { q: 'Calculate the <b>' + which + '</b>.', facts: ['RBC: ' + rbc + ' × 10¹²/L', 'Hemoglobin: ' + hb + ' g/dL', 'Hematocrit: ' + hct + '%'], label: which + ':', unit, answer: val, tol: which === 'MCHC' ? 0.3 : 0.6,
+      show: fmt(val, 1) + ' ' + unit + '.', steps: [step + ' = <b>' + fmt(val, 1) + ' ' + unit + '</b>'],
+      note: which === 'MCV' ? (val < 80 ? 'Microcytic.' : val > 100 ? 'Macrocytic.' : 'Normocytic.') : '' };
+  },
+  retic() {
+    const hct = rnd(14, 44, 1), ret = rnd(1, 12, 0.5), cor = ret * hct / 45, mf = hct >= 36 ? 1 : hct >= 26 ? 1.5 : hct >= 16 ? 2 : 2.5, rpi = cor / mf;
+    return { q: 'Calculate the reticulocyte production index (RPI).', facts: ['Reticulocytes: ' + ret + '%', 'Hematocrit: ' + hct + '%', 'Maturation correction: Hct 36–45 → 1.0; 26–35 → 1.5; 16–25 → 2.0; ≤ 15 → 2.5'],
+      label: 'RPI:', unit: '', answer: rpi, tol: 0.15, show: fmt(rpi, 1) + '.',
+      steps: ['Corrected retic = ' + ret + ' × ' + hct + ' ÷ 45 = ' + fmt(cor, 2) + '%', 'Maturation correction for Hct ' + hct + '% = ' + mf, 'RPI = ' + fmt(cor, 2) + ' ÷ ' + mf + ' = <b>' + fmt(rpi, 1) + '</b>'],
+      note: rpi >= 3 ? 'RPI ≥ 3: adequate marrow response (e.g. hemolysis or bleeding).' : rpi < 2 ? 'RPI < 2: inadequate response (hypoproliferative or ineffective erythropoiesis).' : 'Borderline response.' };
+  },
+  nrbc() {
+    const wbc = rnd(6, 30, 0.5), n = rnd(5, 60, 1), cor = wbc * 100 / (100 + n);
+    return { q: 'The analyzer counts nucleated red cells as white cells. Correct the WBC count.', facts: ['WBC (uncorrected): ' + wbc + ' × 10⁹/L', 'NRBC on the smear: ' + n + ' per 100 WBCs'],
+      label: 'Corrected WBC:', unit: '× 10⁹/L', answer: cor, tol: 0.15, show: fmt(cor, 1) + ' × 10⁹/L.', steps: ['Corrected WBC = ' + wbc + ' × 100 ÷ (100 + ' + n + ') = <b>' + fmt(cor, 1) + '</b>'] };
+  },
+  abs() {
+    const wbc = rnd(2, 25, 0.5), cell = pick([['neutrophils', 40, 85], ['lymphocytes', 15, 70], ['eosinophils', 2, 25], ['monocytes', 3, 15]]), pct = rnd(cell[1], cell[2], 1), a = wbc * pct / 100;
+    return { q: 'Calculate the absolute ' + cell[0] + ' count.', facts: ['WBC: ' + wbc + ' × 10⁹/L', cell[0][0].toUpperCase() + cell[0].slice(1) + ': ' + pct + '%'], label: 'Absolute count:', unit: '× 10⁹/L',
+      answer: a, tol: 0.06, show: fmt(a, 2) + ' × 10⁹/L.', steps: ['Absolute count = WBC × % = ' + wbc + ' × ' + (pct / 100) + ' = <b>' + fmt(a, 2) + '</b>'] };
+  },
+  mentzer() {
+    const thal = Math.random() < 0.5, rbc = thal ? rnd(5.2, 6.6, 0.1) : rnd(3.2, 4.4, 0.1), mcv = thal ? rnd(58, 70, 1) : rnd(66, 78, 1), idx = mcv / rbc;
+    return { q: 'A patient has a microcytic anemia. Calculate the Mentzer index.', facts: ['MCV: ' + mcv + ' fL', 'RBC: ' + rbc + ' × 10¹²/L'], label: 'Mentzer index:', unit: '',
+      answer: idx, tol: 0.15, show: fmt(idx, 1) + '.', steps: ['Mentzer index = MCV ÷ RBC = ' + mcv + ' ÷ ' + rbc + ' = <b>' + fmt(idx, 1) + '</b>'],
+      note: idx < 13 ? 'Below 13: favors β-thalassemia trait. Confirm with Hb A<sub>2</sub> (> 3.5%).' : 'Above 13: favors iron deficiency. Confirm with ferritin.' };
+  },
+  inr() {
+    const mn = rnd(11.5, 13, 0.5), pt = rnd(14, 40, 0.5), isi = pick([1.0, 1.1, 1.2, 1.3]), inr = Math.pow(pt / mn, isi);
+    return { q: 'A patient on warfarin (vitamin K antagonist) has the following results. Calculate the INR.', facts: ['Patient PT: ' + pt + ' s', 'Mean normal PT: ' + mn + ' s', 'ISI of the reagent: ' + fmt(isi, 1)],
+      label: 'INR:', unit: '', answer: inr, tol: 0.06, show: fmt(inr, 1) + '.', steps: ['Ratio = ' + pt + ' ÷ ' + mn + ' = ' + fmt(pt / mn, 2), 'INR = ' + fmt(pt / mn, 2) + '<sup>' + fmt(isi, 1) + '</sup> = <b>' + fmt(inr, 1) + '</b>'] };
+  }
+};
+
+home();
+</script>
+<script data-goatcounter="https://drtarekfaour.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
