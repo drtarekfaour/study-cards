@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blood and Bone Marrow Morphology Study Cards</title>
+<style>
+/* Layout: chapter list (home) and one study card at a time; accent colour comes from each book's cover. */
+:root {
+  --bg: #F3F6F6; --surface: #FFFFFF; --ink: #15282C; --muted: #5A6E72; --line: #D5E0E1;
+  --accent: #7A2E5C; --accent-soft: #F5E6EF; --red: #B8233A; --red-soft: #FBE7EA;
+  --good: #1E7A4C; --good-soft: #E2F3EA; --warn: #9A5B00; --warn-soft: #FDF1DC;
+  --f-display: "Segoe UI Variable Display", "SF Pro Display", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  --f-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --f-mono: ui-monospace, "SF Mono", Consolas, "Roboto Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #E59AC4; --accent-soft: #3A1D2E; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
+  --accent: #E59AC4; --accent-soft: #3A1D2E; --red: #F06E80; --red-soft: #3A1C22;
+  --good: #63CF95; --good-soft: #17352A; --warn: #F0B45A; --warn-soft: #3A2C14; color-scheme: dark }
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+[hidden] { display: none !important }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(20px, env(safe-area-inset-top, 0px)); padding-bottom: max(40px, env(safe-area-inset-bottom, 0px)) }
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 16px }
+header { display: grid; gap: 4px }
+.eyebrow { font: 700 12px/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent) }
+h1 { font: 700 clamp(26px, 6vw, 34px)/1.1 var(--f-display); margin: 0; text-wrap: balance }
+h2 { font: 700 20px/1.2 var(--f-display); margin: 0 }
+.sub { color: var(--muted); margin: 0 }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px }
+.chapters { display: grid; gap: 8px }
+.chap-btn { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; text-align: left; width: 100%;
+  padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font: inherit }
+.chap-btn:hover { border-color: var(--accent) }
+.chap-title { font-weight: 700; min-width: 0 }
+.chap-count { font: 500 13px var(--f-mono); color: var(--muted); white-space: nowrap }
+.bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; display: flex }
+.bar i { display: block; height: 100% } .bar .g { background: var(--good) } .bar .a { background: var(--warn) }
+.strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center }
+.dot { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+  font: 700 12px var(--f-mono); cursor: pointer; display: grid; place-items: center; padding: 0 }
+.dot[aria-current="true"] { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent) }
+.dot.done { background: var(--good-soft); color: var(--good); border-color: transparent }
+.dot.again { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+.score { margin-left: auto; font: 500 13px var(--f-mono); color: var(--muted) }
+.topline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; min-width: 0 }
+.meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center }
+.chip { font: 700 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent) }
+.chap { font-size: 13px; color: var(--muted) }
+.q { font: 600 clamp(18px, 4.4vw, 22px)/1.35 var(--f-display); margin: 0; text-wrap: pretty }
+.hint { color: var(--muted); margin: 0; font-size: 15px }
+figure.ph { margin: 0; display: grid; gap: 4px }
+figure.ph a.zoom { display: flex; justify-content: center; background: #000; border-radius: 10px; overflow: hidden }
+figure.ph img { display: block; width: 100%; max-height: min(58vh, 520px); object-fit: contain; background: #000 }
+figure.ph img.small { image-rendering: auto; max-height: min(42vh, 380px) }
+figure.ph figcaption { font-size: 12px; color: var(--muted) }
+figure.ph figcaption a { color: inherit }
+.answer { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 14px; border-radius: 0 8px 8px 0 }
+.answer p, .feedback p { margin: 0 0 6px } .answer p:last-child, .feedback p:last-child { margin: 0 }
+.answer ul, .feedback ul { margin: 4px 0 0; padding-left: 20px }
+.row { display: flex; gap: 10px; flex-wrap: wrap }
+button.btn { font: 700 15px var(--f-body); padding: 11px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer }
+button.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface) }
+button.btn.good { background: var(--good-soft); color: var(--good); border-color: transparent }
+button.btn.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent }
+button.btn:disabled { opacity: .45; cursor: default }
+button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px }
+.nav { display: flex; justify-content: space-between; gap: 10px }
+.feedback { padding: 12px 14px; border-radius: 8px; font-size: 15px; display: grid; gap: 4px }
+.feedback.ok { background: var(--good-soft); color: var(--good) }
+.feedback.no { background: var(--red-soft); color: var(--red) }
+.feedback .ink { color: var(--ink) }
+.scroll { overflow-x: auto; min-width: 0 }
+table.grid { border-collapse: collapse; font: 500 14px var(--f-mono); width: 100% }
+.grid th, .grid td { border: 1px solid var(--line); padding: 0; text-align: center; min-width: 38px; height: 40px }
+.grid th { background: var(--bg); color: var(--muted); font-weight: 700; padding: 4px 6px; font-family: var(--f-body); font-size: 13px }
+.grid th.rowh { text-align: left; padding: 4px 10px; color: var(--ink) }
+.grid td.given { color: var(--ink); font-weight: 700; padding: 4px 6px }
+.grid td.rx { font-weight: 700; color: var(--red) }
+.tap { width: 100%; height: 100%; min-height: 40px; border: 0; background: transparent; color: var(--ink); font: 700 17px var(--f-mono); cursor: pointer; padding: 2px 6px }
+.tap.set { color: var(--red) }
+.tap.right { background: var(--good-soft) } .tap.wrong { background: var(--red-soft) }
+th.ag { cursor: pointer; user-select: none; color: var(--ink) }
+th.ag.out, td.out { text-decoration: line-through; color: var(--muted); background: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 7px) }
+th.ag.keep { background: var(--red-soft); color: var(--red) }
+.calc { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+.calc input { font: 700 18px var(--f-mono); width: 9ch; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink) }
+.facts { font: 500 15px var(--f-mono); background: var(--bg); border-radius: 8px; padding: 12px 14px; display: grid; gap: 2px }
+ol.steps { margin: 0; padding-left: 20px } ol.steps li { margin: 2px 0 }
+.items { display: grid; gap: 8px }
+.item { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; text-align: left;
+  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer }
+.item .tag { font: 700 12px/1 var(--f-mono); padding: 6px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); white-space: nowrap }
+.item .tag.set { background: var(--accent-soft); color: var(--accent) }
+.item.right { border-color: var(--good); background: var(--good-soft) } .item.wrong { border-color: var(--red); background: var(--red-soft) }
+.item .num { font: 700 13px var(--f-mono); min-width: 24px; height: 24px; border-radius: 12px; display: grid; place-items: center; background: var(--bg); color: var(--muted) }
+.item.picked .num { background: var(--accent); color: var(--surface) }
+.legend { display: flex; gap: 6px; flex-wrap: wrap; font-size: 13px; color: var(--muted) }
+.legend span { font: 700 12px var(--f-mono); padding: 4px 6px; border-radius: 6px; background: var(--bg); color: var(--ink) }
+footer { color: var(--muted); font-size: 13px; text-align: center }
+.empty { color: var(--muted); padding: 20px; text-align: center }
+@media (prefers-reduced-motion: no-preference) { .answer, .feedback { animation: in .18s ease-out } @keyframes in { from { opacity: .4; transform: translateY(3px) } } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+const DECK = {"id":"morph","title":"Blood and Bone Marrow Morphology","eyebrow":"Photo cards for MLT students","sub":"Pick a chapter. Think of the answer first, then check yourself. Cards you mark Again come back in your review.","footer":"Real micrographs from Wikimedia Commons (free licences, credited on each card); content checked against the course books &middot; Dr. Tarek Faour &middot; 97 cards &middot; Anonymous usage statistics, no personal data","chapters":[{
+"key": "m1", "title": "Chapter 1: Normal Peripheral Blood Cells", "short": "Normal blood cells",
+"cards": [
+{"type": "flip", "img": "neutrophil", "q": "Identify this white cell and give its normal adult percentage.",
+ "a": ["<b>Segmented neutrophil</b> (polymorphonuclear neutrophil).", "10–15 µm; nucleus with <b>2–5 lobes joined by thin filaments</b>; clumped chromatin; pale pink cytoplasm with fine lilac (secondary) granules.", "Normal: about <b>50–70%</b> of white cells in adults."]},
+{"type": "flip", "img": "band", "q": "Identify this cell. What does an increase mean?",
+ "a": ["<b>Band (stab) neutrophil</b>: curved, C- or horseshoe-shaped nucleus of fairly even width, <b>no thin filament</b> between lobes.", "Normal: about 0–5%. An increase (with metamyelocytes) is a <b>left shift</b>, typical of bacterial infection."]},
+{"type": "flip", "img": "eosinophil", "q": "Identify this cell. Name two common causes of an increase.",
+ "a": ["<b>Eosinophil</b>: usually <b>bilobed</b> nucleus and many large, round, <b>orange-red refractile granules</b> (major basic protein).", "Normal: about 1–4%. Increased in <b>allergy</b> (asthma, drug reactions) and <b>parasitic infections</b>."]},
+{"type": "flip", "img": "basophil", "q": "Identify this cell. In which disorder is an absolute increase an important clue?",
+ "a": ["<b>Basophil</b>: large, coarse, <b>dark purple-black granules</b> that cover and obscure the nucleus (histamine, heparin).", "Normal: under 1–2%. Basophilia is a classic clue to <b>chronic myeloid leukemia</b> and other myeloproliferative neoplasms."]},
+{"type": "flip", "img": "lymphocyte", "q": "Identify this cell and describe its key features.",
+ "a": ["<b>Small lymphocyte</b>: 7–10 µm (about the size of a red cell); round, dense nucleus with <b>clumped chromatin</b>; <b>scant sky-blue cytoplasm</b>, often only a rim.", "Normal: about <b>20–40%</b> of white cells in adults (higher in young children)."]},
+{"type": "flip", "img": "neutmono", "q": "There are two different white cells in this field. Identify both and say how to tell them apart.",
+ "a": ["The smaller cell with a <b>segmented</b> dense nucleus is a <b>neutrophil</b>.", "The larger cell with a <b>folded, kidney-shaped nucleus</b>, lacy chromatin and abundant grey-blue to pinkish cytoplasm is a <b>monocyte</b>.", "Monocytes are the <b>largest normal blood cells</b> (12–20 µm), 2–8% of white cells; the cytoplasm may contain vacuoles and fine dust-like granules."]},
+{"type": "flip", "img": "normal", "q": "A normal adult blood film at low power. In which area of the film should cells be examined, and what does a normal red cell look like?",
+ "a": ["Examine the <b>monolayer</b>: the thin area where red cells just touch without overlapping (not the thick area or the feathered edge).", "Normal red cells: round, about <b>7–8 µm</b> (similar to a small lymphocyte nucleus), with central pallor about <b>one-third</b> of the diameter: <b>normocytic, normochromic</b>."]},
+{"type": "flip", "img": "retic", "q": "This film was stained with new methylene blue before it was spread. What are the cells containing a blue network?",
+ "a": ["<b>Reticulocytes</b>: the blue network or granules is precipitated <b>residual RNA</b> (ribosomes).", "The stain must act on <b>living cells (supravital)</b>. Normal adult count about 0.5–2.5%.", "On a Wright-stained film the same young cells appear as larger, bluish <b>polychromatic</b> red cells."]},
+{"type": "flip", "img": "neonate", "q": "This film is from a healthy newborn. Which findings are normal at this age but would be abnormal in an adult?",
+ "a": ["<b>Larger red cells</b> (MCV about 100–120 fL) and more variation in size.", "More <b>polychromasia</b> (higher reticulocyte count) and a few <b>nucleated red cells</b> in the first days.", "Higher hemoglobin and white count, with neutrophils predominating at birth."]},
+{"type": "order", "q": "Put the normal adult white cell types in order from most to least numerous.",
+ "steps": ["Neutrophils (50–70%)", "Lymphocytes (20–40%)", "Monocytes (2–8%)", "Eosinophils (1–4%)", "Basophils (0–2%)"]},
+{"type": "flip", "q": "How do you estimate the platelet count from a blood film?",
+ "a": ["Count platelets in <b>10 oil-immersion (100×) fields</b> in the monolayer and take the average.", "Average × <b>20,000</b> (some laboratories use 15,000) ≈ platelets/µL. About <b>8–20 per field</b> fits a normal count.", "Always scan the <b>feathered edge</b> for platelet clumps before accepting a low count."]},
+{"type": "calc", "kind": "retic"}
+]},{
+"key": "m2", "title": "Chapter 2: Bone Marrow Precursors", "short": "Marrow precursors",
+"cards": [
+{"type": "flip", "img": "myeloblast", "q": "Identify this immature cell and list the features that make it a blast.",
+ "a": ["<b>Myeloblast</b>: 15–20 µm, <b>high nucleus-to-cytoplasm ratio</b>, <b>fine, open (lacy) chromatin</b>, <b>2–5 nucleoli</b>, and a small rim of blue cytoplasm with <b>no or few granules</b>.", "Normal marrow: under 5%. Not normally seen in the blood."]},
+{"type": "flip", "img": "promyelocyte", "q": "Identify this cell. Which granules first appear at this stage?",
+ "a": ["<b>Promyelocyte</b>: often the <b>largest</b> granulocytic precursor (15–25 µm); nucleoli may still be visible; basophilic cytoplasm with many purple <b>primary (azurophilic) granules</b>, sometimes a pale perinuclear (Golgi) zone.", "Primary granules contain <b>myeloperoxidase</b>."]},
+{"type": "flip", "img": "myelocyte", "q": "Identify this cell. Why is this stage important?",
+ "a": ["<b>Myelocyte</b>: round to oval, often eccentric nucleus, <b>no nucleoli</b>, more condensed chromatin; <b>secondary (specific) granules</b> appear, giving a lilac or pinkish cytoplasm.", "It is the <b>last stage capable of cell division</b> in the granulocytic series."]},
+{"type": "flip", "img": "eomyelo", "q": "The central cell has a round nucleus and orange-red granules. Identify it.",
+ "a": ["<b>Eosinophilic myelocyte</b>: myelocyte stage with large <b>orange-red specific (eosinophilic) granules</b>, often mixed with a few darker primary granules.", "From the myelocyte stage on, the three granulocyte lines (neutrophil, eosinophil, basophil) can be told apart by their specific granules."]},
+{"type": "flip", "img": "meta", "q": "Identify this cell and its key nuclear feature. What does it mean if many appear in the blood?",
+ "a": ["<b>Metamyelocyte</b>: <b>kidney- or bean-shaped (indented) nucleus</b>, the indentation less than half the width of the nucleus; condensed chromatin; pink cytoplasm with specific granules. It can no longer divide.", "In the blood: a <b>left shift</b> (infection) or a <b>leukoerythroblastic</b> picture (marrow infiltration, myelofibrosis), or CML."]},
+{"type": "flip", "img": "polynormo", "q": "Identify this nucleated red cell precursor. What change in the cytoplasm gives the stage its name?",
+ "a": ["<b>Polychromatic (polychromatophilic) normoblast</b> (rubricyte): round nucleus with <b>checkerboard clumped chromatin</b>, no nucleoli.", "<b>Hemoglobin begins to appear</b>, mixing with the blue ribosomes: grey-blue to lilac cytoplasm.", "It is the <b>last erythroid stage capable of division</b>."]},
+{"type": "flip", "img": "orthonormo", "q": "Identify this erythroid precursor. What happens next in its maturation?",
+ "a": ["<b>Orthochromic normoblast</b> (metarubricyte): small, <b>dense pyknotic nucleus</b>; cytoplasm almost the colour of a mature red cell.", "The nucleus is <b>extruded</b> (taken up by marrow macrophages) and the cell becomes a <b>reticulocyte</b>. In the blood it is counted as a <b>nucleated red cell</b>."]},
+{"type": "flip", "img": "mk", "q": "Identify this very large marrow cell. What is the phenomenon of other cells seen inside its cytoplasm?",
+ "a": ["<b>Megakaryocyte</b>: the <b>largest marrow cell</b> (up to 50–100 µm), one large <b>multilobed (polyploid) nucleus</b> formed by endomitosis, abundant granular cytoplasm that fragments into <b>platelets</b>.", "Other blood cells passing through its cytoplasm: <b>emperipolesis</b> (a non-specific finding)."]},
+{"type": "flip", "img": "plasma", "q": "Identify this cell and its three classic features.",
+ "a": ["<b>Plasma cell</b>: (1) <b>eccentric round nucleus</b> with coarse <b>clock-face (cartwheel) chromatin</b>; (2) deeply <b>basophilic cytoplasm</b> (rich in RER for immunoglobulin); (3) a pale <b>perinuclear hof</b> (Golgi).", "Normal marrow: under about 3–5%. Not normally seen in the blood."]},
+{"type": "flip", "img": "mast", "q": "The central marrow cell is packed with dark purple granules but has a round, non-segmented nucleus. Identify it.",
+ "a": ["<b>Mast cell</b> (tissue basophil): oval or spindle-shaped cell with a <b>round central nucleus</b> and cytoplasm crowded with <b>dark metachromatic granules</b>.", "It differs from a blood basophil by its larger size, round (not segmented) nucleus and location in tissue and marrow. Increased in <b>systemic mastocytosis</b>."]},
+{"type": "flip", "img": "hemoph", "q": "A large marrow cell contains whole red cells and nucleated cells in its cytoplasm. What is the cell, and what is this finding called?",
+ "a": ["A <b>macrophage (histiocyte)</b> showing <b>hemophagocytosis</b>: ingestion of red cells, white cells or platelets.", "A few may be seen in infection; many suggest <b>hemophagocytic lymphohistiocytosis (HLH)</b>."]},
+{"type": "order", "q": "Put the granulocytic (neutrophil) series in order of maturation.",
+ "steps": ["Myeloblast", "Promyelocyte", "Myelocyte", "Metamyelocyte", "Band neutrophil", "Segmented neutrophil"]},
+{"type": "order", "q": "Put the erythroid series in order of maturation.",
+ "steps": ["Pronormoblast (rubriblast)", "Basophilic normoblast (prorubricyte)", "Polychromatic normoblast (rubricyte)", "Orthochromic normoblast (metarubricyte)", "Reticulocyte (polychromatic red cell)", "Mature red cell"]},
+{"type": "order", "q": "Put the megakaryocytic series in order of maturation.",
+ "steps": ["Megakaryoblast", "Promegakaryocyte", "Megakaryocyte (granular, then platelet-producing)", "Platelets"]},
+{"type": "sort", "q": "At which granulocytic stage does each feature first appear (or last occur)?",
+ "bins": ["Myeloblast", "Promyelocyte", "Myelocyte", "Metamyelocyte", "Band"],
+ "items": [{"t": "Nucleoli with no or few granules", "b": 0}, {"t": "Primary (azurophilic) granules are abundant", "b": 1}, {"t": "Secondary (specific) granules first appear", "b": 2}, {"t": "Last stage able to divide", "b": 2}, {"t": "Indented, kidney-shaped nucleus", "b": 3}, {"t": "Curved nucleus without filaments", "b": 4}]},
+{"type": "sort", "q": "Match each feature to the erythroid stage.",
+ "bins": ["Pronormoblast", "Basophilic normoblast", "Polychromatic normoblast", "Orthochromic normoblast", "Reticulocyte"],
+ "items": [{"t": "Largest erythroid cell; nucleoli; deep blue cytoplasm", "b": 0}, {"t": "Intensely blue cytoplasm; nucleoli usually gone", "b": 1}, {"t": "Hemoglobin first visible; checkerboard chromatin", "b": 2}, {"t": "Pyknotic nucleus about to be extruded", "b": 3}, {"t": "No nucleus; residual RNA seen with supravital stain", "b": 4}]},
+{"type": "flip", "q": "What are the normal myeloid-to-erythroid (M:E) ratio and marrow cellularity in an adult?",
+ "a": ["<b>M:E ratio</b> about <b>2:1 to 4:1</b> (granulocytic precursors outnumber erythroid ones).", "<b>Cellularity</b> (biopsy) roughly <b>100 minus age</b> (±10%): about 50% in a 50-year-old; it falls with age as fat replaces marrow."]},
+{"type": "flip", "q": "Which stain is used to assess bone marrow iron, and what does it show in iron deficiency and anemia of chronic disease?",
+ "a": ["<b>Prussian blue (Perls)</b> stain: iron appears blue.", "<b>Iron deficiency</b>: no stainable iron in macrophages and few or no sideroblasts.", "<b>Anemia of chronic disease</b>: macrophage iron <b>normal or increased</b> but few sideroblasts (iron is trapped).", "It also detects <b>ring sideroblasts</b> (Chapter 5)."]}
+]},{
+"key": "m3", "title": "Chapter 3: Red Cell Morphology and Inclusions", "short": "Red cells",
+"cards": [
+{"type": "flip", "img": "ida", "q": "Describe the red cells in this film. Which anemia does it suggest, and which indices fit?",
+ "a": ["<b>Microcytic, hypochromic</b> red cells (central pallor wider than one-third), anisocytosis and some elongated <b>pencil cells</b>.", "Typical of <b>iron deficiency anemia</b> (thalassemia is the main differential).", "Low <b>MCV, MCH</b> and MCHC; <b>RDW high</b> in iron deficiency (often normal in thalassemia trait)."]},
+{"type": "flip", "img": "target", "q": "Identify the abnormal red cells (hemoglobin in the centre of the pallor). Name three causes.",
+ "a": ["<b>Target cells (codocytes)</b>: a central dark spot of hemoglobin inside the pale zone, like a bull's eye. Excess membrane relative to hemoglobin.", "Causes: <b>thalassemia</b>, <b>hemoglobin C</b> (and SC) disease, <b>liver disease</b> (obstructive jaundice), after <b>splenectomy</b>.", "Slow drying of the film can produce artefactual target cells."]},
+{"type": "flip", "img": "sphero", "q": "Identify the small, dense, round cell with no central pallor. Name causes and the index that is often raised.",
+ "a": ["<b>Spherocyte</b>: lost membrane, so a reduced surface-to-volume ratio; small and dense with <b>no central pallor</b>.", "Causes: <b>hereditary spherocytosis</b>, <b>warm autoimmune hemolytic anemia</b>, ABO HDFN, burns.", "<b>MCHC often raised</b>; osmotic fragility increased."]},
+{"type": "flip", "img": "hs", "q": "A young patient with anemia, jaundice and splenomegaly; the father had a splenectomy. The DAT is negative. What is the likely diagnosis, and which tests help confirm it?",
+ "a": ["Many <b>spherocytes</b> with a <b>negative DAT</b> and a family history: <b>hereditary spherocytosis</b> (spectrin/ankyrin defects).", "Confirm with <b>EMA (eosin-5′-maleimide) binding</b> by flow cytometry or the <b>osmotic fragility</b> test. The negative DAT separates it from autoimmune hemolysis."]},
+{"type": "flip", "img": "schisto", "q": "Identify these red cell fragments. Why must they be reported urgently?",
+ "a": ["<b>Schistocytes</b> (fragmented red cells: helmet cells, triangles, keratocytes).", "They indicate <b>microangiopathic hemolytic anemia</b>: <b>DIC</b>, <b>TTP</b>, HUS, HELLP, or a malfunctioning mechanical heart valve.", "With thrombocytopenia, schistocytes may signal <b>TTP</b>, a medical emergency: report at once."]},
+{"type": "flip", "img": "sickle", "q": "Identify the abnormal cells shown by the arrow. Which other findings and tests support the diagnosis?",
+ "a": ["<b>Sickle cells (drepanocytes)</b>: elongated crescent cells with pointed ends, from polymerized <b>HbS</b> when deoxygenated: <b>sickle cell anemia (HbSS)</b>.", "Other findings: <b>target cells</b>, polychromasia, nucleated red cells and <b>Howell–Jolly bodies</b> (autosplenectomy).", "Tests: <b>solubility screen</b>, then <b>Hb electrophoresis or HPLC</b> to confirm."]},
+{"type": "flip", "img": "hbsc", "q": "A film with many target cells and a few irregular, boat-shaped and crystal-like cells; electrophoresis shows two abnormal hemoglobins. What is the likely disorder?",
+ "a": ["<b>Hemoglobin SC disease</b>: numerous <b>target cells</b>, few classic sickle cells, and <b>SC crystals</b> (blunt, irregular, sometimes 'Washington monument' shapes) or folded cells.", "Hemoglobin C alone gives target cells and rod-like <b>HbC crystals</b>."]},
+{"type": "flip", "img": "ellipto", "q": "Identify this elongated red cell and give three causes.",
+ "a": ["<b>Elliptocyte (ovalocyte)</b>: oval to cigar-shaped cell with hemoglobin at both ends.", "Causes: <b>hereditary elliptocytosis</b> (most cells), <b>iron deficiency</b> (pencil cells), <b>myelofibrosis</b>, <b>megaloblastic anemia</b> (large <b>macro-ovalocytes</b>), thalassemia."]},
+{"type": "flip", "img": "tear", "q": "Identify the predominant abnormal cells. With nucleated red cells and immature granulocytes in the blood, which marrow disease is suggested?",
+ "a": ["<b>Teardrop cells (dacrocytes)</b>: cells with a single tail, squeezed out of a fibrotic marrow.", "With a <b>leukoerythroblastic</b> picture: <b>primary myelofibrosis</b> or marrow infiltration (e.g. metastatic cancer). Also seen in thalassemia."]},
+{"type": "flip", "img": "echino", "q": "Identify this cell with short, evenly spaced projections. How does it differ from an acanthocyte?",
+ "a": ["<b>Echinocyte (burr cell, crenated cell)</b>: 10–30 short, <b>regular</b> projections; central pallor kept. Often an <b>artefact</b> (old blood, excess EDTA, slow drying); also uremia and pyruvate kinase deficiency.", "<b>Acanthocyte (spur cell)</b>: 2–20 <b>irregular</b>, unevenly spaced spicules, dense cell without pallor: severe <b>liver disease</b>, <b>abetalipoproteinemia</b>, McLeod phenotype."]},
+{"type": "flip", "img": "stomato", "q": "Identify the red cells with a slit-like central pallor. Name two causes.",
+ "a": ["<b>Stomatocytes</b>: central pallor shaped like a <b>mouth (slit)</b>.", "Causes: <b>alcoholism</b> and liver disease, <b>hereditary stomatocytosis</b>, Rh-null phenotype; a few may be an artefact of thick areas."]},
+{"type": "flip", "img": "rouleaux", "q": "Red cells are stacked like coins in this film from a patient with myeloma. What is this, why does it happen, and how do you tell it from agglutination?",
+ "a": ["<b>Rouleaux</b>: stacks of red cells caused by <b>raised plasma proteins</b> (fibrinogen, globulins, <b>paraprotein</b>), which reduce the negative surface charge. Associated with a high ESR and blue background staining.", "Rouleaux <b>disperse with saline replacement</b>; true agglutination does not."]},
+{"type": "flip", "img": "agglut", "q": "Red cells form irregular grape-like clumps. What is this, what is the commonest cause, and how does it affect automated results?",
+ "a": ["<b>Red cell agglutination</b>, most often by a <b>cold agglutinin</b> (cold AIHA, Mycoplasma or EBV infection).", "Clumps are counted as single large cells: <b>falsely low RBC and hematocrit</b>, <b>falsely high MCV and MCHC</b>.", "Fix: <b>warm the sample to 37 °C</b> and repeat."]},
+{"type": "flip", "img": "stipp", "q": "Identify the fine blue dots throughout this red cell. What are they made of, and name three causes.",
+ "a": ["<b>Basophilic stippling</b>: aggregated <b>ribosomes (RNA)</b>, evenly distributed through the cell.", "Coarse stippling: <b>lead poisoning</b>, <b>thalassemia</b>, pyrimidine-5′-nucleotidase deficiency; also megaloblastic anemia."]},
+{"type": "flip", "img": "hj", "q": "Look for small, round, dark purple inclusions (usually one per cell) in the red cells. What are they, and in which patients are they typical?",
+ "a": ["<b>Howell–Jolly bodies</b>: <b>nuclear (DNA) remnants</b>, normally removed by the spleen.", "Typical after <b>splenectomy</b> or with <b>hyposplenism</b> (sickle cell disease), and in <b>megaloblastic anemia</b>."]},
+{"type": "flip", "img": "pappen", "q": "The same red cell inclusions are shown with a Romanowsky stain (left) and Prussian blue (right). What are they?",
+ "a": ["<b>Pappenheimer bodies</b>: small clusters of granules near the cell edge on Wright/MGG; they stain <b>blue with Prussian blue</b>, proving they contain <b>iron</b>. Red cells with them are <b>siderocytes</b>.", "Seen in <b>sideroblastic anemia</b>, after <b>splenectomy</b>, thalassemia and hemoglobinopathies."]},
+{"type": "flip", "img": "cabot", "q": "Identify the thin, ring-shaped inclusion in the red cell marked by the arrow. What is it, and in which anemia is it seen?",
+ "a": ["<b>Cabot ring</b>: a thin red-violet loop or figure of eight, thought to be a remnant of the <b>mitotic spindle</b>.", "Rare; seen in <b>megaloblastic anemia</b>, lead poisoning and severe hemolysis, often with basophilic stippling."]},
+{"type": "flip", "img": "polychr", "q": "Compare the bluish-grey cell with its neighbours. What is it, and what does an increase mean?",
+ "a": ["A <b>polychromatic (polychromatophilic) red cell</b>: larger, blue-grey because of residual RNA; it is a <b>reticulocyte</b> on a supravital stain.", "Increased polychromasia means the marrow is <b>responding</b>: hemolysis or acute blood loss."]},
+{"type": "flip", "img": "nrbc", "q": "Identify the small cells with dense round nuclei. When are they abnormal, and what must you do with the white count?",
+ "a": ["<b>Nucleated red cells (normoblasts)</b>.", "Abnormal in the blood after the newborn period: <b>hemolysis</b> (thalassemia major, HDFN), <b>marrow infiltration or myelofibrosis</b>, severe hypoxia.", "Older counters may count them as white cells: <b>correct the WBC</b> = WBC × 100 ÷ (100 + nRBC per 100 WBC)."]},
+{"type": "flip", "img": "lead", "q": "Arrows point to red cells with coarse blue granules in a patient with abdominal colic and anemia. What is the finding and the likely cause?",
+ "a": ["<b>Coarse basophilic stippling</b>.", "<b>Lead poisoning</b>: lead inhibits <b>pyrimidine-5′-nucleotidase</b> (ribosomes are not broken down) and enzymes of heme synthesis. Confirm with a <b>blood lead</b> level."]},
+{"type": "sort", "q": "Match each red cell finding to its most typical cause.",
+ "bins": ["Microangiopathic hemolysis", "Myelofibrosis", "Spherocytic hemolysis", "Liver disease or thalassemia", "Absent spleen"],
+ "items": [{"t": "Schistocytes", "b": 0}, {"t": "Teardrop cells with a leukoerythroblastic picture", "b": 1}, {"t": "Spherocytes with polychromasia", "b": 2}, {"t": "Target cells", "b": 3}, {"t": "Acanthocytes (spur cells)", "b": 3}, {"t": "Howell–Jolly bodies", "b": 4}]},
+{"type": "sort", "q": "What is each red cell inclusion made of?",
+ "bins": ["DNA", "RNA (ribosomes)", "Iron", "Denatured hemoglobin", "Spindle remnant"],
+ "items": [{"t": "Howell–Jolly body", "b": 0}, {"t": "Basophilic stippling", "b": 1}, {"t": "Reticulum of a reticulocyte", "b": 1}, {"t": "Pappenheimer body", "b": 2}, {"t": "Heinz body", "b": 3}, {"t": "HbH inclusions (golf-ball cells)", "b": 3}, {"t": "Cabot ring", "b": 4}]},
+{"type": "flip", "q": "Which red cell findings need a supravital stain (not Wright stain) to be seen?",
+ "a": ["<b>Reticulocytes</b> (new methylene blue).", "<b>Heinz bodies</b> (crystal violet or brilliant cresyl blue): G6PD deficiency, unstable hemoglobins. On Wright stain you only see <b>bite cells</b>.", "<b>HbH inclusions</b> (brilliant cresyl blue): many small inclusions, the <b>golf-ball</b> pattern of α-thalassemia (HbH disease)."]},
+{"type": "calc", "kind": "nrbc"}
+]},{
+"key": "m4", "title": "Chapter 4: White Cell and Platelet Abnormalities", "short": "WBC & platelet changes",
+"cards": [
+{"type": "flip", "img": "hyperseg", "q": "The arrow shows a neutrophil. What is abnormal, what is the counting rule, and what does it suggest?",
+ "a": ["<b>Hypersegmented neutrophil</b>.", "Rule: <b>5% or more</b> of neutrophils with <b>5 lobes</b>, or any neutrophil with <b>6 or more</b> lobes.", "An early sign of <b>megaloblastic anemia</b> (vitamin B12 or folate deficiency)."]},
+{"type": "flip", "img": "toxgran", "q": "This band neutrophil has large, dark purple granules in its cytoplasm. Name the change and its usual cause.",
+ "a": ["<b>Toxic granulation</b>: prominent primary (azurophilic) granules.", "Seen in <b>severe bacterial infection and sepsis</b>, inflammation, burns, and G-CSF therapy; often with <b>Döhle bodies</b>, <b>vacuoles</b> and a left shift."]},
+{"type": "flip", "img": "toxvac", "q": "Look at the neutrophil in the lower left. What is the change, and which pre-analytical cause must be excluded?",
+ "a": ["<b>Cytoplasmic vacuolation</b> (toxic vacuoles), a sign of active phagocytosis in <b>sepsis</b>.", "Vacuoles also appear as an <b>artefact</b> in EDTA blood stored too long before the film is made: use fresh blood."]},
+{"type": "flip", "img": "pelger", "q": "This neutrophil has a bilobed 'spectacles' nucleus with very dense chromatin. Name the cell. How do you tell the inherited from the acquired form?",
+ "a": ["<b>Pelger–Huët cell</b> (pince-nez nucleus).", "<b>Pelger–Huët anomaly</b>: inherited (LBR gene), benign, affects <b>most neutrophils</b> of a healthy person; function is normal.", "<b>Pseudo-Pelger</b>: acquired, in <b>myelodysplastic syndrome</b> or AML (or some drugs); fewer cells, often with <b>hypogranulation</b> and other dysplasia."]},
+{"type": "flip", "img": "reactive", "q": "Identify this large lymphoid cell with abundant blue cytoplasm that is darker at the edges. In which condition is it typical?",
+ "a": ["<b>Reactive (atypical, variant) lymphocyte</b>: large cell with abundant cytoplasm that <b>scallops around neighbouring red cells</b>, with deeper blue staining at the edge.", "Typical of <b>infectious mononucleosis (EBV)</b>, CMV and other viral infections.", "Reactive lymphocytes vary from cell to cell (<b>heterogeneous</b>); a monotonous population suggests a neoplasm."]},
+{"type": "flip", "img": "smudge", "q": "What is this crushed cell, and in which disease are many seen? How can they be reduced?",
+ "a": ["A <b>smudge (basket) cell</b>: a fragile lymphocyte ruptured while the film was spread.", "Many are typical of <b>chronic lymphocytic leukemia (CLL)</b>.", "Adding a drop of <b>22% albumin</b> to the blood before spreading reduces smudging; smudge cells are counted as lymphocytes."]},
+{"type": "flip", "img": "cll", "q": "An elderly patient has a high white count. Most cells look like this. What is the likely diagnosis and confirmatory test?",
+ "a": ["Many <b>small mature-looking lymphocytes</b> with clumped ('soccer-ball') chromatin and scant cytoplasm, plus smudge cells: <b>chronic lymphocytic leukemia</b>.", "Confirm by <b>flow cytometry</b>: monoclonal B cells, <b>CD5+ CD23+</b>, weak surface immunoglobulin; at least <b>5 × 10<sup>9</sup>/L</b> clonal B cells."]},
+{"type": "flip", "img": "bact", "q": "What do these neutrophils contain, and what should the laboratory do?",
+ "a": ["<b>Phagocytosed bacteria</b> inside neutrophils (with toxic changes).", "This indicates heavy <b>bacteremia or sepsis</b>: a <b>critical finding</b>. Notify the clinician immediately; blood cultures should be collected."]},
+{"type": "flip", "img": "satell", "q": "Platelets surround the neutrophils. What is this, what does it do to the platelet count, and how is it solved?",
+ "a": ["<b>Platelet satellitism</b>: an EDTA-dependent antibody makes platelets adhere to neutrophils.", "Platelets are not counted: <b>pseudothrombocytopenia</b> (falsely low).", "Recollect in <b>sodium citrate</b> (multiply the count by <b>1.1</b> for dilution) and confirm on the film."]},
+{"type": "flip", "img": "giantplt", "q": "Identify the large cell-sized purple object in the centre. Name causes and the counting problem it creates.",
+ "a": ["A <b>giant platelet</b> (as large as or larger than a red cell).", "Causes: <b>Bernard–Soulier syndrome</b>, <b>May–Hegglin anomaly</b> (MYH9), <b>myeloproliferative neoplasms</b>, immune thrombocytopenia (young large platelets).", "Analyzers may count giant platelets as red cells: <b>falsely low platelet count</b>, so check the film."]},
+{"type": "flip", "img": "et", "q": "This film shows very many platelets, some large. The count is persistently above 450 × 10<sup>9</sup>/L. Which disorders do you consider?",
+ "a": ["<b>Thrombocytosis</b>. Persistent and unexplained with large platelets: <b>essential thrombocythemia</b>, a myeloproliferative neoplasm (<b>JAK2</b>, <b>CALR</b> or <b>MPL</b> mutation).", "Exclude <b>reactive thrombocytosis</b> first: iron deficiency, infection, inflammation, after splenectomy or bleeding."]},
+{"type": "flip", "img": "pltclump", "q": "Large aggregates of platelets are seen on the film. What does this do to the analyzer count, and what are the causes?",
+ "a": ["<b>Platelet clumps</b>: the analyzer gives a <b>falsely low platelet count</b> (pseudothrombocytopenia) and may raise the WBC.", "Causes: <b>EDTA-dependent agglutinins</b>, a slow or difficult collection (partial clotting).", "Check the <b>feathered edge</b>; recollect in sodium citrate."]},
+{"type": "sort", "q": "Match each neutrophil change to its most likely cause.",
+ "bins": ["Infection or inflammation", "Vitamin B12 or folate deficiency", "Myelodysplasia (acquired)", "Inherited, benign"],
+ "items": [{"t": "Toxic granulation", "b": 0}, {"t": "Döhle bodies", "b": 0}, {"t": "Cytoplasmic vacuoles", "b": 0}, {"t": "Hypersegmentation", "b": 1}, {"t": "Hypogranular, bilobed (pseudo-Pelger) neutrophils", "b": 2}, {"t": "Bilobed nucleus in nearly all neutrophils of a healthy person", "b": 3}]},
+{"type": "flip", "q": "What are Döhle bodies, and how do May–Hegglin inclusions differ?",
+ "a": ["<b>Döhle bodies</b>: pale blue, oval patches at the periphery of neutrophil cytoplasm (remnants of rough ER/RNA): infection, burns, pregnancy.", "<b>May–Hegglin anomaly</b> (MYH9 disorder): similar but larger, crisper inclusions, together with <b>giant platelets</b> and <b>thrombocytopenia</b>."]},
+{"type": "flip", "q": "Distinguish a left shift from a leukoerythroblastic picture.",
+ "a": ["<b>Left shift</b>: more bands, sometimes metamyelocytes and myelocytes, <b>no nucleated red cells</b>; usually with toxic changes: <b>infection</b>.", "<b>Leukoerythroblastic picture</b>: immature granulocytes <b>plus nucleated red cells</b>, often <b>teardrop cells</b>: <b>marrow infiltration</b> (cancer, fibrosis) or severe stress."]}
+]},{
+"key": "m5", "title": "Chapter 5: Leukemias and Marrow Disorders", "short": "Leukemias & marrow",
+"cards": [
+{"type": "flip", "img": "auer", "q": "Look closely at the cytoplasm of these blasts. What are the pink rod-shaped inclusions, and which lineage do they prove?",
+ "a": ["<b>Auer rods</b>: needle-like inclusions formed by <b>fused primary granules</b>; they are <b>myeloperoxidase positive</b>.", "They prove a <b>myeloid</b> lineage (AML or high-grade MDS) and are <b>never seen in ALL</b>."]},
+{"type": "flip", "img": "faggot", "q": "Abnormal promyelocytes with heavy granules, one containing bundles of Auer rods. Name the cell and the leukemia. Why is this a laboratory emergency?",
+ "a": ["<b>Faggot cell</b>: promyelocyte with <b>bundles of Auer rods</b>.", "<b>Acute promyelocytic leukemia (APL)</b>, with <b>PML::RARA</b> from <b>t(15;17)</b>.", "APL often causes <b>DIC</b> with life-threatening bleeding: report immediately and check PT, APTT, fibrinogen and D-dimer."]},
+{"type": "flip", "img": "aplv", "q": "This cell has a bilobed 'butterfly' nucleus and few visible granules; the white count is high. Which leukemia variant should you think of?",
+ "a": ["<b>Hypogranular (microgranular) variant of APL</b> (FAB M3v): bilobed, folded, <b>butterfly</b>-shaped nuclei; granules too fine to see by light microscopy.", "It can mimic monocytic leukemia, but the cells are <b>strongly MPO positive</b> and carry <b>t(15;17)</b>. Same DIC risk."]},
+{"type": "flip", "img": "all", "q": "A child with bone pain and pancytopenia. The blood shows these cells. What are they, and which tests confirm the lineage?",
+ "a": ["<b>Lymphoblasts</b>: small to medium cells, very <b>high N:C ratio</b>, scant blue <b>agranular</b> cytoplasm, fine chromatin, inconspicuous nucleoli; <b>no Auer rods</b>.", "<b>Acute lymphoblastic leukemia</b>: <b>MPO negative</b>; flow cytometry shows <b>TdT</b>, CD34 and B (CD19, CD10) or T (CD3) markers."]},
+{"type": "flip", "img": "m1", "q": "Almost all nucleated cells are large blasts with fine chromatin and nucleoli, with very little maturation. What is the likely diagnosis and the key cytochemical test?",
+ "a": ["<b>Acute myeloid leukemia without maturation</b> (FAB M1): blasts make up about 90% of non-erythroid cells; few maturing granulocytes.", "<b>Myeloperoxidase (MPO)</b> or Sudan black B: <b>3% or more</b> of blasts positive proves the myeloid lineage."]},
+{"type": "flip", "img": "m2", "q": "Many myeloblasts with some maturing granulocytes. Which AML type is this, and which translocation is classically associated?",
+ "a": ["<b>AML with maturation</b> (FAB M2): blasts plus 10% or more maturing granulocytes (promyelocytes onward).", "Classically associated with <b>t(8;21)</b> (<b>RUNX1::RUNX1T1</b>), often with <b>Auer rods</b>."]},
+{"type": "flip", "img": "m5", "q": "Large cells with folded nuclei and abundant grey-blue cytoplasm fill the film. Which leukemia and which cytochemical stain fit?",
+ "a": ["<b>Acute monocytic / monoblastic leukemia</b> (FAB M5): monoblasts and promonocytes.", "<b>Non-specific esterase</b> (α-naphthyl butyrate or acetate esterase) <b>positive</b>, <b>inhibited by sodium fluoride</b>.", "Clinical clues: gum and skin infiltration; high serum and urine lysozyme."]},
+{"type": "flip", "img": "m6", "q": "The blood contains many nucleated red cells, some large and abnormal, in a patient with acute leukemia. Which rare AML type fits?",
+ "a": ["<b>Acute erythroid leukemia</b> (FAB M6, erythroleukemia): malignant <b>erythroblasts</b> dominate the marrow and appear in the blood.", "Erythroblasts often show <b>block PAS positivity</b> and marked dyserythropoiesis."]},
+{"type": "flip", "img": "cml", "q": "Very high white count with granulocytes at every stage of maturation. Name the diagnosis and the defining genetic lesion.",
+ "a": ["<b>Chronic myeloid leukemia</b>, chronic phase: all stages from myeloblast to neutrophil, with a peak of <b>myelocytes and segmented neutrophils</b>; <b>basophilia</b> and eosinophilia; blasts under 10%.", "<b>BCR::ABL1</b> fusion from <b>t(9;22)</b>: the <b>Philadelphia chromosome</b>. LAP score is low."]},
+{"type": "flip", "img": "cmml", "q": "An older patient has persistent monocytosis with dysplastic cells. Which disorder is likely, and what are the blood criteria?",
+ "a": ["<b>Chronic myelomonocytic leukemia (CMML)</b>, an MDS/MPN overlap neoplasm.", "Persistent monocytes <b>≥ 0.5 × 10<sup>9</sup>/L</b> and <b>≥ 10%</b> of white cells, with blasts (including promonocytes) under 20% and no BCR::ABL1."]},
+{"type": "flip", "img": "hcl", "q": "Medium-sized lymphoid cells with oval nuclei and cytoplasm with fine irregular projections; the patient has pancytopenia, splenomegaly and a dry tap. Diagnosis and markers?",
+ "a": ["<b>Hairy cell leukemia</b>: 'hairy' cytoplasmic projections; <b>monocytopenia</b> is typical; marrow fibrosis gives a <b>dry tap</b>.", "Markers: <b>TRAP</b> positive (tartrate-resistant acid phosphatase), <b>CD11c, CD25, CD103</b>, annexin A1; <b>BRAF V600E</b> mutation."]},
+{"type": "flip", "img": "myeloma", "q": "Bone marrow aspirate from a patient with bone pain, anemia and a serum M-protein. Identify the cells and the diagnostic threshold.",
+ "a": ["Sheets of <b>plasma cells</b> (eccentric nuclei, blue cytoplasm, perinuclear hof), some immature or binucleate.", "<b>Plasma cell myeloma</b>: <b>10% or more clonal plasma cells</b> in the marrow, with myeloma-defining events (CRAB: hypercalcemia, renal failure, anemia, bone lesions).", "The blood film often shows <b>rouleaux</b>."]},
+{"type": "flip", "img": "flame", "q": "This plasma cell has bright red-pink cytoplasm at its edge. What is it called, and with which myeloma type is it associated?",
+ "a": ["<b>Flame cell</b>: plasma cell with <b>fuchsinophilic (red) cytoplasm</b> due to glycoprotein-rich immunoglobulin.", "Classically associated with <b>IgA myeloma</b>."]},
+{"type": "flip", "img": "hypomk", "q": "The large cell in this marrow aspirate is a megakaryocyte with a small, round, non-lobed nucleus. What does it suggest?",
+ "a": ["A <b>hypolobated (mononuclear) dysplastic megakaryocyte</b>.", "Megakaryocytic dysplasia of <b>myelodysplastic syndrome</b>; small hypolobated forms are typical of <b>MDS with isolated del(5q)</b>."]},
+{"type": "flip", "img": "megaloblasts", "q": "Marrow erythroid precursors are large, with open immature chromatin but well-hemoglobinized cytoplasm. Name the change and its usual cause.",
+ "a": ["<b>Megaloblastic erythropoiesis</b>: <b>nuclear-cytoplasmic asynchrony</b> (the nucleus lags behind the cytoplasm because DNA synthesis is impaired).", "Due to <b>vitamin B12 or folate deficiency</b>. Also seen: <b>giant metamyelocytes</b>, hypersegmented neutrophils, oval macrocytes in the blood."]},
+{"type": "flip", "img": "ringsid", "q": "A marrow film stained with Prussian blue shows erythroblasts with blue granules around the nucleus. What are they, and what is the definition?",
+ "a": ["<b>Ring sideroblasts</b>: iron-laden <b>mitochondria</b> around the nucleus.", "Definition: <b>5 or more iron granules</b> encircling at least <b>one-third</b> of the nucleus.", "Seen in <b>sideroblastic anemias</b> (congenital, alcohol, lead, drugs) and <b>MDS with ring sideroblasts</b> (15% or more, or 5% or more with an <b>SF3B1</b> mutation)."]},
+{"type": "sort", "q": "Lymphoblast or myeloblast?",
+ "bins": ["Lymphoblast", "Myeloblast"],
+ "items": [{"t": "Auer rods may be present", "b": 1}, {"t": "MPO positive", "b": 1}, {"t": "Scant agranular cytoplasm, inconspicuous nucleoli", "b": 0}, {"t": "TdT positive", "b": 0}, {"t": "Several prominent nucleoli, more cytoplasm, sometimes granules", "b": 1}, {"t": "Block PAS positivity (classic)", "b": 0}]},
+{"type": "sort", "q": "Which special stain identifies each cell or finding?",
+ "bins": ["Myeloperoxidase / Sudan black B", "Non-specific esterase (fluoride-inhibited)", "TRAP", "Prussian blue"],
+ "items": [{"t": "Myeloblasts and Auer rods", "b": 0}, {"t": "Monoblasts and monocytes", "b": 1}, {"t": "Hairy cells", "b": 2}, {"t": "Ring sideroblasts", "b": 3}, {"t": "Marrow iron stores", "b": 3}]},
+{"type": "flip", "q": "What blast percentage defines acute leukemia, and which important exceptions exist?",
+ "a": ["<b>20% or more blasts</b> (including promonocytes in monocytic leukemia) in the blood or marrow (WHO).", "Some genetically defined AMLs, such as <b>t(15;17)</b>, <b>t(8;21)</b> and <b>inv(16)</b>, are diagnosed as AML even with fewer blasts."]},
+{"type": "flip", "q": "Which conditions commonly give a 'dry tap' on bone marrow aspiration, and what is done then?",
+ "a": ["<b>Myelofibrosis</b>, <b>hairy cell leukemia</b>, and a <b>packed marrow</b> (some leukemias, metastatic cancer).", "A <b>trephine biopsy</b> (with touch imprints) is needed to assess the marrow."]}
+]},{
+"key": "m6", "title": "Chapter 6: Blood Parasites", "short": "Blood parasites",
+"cards": [
+{"type": "flip", "img": "pfring", "q": "Thin blood film from a febrile traveller. Identify the parasite stage and the features that point to the species.",
+ "a": ["<b>Ring forms (early trophozoites)</b> of <b>Plasmodium falciparum</b>.", "Clues: small delicate rings, <b>double chromatin dots</b>, <b>multiple rings in one cell</b>, rings at the cell edge (<b>appliqué</b>), infected cells <b>not enlarged</b>, usually only rings in the blood.", "High parasitemia is common: report the <b>percentage of infected red cells</b>."]},
+{"type": "flip", "img": "pfgam", "q": "Identify this crescent-shaped stage. Which species does it identify?",
+ "a": ["A <b>banana- or crescent-shaped gametocyte</b>: diagnostic of <b>Plasmodium falciparum</b>.", "Gametocytes are the sexual stage, infective to mosquitoes; they appear about 10 days after the infection starts."]},
+{"type": "flip", "img": "babesia", "q": "A patient from a tick area (no travel) has hemolytic anemia. Small rings and tetrads are seen. Which parasite is it, and how does it differ from P. falciparum?",
+ "a": ["<b>Babesia</b> (e.g. B. microti), transmitted by ticks or transfusion.", "Differences: <b>tetrads ('Maltese cross')</b>, rings often <b>outside</b> the red cells, <b>no hemozoin pigment</b>, <b>no gametocytes or schizonts</b>."]},
+{"type": "flip", "img": "tryp", "q": "Identify these extracellular, wavy organisms between the red cells.",
+ "a": ["<b>Trypanosomes</b> (trypomastigotes): elongated with an <b>undulating membrane</b>, a free <b>flagellum</b>, a central nucleus and a <b>kinetoplast</b>.", "<b>T. brucei</b> causes African sleeping sickness; <b>T. cruzi</b> (C-shaped forms) causes Chagas disease."]},
+{"type": "flip", "img": "leish", "q": "Bone marrow aspirate from a patient with fever, massive splenomegaly and pancytopenia. A macrophage is full of small oval bodies. What are they?",
+ "a": ["<b>Leishmania amastigotes</b> (Leishman–Donovan bodies): small oval bodies with a <b>nucleus and a rod-shaped kinetoplast</b>, inside macrophages or freed from ruptured cells.", "Diagnosis: <b>visceral leishmaniasis (kala-azar)</b>."]},
+{"type": "flip", "q": "Why are both thick and thin films prepared for malaria?",
+ "a": ["<b>Thick film</b> (lysed red cells): concentrates parasites, about 20–40 times more <b>sensitive</b>, used to <b>detect</b> infection.", "<b>Thin film</b> (fixed): red cells intact, so you can <b>identify the species</b> and calculate the <b>parasitemia</b>.", "Repeat films every 12–24 hours (up to 3 sets) before excluding malaria."]},
+{"type": "sort", "q": "Which malaria species does each feature suggest?",
+ "bins": ["P. falciparum", "P. vivax / P. ovale", "P. malariae"],
+ "items": [{"t": "Banana-shaped gametocytes", "b": 0}, {"t": "Multiple rings and appliqué forms; infected cells normal size", "b": 0}, {"t": "Enlarged infected red cells with Schüffner's dots", "b": 1}, {"t": "Band-form trophozoites; 'rosette' schizonts", "b": 2}]},
+{"type": "flip", "q": "How is the parasitemia calculated on a thin film?",
+ "a": ["Count infected red cells among at least <b>1,000 red cells</b> (or 500–2,000 depending on the method).", "Parasitemia (%) = infected red cells ÷ total red cells counted × 100. Count an infected cell <b>once</b>, even with several rings.", "Above about <b>2–5%</b> suggests severe falciparum malaria: report urgently."]}
+]}],"images":{"neutrophil":{"s":"https://upload.wikimedia.org/wikipedia/commons/b/b3/PBNeutrophil.jpg","p":"https://commons.wikimedia.org/wiki/File:PBNeutrophil.jpg","a":"CS99","l":"Public domain"},"band":{"s":"https://upload.wikimedia.org/wikipedia/commons/8/8c/PBStabkerniger.jpg","p":"https://commons.wikimedia.org/wiki/File:PBStabkerniger.jpg","a":"CS99","l":"Public domain"},"eosinophil":{"s":"https://upload.wikimedia.org/wikipedia/commons/a/af/PBEosinophil.jpg","p":"https://commons.wikimedia.org/wiki/File:PBEosinophil.jpg","a":"CS99","l":"Public domain"},"basophil":{"s":"https://upload.wikimedia.org/wikipedia/commons/f/f2/PBBasophil.jpg","p":"https://commons.wikimedia.org/wiki/File:PBBasophil.jpg","a":"CS99","l":"Public domain"},"lymphocyte":{"s":"https://upload.wikimedia.org/wikipedia/commons/1/12/PBLymphozyt.jpg","p":"https://commons.wikimedia.org/wiki/File:PBLymphozyt.jpg","a":"CS99","l":"CC BY-SA 3.0"},"neutmono":{"s":"https://upload.wikimedia.org/wikipedia/commons/d/d2/Neutrophil_%2B_monocyte_%2816076054013%29.jpg","p":"https://commons.wikimedia.org/wiki/File:Neutrophil_%2B_monocyte_(16076054013).jpg","a":"Hanna Sörensson from Karlstad, Sweden","l":"CC BY-SA 2.0"},"normal":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Normal_Adult_Blood_Smear.JPG/960px-Normal_Adult_Blood_Smear.JPG","p":"https://commons.wikimedia.org/wiki/File:Normal_Adult_Blood_Smear.JPG","a":"Keith Chambers","l":"CC BY-SA 3.0"},"retic":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Reticulocytes_Human_Blood_Supravital_Stain.jpg/960px-Reticulocytes_Human_Blood_Supravital_Stain.jpg","p":"https://commons.wikimedia.org/wiki/File:Reticulocytes_Human_Blood_Supravital_Stain.jpg","a":"Ed Uthman, MD","l":"CC BY 3.0"},"neonate":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Neonate_Blood_Smear.JPG/960px-Neonate_Blood_Smear.JPG","p":"https://commons.wikimedia.org/wiki/File:Neonate_Blood_Smear.JPG","a":"Keith Chambers","l":"CC BY-SA 3.0"},"myeloblast":{"s":"https://upload.wikimedia.org/wikipedia/commons/e/ef/Myeloblast.jpg","p":"https://commons.wikimedia.org/wiki/File:Myeloblast.jpg","a":"El*Falaf","l":"CC BY-SA 4.0"},"promyelocyte":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Samples_of_the_fifteen_different_types_of_WBCs_presented_in_the_dataset%2C_including_normal_and_abnormal_cells._Cropped_Promyelocyte.jpg/960px-Samples_of_the_fifteen_different_types_of_WBCs_presented_in_the_dataset%2C_including_normal_and_abnormal_cells._Cropped_Promyelocyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Samples_of_the_fifteen_different_types_of_WBCs_presented_in_the_dataset,_including_normal_and_abnormal_cells._Cropped_Promyelocyte.jpg","a":"Elhassan T.A. et al.","l":"CC BY 4.0"},"myelocyte":{"s":"https://upload.wikimedia.org/wikipedia/commons/5/58/Hem1Myelocyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Hem1Myelocyte.jpg","a":"El*Falaf","l":"CC BY-SA 3.0"},"eomyelo":{"s":"https://upload.wikimedia.org/wikipedia/commons/b/ba/Eosinophilic_Myelocyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Eosinophilic_Myelocyte.jpg","a":"Laboratorio microscopico","l":"CC BY-SA 4.0"},"meta":{"s":"https://upload.wikimedia.org/wikipedia/commons/f/ff/Hem1Metamyelocyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Hem1Metamyelocyte.jpg","a":"El*Falaf","l":"CC BY-SA 3.0"},"polynormo":{"s":"https://upload.wikimedia.org/wikipedia/commons/d/d0/Hem1PolychromaticErythroblast.jpg","p":"https://commons.wikimedia.org/wiki/File:Hem1PolychromaticErythroblast.jpg","a":"El*Falaf","l":"CC BY-SA 3.0"},"orthonormo":{"s":"https://upload.wikimedia.org/wikipedia/commons/0/02/Metarubricyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Metarubricyte.jpg","a":"Bobjgalindo","l":"CC BY-SA 4.0"},"mk":{"s":"https://upload.wikimedia.org/wikipedia/commons/f/f6/Emperipolesis.jpg","p":"https://commons.wikimedia.org/wiki/File:Emperipolesis.jpg","a":"Jarkeld","l":"CC BY-SA 3.0"},"plasma":{"s":"https://upload.wikimedia.org/wikipedia/commons/1/11/Plasmacell.jpg","p":"https://commons.wikimedia.org/wiki/File:Plasmacell.jpg","a":"CS99","l":"Public domain"},"mast":{"s":"https://upload.wikimedia.org/wikipedia/commons/d/d1/Mast_Cell%2C_Bone_Marrow_Aspirate%2C_Wright_Stain_%285916735712%29.jpg","p":"https://commons.wikimedia.org/wiki/File:Mast_Cell,_Bone_Marrow_Aspirate,_Wright_Stain_(5916735712).jpg","a":"Ed Uthman, MD","l":"CC BY 2.0"},"hemoph":{"s":"https://upload.wikimedia.org/wikipedia/commons/7/74/Hemophagocytosis_1.jpg","p":"https://commons.wikimedia.org/wiki/File:Hemophagocytosis_1.jpg","a":"Koenjo","l":"Public domain"},"megaloblasts":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Megaloblasts.jpg/960px-Megaloblasts.jpg","p":"https://commons.wikimedia.org/wiki/File:Megaloblasts.jpg","a":"Makysm","l":"CC0"},"ringsid":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Ring_Sideroblast_smear_2010-01-13.JPG/960px-Ring_Sideroblast_smear_2010-01-13.JPG","p":"https://commons.wikimedia.org/wiki/File:Ring_Sideroblast_smear_2010-01-13.JPG","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 3.0"},"ida":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Iron_deficiency_anemia_blood_film.jpg/960px-Iron_deficiency_anemia_blood_film.jpg","p":"https://commons.wikimedia.org/wiki/File:Iron_deficiency_anemia_blood_film.jpg","a":"Dr Graham Beards","l":"CC BY-SA 3.0"},"target":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Target_cells.jpg/960px-Target_cells.jpg","p":"https://commons.wikimedia.org/wiki/File:Target_cells.jpg","a":"Prof. Osaro Erhabor","l":"CC0"},"sphero":{"s":"https://upload.wikimedia.org/wikipedia/commons/a/a7/Micrograph_of_a_spherocyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Micrograph_of_a_spherocyte.jpg","a":"Mikael Häggström, M.D.","l":"CC0"},"hs":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Hereditary_Spherocytosis_smear_2010-03-17.JPG/960px-Hereditary_Spherocytosis_smear_2010-03-17.JPG","p":"https://commons.wikimedia.org/wiki/File:Hereditary_Spherocytosis_smear_2010-03-17.JPG","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 3.0"},"schisto":{"s":"https://upload.wikimedia.org/wikipedia/commons/e/ee/Micrograph_of_schistocytes.jpg","p":"https://commons.wikimedia.org/wiki/File:Micrograph_of_schistocytes.jpg","a":"Mikael Häggström, M.D.","l":"CC0"},"sickle":{"s":"https://upload.wikimedia.org/wikipedia/commons/d/d2/Sickle-cell_smear_2015-09-10.jpg","p":"https://commons.wikimedia.org/wiki/File:Sickle-cell_smear_2015-09-10.jpg","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 4.0"},"hbsc":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Blood_film_of_Hemoglobin_SC_disease.jpg/960px-Blood_film_of_Hemoglobin_SC_disease.jpg","p":"https://commons.wikimedia.org/wiki/File:Blood_film_of_Hemoglobin_SC_disease.jpg","a":"Spicy","l":"CC BY-SA 4.0"},"ellipto":{"s":"https://upload.wikimedia.org/wikipedia/commons/3/3c/Micrograph_of_an_elliptocyte_on_a_peripheral_blood_smear_02.jpg","p":"https://commons.wikimedia.org/wiki/File:Micrograph_of_an_elliptocyte_on_a_peripheral_blood_smear_02.jpg","a":"Mikael Häggström, M.D.","l":"CC0"},"tear":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Teardrop_Cells_smear_2009-09-22.JPG/960px-Teardrop_Cells_smear_2009-09-22.JPG","p":"https://commons.wikimedia.org/wiki/File:Teardrop_Cells_smear_2009-09-22.JPG","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 3.0"},"echino":{"s":"https://upload.wikimedia.org/wikipedia/commons/c/c9/Micrograph_of_an_echinocyte_on_a_peripheral_blood_smear.jpg","p":"https://commons.wikimedia.org/wiki/File:Micrograph_of_an_echinocyte_on_a_peripheral_blood_smear.jpg","a":"Mikael Häggström, M.D.","l":"CC0"},"stomato":{"s":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Stomatocytes-1.JPG","p":"https://commons.wikimedia.org/wiki/File:Stomatocytes-1.JPG","a":"Guy Waterval","l":"Apache License 2.0"},"rouleaux":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Rouleaux_in_myeloma_patient.jpg/960px-Rouleaux_in_myeloma_patient.jpg","p":"https://commons.wikimedia.org/wiki/File:Rouleaux_in_myeloma_patient.jpg","a":"Osaretin","l":"CC BY-SA 4.0"},"agglut":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Crioaglutininas.jpg/960px-Crioaglutininas.jpg","p":"https://commons.wikimedia.org/wiki/File:Crioaglutininas.jpg","a":"DaFerRod","l":"CC BY-SA 4.0"},"stipp":{"s":"https://upload.wikimedia.org/wikipedia/commons/9/97/Micrograph_of_a_red_blood_cell_with_basophilic_stippling.jpg","p":"https://commons.wikimedia.org/wiki/File:Micrograph_of_a_red_blood_cell_with_basophilic_stippling.jpg","a":"Mikael Häggström, M.D.","l":"CC0"},"hj":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Howell%E2%80%93Jolly_bodies.jpg/960px-Howell%E2%80%93Jolly_bodies.jpg","p":"https://commons.wikimedia.org/wiki/File:Howell%E2%80%93Jolly_bodies.jpg","a":"Makysm","l":"CC0"},"pappen":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Pappenheimer_bodies_smear_2015-08-31.jpg/960px-Pappenheimer_bodies_smear_2015-08-31.jpg","p":"https://commons.wikimedia.org/wiki/File:Pappenheimer_bodies_smear_2015-08-31.jpg","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 4.0"},"cabot":{"s":"https://upload.wikimedia.org/wikipedia/commons/8/87/Cabot_ring_and_basophilic_stippling.jpg","p":"https://commons.wikimedia.org/wiki/File:Cabot_ring_and_basophilic_stippling.jpg","a":"Dr. Roshan Nasimudeen","l":"CC BY-SA 4.0"},"polychr":{"s":"https://upload.wikimedia.org/wikipedia/commons/f/fa/Peripheral_blood_smear_with_polychromasia.jpg","p":"https://commons.wikimedia.org/wiki/File:Peripheral_blood_smear_with_polychromasia.jpg","a":"Mikael Häggström, M.D.","l":"CC0"},"nrbc":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Nucleated_red_cells.jpg/960px-Nucleated_red_cells.jpg","p":"https://commons.wikimedia.org/wiki/File:Nucleated_red_cells.jpg","a":"Osaretin","l":"CC BY-SA 4.0"},"lead":{"s":"https://upload.wikimedia.org/wikipedia/commons/3/3b/Lead_poisoning_-_blood_film.jpg","p":"https://commons.wikimedia.org/wiki/File:Lead_poisoning_-_blood_film.jpg","a":"Herbert L. Fred, MD and Hendrik A. van Dijk","l":"CC BY 2.0"},"pfring":{"s":"https://upload.wikimedia.org/wikipedia/commons/5/53/Rings_of_P._falciparum_in_a_thin_blood_smear.jpg","p":"https://commons.wikimedia.org/wiki/File:Rings_of_P._falciparum_in_a_thin_blood_smear.jpg","a":"CDC","l":"Public domain"},"pfgam":{"s":"https://upload.wikimedia.org/wikipedia/commons/9/97/Falciparum_gametocyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Falciparum_gametocyte.jpg","a":"see source page","l":"Public domain"},"babesia":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Blood_smear_of_Babesia_microti%2C_original.png/960px-Blood_smear_of_Babesia_microti%2C_original.png","p":"https://commons.wikimedia.org/wiki/File:Blood_smear_of_Babesia_microti,_original.png","a":"Mikael Häggström, M.D.","l":"CC0"},"tryp":{"s":"https://upload.wikimedia.org/wikipedia/commons/2/23/Trypanosoma_sp._PHIL_613_lores.jpg","p":"https://commons.wikimedia.org/wiki/File:Trypanosoma_sp._PHIL_613_lores.jpg","a":"CDC","l":"Public domain"},"leish":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Leishmania_2009-04-14_smear.JPG/960px-Leishmania_2009-04-14_smear.JPG","p":"https://commons.wikimedia.org/wiki/File:Leishmania_2009-04-14_smear.JPG","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 3.0"},"satell":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Platelet_Satellitism_smear_2009-09-11.JPG/960px-Platelet_Satellitism_smear_2009-09-11.JPG","p":"https://commons.wikimedia.org/wiki/File:Platelet_Satellitism_smear_2009-09-11.JPG","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 3.0"},"giantplt":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Giant_Platelet%2C_Peripheral_Blood_Smear_%286032662354%29.jpg/960px-Giant_Platelet%2C_Peripheral_Blood_Smear_%286032662354%29.jpg","p":"https://commons.wikimedia.org/wiki/File:Giant_Platelet,_Peripheral_Blood_Smear_(6032662354).jpg","a":"Ed Uthman, MD","l":"CC BY 2.0"},"et":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Essential_Thrombocythemia%2C_Peripheral_Blood_%2810189570483%29.jpg/960px-Essential_Thrombocythemia%2C_Peripheral_Blood_%2810189570483%29.jpg","p":"https://commons.wikimedia.org/wiki/File:Essential_Thrombocythemia,_Peripheral_Blood_(10189570483).jpg","a":"Ed Uthman, MD","l":"CC BY 2.0"},"pltclump":{"s":"https://upload.wikimedia.org/wikipedia/commons/8/89/Platelets.jpg","p":"https://commons.wikimedia.org/wiki/File:Platelets.jpg","a":"Tleonardi","l":"CC BY 3.0"},"hyperseg":{"s":"https://upload.wikimedia.org/wikipedia/commons/5/51/Hypersegmented_neutrophil.png","p":"https://commons.wikimedia.org/wiki/File:Hypersegmented_neutrophil.png","a":"Paul Weisz Carrington, M.D.","l":"Public domain"},"toxgran":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Cayado_con_granulaci%C3%B3n_t%C3%B3xica.jpg/960px-Cayado_con_granulaci%C3%B3n_t%C3%B3xica.jpg","p":"https://commons.wikimedia.org/wiki/File:Cayado_con_granulaci%C3%B3n_t%C3%B3xica.jpg","a":"DaFerRod","l":"CC BY-SA 4.0"},"toxvac":{"s":"https://upload.wikimedia.org/wikipedia/commons/e/e5/Toxic_vacuolation.jpg","p":"https://commons.wikimedia.org/wiki/File:Toxic_vacuolation.jpg","a":"SpicyMilkBoy","l":"CC BY-SA 4.0"},"pelger":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Pelger-H%C3%BCet.jpg/960px-Pelger-H%C3%BCet.jpg","p":"https://commons.wikimedia.org/wiki/File:Pelger-H%C3%BCet.jpg","a":"DaFerRod","l":"CC BY-SA 4.0"},"reactive":{"s":"https://upload.wikimedia.org/wikipedia/commons/7/76/Reactive_lymphocyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Reactive_lymphocyte.jpg","a":"SpicyMilkBoy","l":"CC BY-SA 4.0"},"smudge":{"s":"https://upload.wikimedia.org/wikipedia/commons/e/e6/Smudge_cell_in_a_peripheral_blood_smear.jpg","p":"https://commons.wikimedia.org/wiki/File:Smudge_cell_in_a_peripheral_blood_smear.jpg","a":"Mikael Häggström, M.D.","l":"CC0"},"cll":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Chronic_lymphocytic_leukemia.jpg/960px-Chronic_lymphocytic_leukemia.jpg","p":"https://commons.wikimedia.org/wiki/File:Chronic_lymphocytic_leukemia.jpg","a":"Mary Ann Thompson","l":"CC BY-SA 3.0"},"hcl":{"s":"https://upload.wikimedia.org/wikipedia/commons/e/e4/Hairy_cell_leukemia_smear_2009-08-20.JPG","p":"https://commons.wikimedia.org/wiki/File:Hairy_cell_leukemia_smear_2009-08-20.JPG","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 3.0"},"bact":{"s":"https://upload.wikimedia.org/wikipedia/commons/b/b9/Neutrophils_with_intracellular_bacteria_on_peripheral_blood_smear.png","p":"https://commons.wikimedia.org/wiki/File:Neutrophils_with_intracellular_bacteria_on_peripheral_blood_smear.png","a":"Spicy","l":"CC BY-SA 4.0"},"auer":{"s":"https://upload.wikimedia.org/wikipedia/commons/d/db/Two_myeloblasts_with_Auer_rods.jpg","p":"https://commons.wikimedia.org/wiki/File:Two_myeloblasts_with_Auer_rods.jpg","a":"Armed Forces Institute of Pathology","l":"Public domain"},"faggot":{"s":"https://upload.wikimedia.org/wikipedia/commons/e/e4/Faggot_cell_in_AML-M3.jpg","p":"https://commons.wikimedia.org/wiki/File:Faggot_cell_in_AML-M3.jpg","a":"Armed Forces Institute of Pathology","l":"Public domain"},"aplv":{"s":"https://upload.wikimedia.org/wikipedia/commons/f/f4/Acute_promyelocytic_leukemia_-_butterfly_cell.jpg","p":"https://commons.wikimedia.org/wiki/File:Acute_promyelocytic_leukemia_-_butterfly_cell.jpg","a":"SpicyMilkBoy","l":"CC BY-SA 4.0"},"all":{"s":"https://upload.wikimedia.org/wikipedia/commons/b/b3/Acute_lymphoblastic_leukaemia_smear.jpg","p":"https://commons.wikimedia.org/wiki/File:Acute_lymphoblastic_leukaemia_smear.jpg","a":"James Grellier","l":"CC BY-SA 3.0"},"m1":{"s":"https://upload.wikimedia.org/wikipedia/commons/d/db/AML-M1.jpg","p":"https://commons.wikimedia.org/wiki/File:AML-M1.jpg","a":"Armed Forces Institute of Pathology","l":"Public domain"},"m2":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Acute_Myeloid_Leukemia_%28M2_type%29.jpg/960px-Acute_Myeloid_Leukemia_%28M2_type%29.jpg","p":"https://commons.wikimedia.org/wiki/File:Acute_Myeloid_Leukemia_(M2_type).jpg","a":"Makysm","l":"CC0"},"m5":{"s":"https://upload.wikimedia.org/wikipedia/commons/f/f8/AML-M5A.jpg","p":"https://commons.wikimedia.org/wiki/File:AML-M5A.jpg","a":"Armed Forces Institute of Pathology","l":"Public domain"},"m6":{"s":"https://upload.wikimedia.org/wikipedia/commons/4/4e/AML-M6%2C_blood_smear.jpg","p":"https://commons.wikimedia.org/wiki/File:AML-M6,_blood_smear.jpg","a":"Armed Forces Institute of Pathology","l":"Public domain"},"cml":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Chronic_Myeloid_Leukemia_smear_2009-04-09.JPG/960px-Chronic_Myeloid_Leukemia_smear_2009-04-09.JPG","p":"https://commons.wikimedia.org/wiki/File:Chronic_Myeloid_Leukemia_smear_2009-04-09.JPG","a":"Paulo Henrique Orlandi Mourao","l":"CC BY-SA 3.0"},"cmml":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/CMML.jpg/960px-CMML.jpg","p":"https://commons.wikimedia.org/wiki/File:CMML.jpg","a":"Simon Caulton","l":"CC BY-SA 3.0"},"myeloma":{"s":"https://upload.wikimedia.org/wikipedia/commons/c/c7/Multiple_myeloma_%281%29_MG_stain.jpg","p":"https://commons.wikimedia.org/wiki/File:Multiple_myeloma_(1)_MG_stain.jpg","a":"KGH","l":"CC BY-SA 3.0"},"flame":{"s":"https://upload.wikimedia.org/wikipedia/commons/9/93/Flame_plasma_cell.jpg","p":"https://commons.wikimedia.org/wiki/File:Flame_plasma_cell.jpg","a":"Vladareanu A.M. et al.","l":"CC BY 2.0"},"hypomk":{"s":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Hypolobated_small_megakaryocyte.jpg/960px-Hypolobated_small_megakaryocyte.jpg","p":"https://commons.wikimedia.org/wiki/File:Hypolobated_small_megakaryocyte.jpg","a":"Difu Wu","l":"CC BY-SA 3.0"}}};
+const KEY = 'studycards-' + DECK.id;
+let status = {};
+try { status = JSON.parse(localStorage.getItem(KEY) || '{}') || {} } catch (e) { status = {} }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(status)) } catch (e) {} }
+// Anonymous usage statistics (GoatCounter, no cookies, no personal data).
+function track(path, title, ev) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: DECK.id + '/' + path, title: String(title).replace(/<[^>]+>/g, '').slice(0, 120), event: !!ev }) } catch (e) {} }
+const app = document.getElementById('app');
+const esc = s => String(s);
+const plain = s => String(s).replace(/<[^>]+>/g, '');
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]] } return a }
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const rnd = (lo, hi, step) => { const n = Math.round((hi - lo) / step); return +(lo + step * Math.floor(Math.random() * (n + 1))).toFixed(4) };
+const fmt = (x, d) => (+x).toFixed(d);
+
+// every card gets a stable id: chapter key + position
+const ALL = [];
+DECK.chapters.forEach(ch => ch.cards.forEach((c, i) => { c._id = ch.key + '.' + (i + 1); c._ch = ch; ALL.push(c) }));
+
+let list = [], idx = 0, mode = '';
+
+function home() {
+  mode = 'home';
+  const again = ALL.filter(c => status[c._id] === 'again').length;
+  const done = ALL.filter(c => status[c._id] === 'done').length;
+  app.innerHTML = '<a class="eyebrow" href="../" style="text-decoration:none">← All books</a><header><div class="eyebrow">' + DECK.eyebrow + '</div><h1>' + DECK.title + '</h1><p class="sub">' + DECK.sub + '</p></header>' +
+    '<div class="toolbar"><button class="btn primary" id="mixed">Mixed review (all chapters)</button>' +
+    '<button class="btn warn" id="again"' + (again ? '' : ' disabled') + '>Review my “Again” cards (' + again + ')</button></div>' +
+    '<p class="sub">' + done + ' of ' + ALL.length + ' cards marked “Got it”.</p>' +
+    '<div class="chapters">' + DECK.chapters.map((ch, k) => {
+      const n = ch.cards.length, g = ch.cards.filter(c => status[c._id] === 'done').length, a = ch.cards.filter(c => status[c._id] === 'again').length;
+      return '<button class="chap-btn" data-k="' + k + '"><span class="chap-title">' + ch.title + '</span><span class="chap-count">' + g + '/' + n + '</span>' +
+        '<span class="bar"><i class="g" style="width:' + (100 * g / n) + '%"></i><i class="a" style="width:' + (100 * a / n) + '%"></i></span></button>';
+    }).join('') + '</div>' +
+    '<div class="toolbar"><button class="btn" id="reset">Clear my progress</button></div><div id="confirm"></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  app.querySelectorAll('.chap-btn').forEach(b => b.onclick = () => start(DECK.chapters[+b.dataset.k].cards, DECK.chapters[+b.dataset.k].title, 'chapter/' + DECK.chapters[+b.dataset.k].key));
+  document.getElementById('mixed').onclick = () => start(shuffle(ALL).slice(0, 30), 'Mixed review · 30 random cards', 'mixed-review');
+  document.getElementById('again').onclick = () => start(ALL.filter(c => status[c._id] === 'again'), 'Cards marked “Again”', 'again-review');
+  document.getElementById('reset').onclick = () => {
+    document.getElementById('confirm').innerHTML = '<div class="feedback no"><p class="ink">Clear all your progress for this book? This cannot be undone.</p><div class="row"><button class="btn warn" id="yes">Clear progress</button><button class="btn" id="no">Keep it</button></div></div>';
+    document.getElementById('yes').onclick = () => { status = {}; save(); home() };
+    document.getElementById('no').onclick = () => document.getElementById('confirm').innerHTML = '';
+  };
+  window.scrollTo(0, 0);
+}
+
+let setTitle = '';
+function start(cards, title, path) { if (!cards.length) return; if (path) track(path, title, false); list = cards; idx = 0; setTitle = title; mode = 'study'; study() }
+
+function study() {
+  app.innerHTML = '<div class="topline"><button class="btn" id="back">← Chapters</button><h2>' + setTitle + '</h2></div>' +
+    '<div class="strip" id="strip"></div><section class="card" id="card" aria-live="polite"></section>' +
+    '<div class="nav"><button class="btn" id="prev">← Previous</button><button class="btn" id="next">Next →</button></div>' +
+    '<footer>' + DECK.footer + '</footer>';
+  document.getElementById('back').onclick = home;
+  document.getElementById('prev').onclick = () => go(idx - 1);
+  document.getElementById('next').onclick = () => go(idx + 1);
+  go(0);
+}
+function drawStrip() {
+  const strip = document.getElementById('strip'); if (!strip) return;
+  strip.innerHTML = list.map((c, i) => '<button class="dot' + (status[c._id] === 'done' ? ' done' : status[c._id] === 'again' ? ' again' : '') +
+    '" data-i="' + i + '" aria-label="Card ' + (i + 1) + '" aria-current="' + (i === idx) + '">' + (i + 1) + '</button>').join('') +
+    '<span class="score">' + list.filter(c => status[c._id] === 'done').length + ' / ' + list.length + ' got it</span>';
+  strip.querySelectorAll('.dot').forEach(b => b.onclick = () => go(+b.dataset.i));
+}
+function go(i) {
+  idx = Math.max(0, Math.min(list.length - 1, i));
+  const c = list[idx], el = document.getElementById('card');
+  (R[c.type] || R.flip)(c, el);
+  drawStrip();
+  document.getElementById('prev').disabled = idx === 0;
+  document.getElementById('next').disabled = idx === list.length - 1;
+}
+document.addEventListener('keydown', e => {
+  if (mode !== 'study' || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') go(idx + 1); if (e.key === 'ArrowLeft') go(idx - 1);
+});
+
+// photo cards: c.img is a key into DECK.images {s: src, p: source page, a: author, l: licence}
+function pic(c) {
+  const m = c.img && DECK.images && DECK.images[c.img]; if (!m) return '';
+  return '<figure class="ph"><a class="zoom" href="' + m.s + '" target="_blank" rel="noopener"><img src="' + m.s + '" alt="Microscope photograph for this card" loading="lazy" referrerpolicy="no-referrer" onload="if(this.naturalWidth<400){this.classList.add(\'small\');this.style.maxWidth=Math.round(this.naturalWidth*2.2)+\'px\'}"></a>' +
+    '<figcaption>Photo: ' + m.a + ' · ' + m.l + ' · <a href="' + m.p + '" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure>';
+}
+const LABEL = { flip: 'Flip', grid: 'Fill the grid', panel: 'Rule out', calc: 'Calculate', sort: 'Sort', order: 'Put in order' };
+function head(c) { return '<div class="meta"><span class="chip">' + LABEL[c.type] + '</span><span class="chap">' + c._ch.short + '</span></div>' }
+function rate(box) {
+  box.insertAdjacentHTML('beforeend', '<div class="row"><button class="btn good" data-r="done">Got it</button><button class="btn warn" data-r="again">Again</button></div>');
+  box.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { const c = list[idx]; status[c._id] = b.dataset.r; save(); track((b.dataset.r === 'done' ? 'got-it/' : 'again/') + c._id, c._ch.short + ' · ' + (c.q || LABEL[c.type] + ' card'), true); if (idx < list.length - 1) go(idx + 1); else drawStrip() });
+}
+function paras(a) { return (Array.isArray(a) ? a : [a]).map(p => '<p>' + p + '</p>').join('') }
+function fb(el, ok, html) { const f = el.querySelector('.fb'); f.innerHTML = '<div class="feedback ' + (ok ? 'ok' : 'no') + '">' + html + '</div>'; if (ok !== null) rate(f) }
+
+const R = {
+  flip(c, el) {
+    const ph = pic(c);
+    el.innerHTML = head(c) + ph + '<p class="q">' + c.q + '</p><p class="hint">' + (ph ? 'Look carefully, name it in your head, then flip the card. Tap the photo to enlarge it.' : 'Answer in your head, then flip the card.') + '</p><div class="row"><button class="btn primary" id="flip">Show answer</button></div>';
+    el.querySelector('#flip').onclick = () => {
+      el.innerHTML = head(c) + ph + '<p class="q">' + c.q + '</p><div class="answer">' + paras(c.a) + '</div><div class="fb"></div>';
+      rate(el.querySelector('.fb'));
+    };
+  },
+  grid(c, el) {
+    const v = c.variants ? pick(c.variants) : c;
+    const sym = c.symbols || ['+', '0'];
+    const rows = v.answer.length, cols = c.cols.length;
+    const state = v.answer.map((r, i) => r.map((x, j) => (v.given && v.given[i] && v.given[i][j] != null) ? null : ''));
+    let h = head(c) + '<p class="q">' + (v.q || c.q) + '</p><p class="hint">' + (c.hint || 'Tap each empty cell to cycle through the possible results, then check.') + '</p>' +
+      '<div class="legend">Tap to cycle: ' + sym.map(s => '<span>' + s + '</span>').join('') + (c.legend ? ' · ' + c.legend : '') + '</div>' +
+      '<div class="scroll"><table class="grid"><thead>';
+    if (c.groups) h += '<tr>' + (c.rows ? '<th></th>' : '') + c.groups.map(g => '<th colspan="' + g[1] + '">' + g[0] + '</th>').join('') + '</tr>';
+    h += '<tr>' + (c.rows || v.rows ? '<th></th>' : '') + c.cols.map(x => '<th>' + x + '</th>').join('') + '</tr></thead><tbody>';
+    const rlab = v.rows || c.rows;
+    for (let i = 0; i < rows; i++) {
+      h += '<tr>' + (rlab ? '<th class="rowh">' + rlab[i] + '</th>' : '');
+      for (let j = 0; j < cols; j++) {
+        const g = v.given && v.given[i] && v.given[i][j] != null ? v.given[i][j] : null;
+        h += g !== null ? '<td class="given">' + g + '</td>' : '<td><button class="tap" data-i="' + i + '" data-j="' + j + '" aria-label="' + plain((rlab ? rlab[i] + ', ' : '') + c.cols[j]) + '">·</button></td>';
+      }
+      h += '</tr>';
+    }
+    h += '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check</button>' + (c.variants ? '<button class="btn" id="nw">New case</button>' : '') + '</div><div class="fb"></div>';
+    el.innerHTML = h;
+    el.querySelectorAll('.tap').forEach(b => b.onclick = () => {
+      const i = +b.dataset.i, j = +b.dataset.j; const k = sym.indexOf(state[i][j]);
+      state[i][j] = sym[(k + 1) % sym.length]; b.textContent = state[i][j]; b.classList.add('set'); b.classList.remove('right', 'wrong');
+    });
+    if (c.variants) el.querySelector('#nw').onclick = () => R.grid(c, el);
+    el.querySelector('#chk').onclick = () => {
+      if (state.some(r => r.includes(''))) { fb(el, null, '<p>Fill every empty cell first.</p>'); return }
+      let ok = true;
+      el.querySelectorAll('.tap').forEach(b => { const i = +b.dataset.i, j = +b.dataset.j; const r = state[i][j] === v.answer[i][j]; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Not quite: the red cells are wrong.') + '</b></p>' + paras(v.explain || c.explain));
+    };
+  },
+  panel(c, el) {
+    const out = new Set(), keep = [].concat(c.keep);
+    let h = head(c) + '<p class="q">' + c.q + '</p><p class="hint">' + (c.hint || 'Tap an antigen to cross it out when it is present on a cell that did <b>not</b> react (0). Prefer homozygous cells. Then check.') + '</p>' +
+      '<div class="scroll"><table class="grid pt"><thead><tr><th>Cell</th>' +
+      c.antigens.map((a, i) => '<th class="ag" data-a="' + i + '" tabindex="0" role="button" aria-pressed="false">' + a + '</th>').join('') + '<th>' + (c.phase || 'IAT') + '</th></tr></thead><tbody>' +
+      c.cells.map((r, k) => '<tr><th class="rowh">' + (k + 1) + '</th>' + r.c.split('').map((x, i) => '<td data-a="' + i + '">' + (x === '+' ? '+' : '0') + '</td>').join('') + '<td class="rx">' + r.rx + '</td></tr>').join('') +
+      '</tbody></table></div><div class="row"><button class="btn primary" id="chk">Check my rule-outs</button><button class="btn" id="clr">Clear</button></div><div class="fb"></div>';
+    el.innerHTML = h;
+    const paint = () => {
+      el.querySelectorAll('th.ag').forEach(x => { const on = out.has(+x.dataset.a); x.classList.toggle('out', on); x.setAttribute('aria-pressed', on) });
+      el.querySelectorAll('.pt td[data-a]').forEach(d => d.classList.toggle('out', out.has(+d.dataset.a)));
+    };
+    el.querySelectorAll('th.ag').forEach(x => { const t = () => { const a = +x.dataset.a; out.has(a) ? out.delete(a) : out.add(a); paint() };
+      x.onclick = t; x.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t() } } });
+    el.querySelector('#clr').onclick = () => { out.clear(); paint(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      const wrong = keep.filter(k => out.has(k));
+      const left = c.antigens.map((_, i) => i).filter(i => !out.has(i) && !keep.includes(i));
+      if (wrong.length) fb(el, null, '<p><b>' + wrong.map(k => plain(c.antigens[k])).join(', ') + ' cannot be ruled out.</b> ' + (c.keepNote || 'Check again: is it present on any cell that did not react?') + '</p>');
+      else if (left.length) fb(el, null, '<p><b>Keep going.</b> Still not ruled out: ' + left.map(i => plain(c.antigens[i])).join(', ') + '.</p><p>Cross out every antigen carried by a non-reacting cell.</p>');
+      else { keep.forEach(k => el.querySelector('th.ag[data-a="' + k + '"]').classList.add('keep')); fb(el, true, paras(c.explain)) }
+    };
+  },
+  calc(c, el) {
+    const k = CALC[c.kind]();
+    el.innerHTML = head(c) + '<p class="q">' + k.q + '</p><div class="facts">' + k.facts.map(f => '<span>' + f + '</span>').join('') + '</div>' +
+      '<div class="calc"><label for="ans">' + k.label + '</label><input id="ans" type="text" inputmode="decimal" autocomplete="off">' + (k.unit ? '<span>' + k.unit + '</span>' : '') +
+      '<button class="btn primary" id="chk">Check</button><button class="btn" id="nw">New case</button></div><div class="fb"></div>';
+    el.querySelector('#nw').onclick = () => R.calc(c, el);
+    const inp = el.querySelector('#ans'); inp.onkeydown = e => { if (e.key === 'Enter') el.querySelector('#chk').click() };
+    el.querySelector('#chk').onclick = () => {
+      const v = parseFloat(inp.value.replace(',', '.'));
+      if (isNaN(v)) { fb(el, null, '<p>Type a number first.</p>'); return }
+      const ok = Math.abs(v - k.answer) <= k.tol;
+      fb(el, ok, '<p><b>' + (ok ? 'Correct: ' : 'The answer is ') + k.show + '</b></p><ol class="steps">' + k.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>' + (k.note ? '<p>' + k.note + '</p>' : ''));
+    };
+  },
+  sort(c, el) {
+    const items = shuffle(c.items), st = items.map(() => -1);
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap each item to move it through the groups, then check.</p>' +
+      '<div class="legend">Groups: ' + c.bins.map(b => '<span>' + b + '</span>').join('') + '</div><div class="items">' +
+      items.map((it, i) => '<button class="item" data-i="' + i + '"><span>' + it.t + '</span><span class="tag">choose</span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i; st[i] = (st[i] + 1) % c.bins.length;
+      const t = b.querySelector('.tag'); t.textContent = plain(c.bins[st[i]]); t.classList.add('set'); b.classList.remove('right', 'wrong') });
+    el.querySelector('#chk').onclick = () => {
+      if (st.includes(-1)) { fb(el, null, '<p>Place every item in a group first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = st[i] === items[i].b; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct.' : 'Some items are in the wrong group (red).') + '</b></p>' + (ok ? '' : '<ul>' + items.filter((it, i) => st[i] !== it.b).map(it => '<li>' + it.t + ' → ' + c.bins[it.b] + '</li>').join('') + '</ul>') + (c.explain ? paras(c.explain) : ''));
+    };
+  },
+  order(c, el) {
+    const shown = shuffle(c.steps.map((s, i) => ({ s, i }))); let seq = [];
+    const draw = () => {
+      el.querySelectorAll('.item').forEach(b => { const p = seq.indexOf(+b.dataset.i); b.classList.toggle('picked', p >= 0); b.querySelector('.num').textContent = p >= 0 ? p + 1 : '' });
+    };
+    el.innerHTML = head(c) + '<p class="q">' + c.q + '</p><p class="hint">Tap the steps in the right order. Tap a numbered step again to remove it.</p><div class="items">' +
+      shown.map(x => '<button class="item" data-i="' + x.i + '"><span>' + x.s + '</span><span class="num"></span></button>').join('') +
+      '</div><div class="row"><button class="btn primary" id="chk">Check</button><button class="btn" id="clr">Start again</button></div><div class="fb"></div>';
+    el.querySelectorAll('.item').forEach(b => b.onclick = () => { const i = +b.dataset.i, p = seq.indexOf(i); if (p >= 0) seq.splice(p, 1); else seq.push(i);
+      el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw() });
+    el.querySelector('#clr').onclick = () => { seq = []; el.querySelectorAll('.item').forEach(x => x.classList.remove('right', 'wrong')); draw(); el.querySelector('.fb').innerHTML = '' };
+    el.querySelector('#chk').onclick = () => {
+      if (seq.length < c.steps.length) { fb(el, null, '<p>Number every step first.</p>'); return }
+      let ok = true; el.querySelectorAll('.item').forEach(b => { const i = +b.dataset.i, r = seq.indexOf(i) === i; ok = ok && r; b.classList.add(r ? 'right' : 'wrong') });
+      fb(el, ok, '<p><b>' + (ok ? 'Correct order.' : 'Not quite. The right order is:') + '</b></p>' + (ok ? '' : '<ol class="steps">' + c.steps.map(s => '<li>' + s + '</li>').join('') + '</ol>') + (c.explain ? paras(c.explain) : ''));
+    };
+  }
+};
+
+const CALC = {
+  rhig() {
+    const kb = rnd(0.3, 3.0, 0.1), fetal = kb * 50, raw = fetal / 30, w = Math.floor(raw), d = raw - w, v = (d >= 0.5 ? w + 1 : w) + 1;
+    return { q: 'A D-negative mother delivers a D-positive baby. How many 300 µg vials of RhIG does she need?',
+      facts: ['Kleihauer–Betke: ' + fmt(kb, 1) + '% fetal cells', 'Maternal blood volume: 5000 mL'], label: 'Vials:', unit: '', answer: v, tol: 0, show: v + ' vials.',
+      steps: ['Fetal blood = ' + fmt(kb, 1) + '% × 5000 mL = ' + fmt(fetal, 0) + ' mL', fmt(fetal, 0) + ' ÷ 30 = ' + fmt(raw, 2), 'Decimal ' + (d >= 0.5 ? '≥ 0.5: round up to ' + (w + 1) : '< 0.5: round down to ' + w), 'Add one vial: <b>' + v + '</b>'] };
+  },
+  hw() {
+    const negPct = pick([9, 16, 25, 36, 49, 64, 4, 1]), q = Math.sqrt(negPct / 100), p = 1 - q, het = 2 * p * q * 100;
+    return { q: 'In a population, ' + (100 - negPct) + '% of people are antigen-positive and ' + negPct + '% are antigen-negative (homozygous for the silent/recessive allele). What percentage are heterozygous?',
+      facts: ['Hardy–Weinberg: p² + 2pq + q² = 1', 'Antigen-negative = q² = ' + (negPct / 100)], label: 'Heterozygous:', unit: '%', answer: het, tol: 0.6, show: fmt(het, 0) + '%.',
+      steps: ['q² = ' + (negPct / 100) + ' → q = ' + fmt(q, 2), 'p = 1 − q = ' + fmt(p, 2), '2pq = 2 × ' + fmt(p, 2) + ' × ' + fmt(q, 2) + ' = ' + fmt(het / 100, 2) + ' → <b>' + fmt(het, 0) + '%</b>'] };
+  },
+  antneg() {
+    const ab = [['anti-Fy<sup>a</sup>', 33], ['anti-S', 50], ['anti-E', 70], ['anti-K', 91], ['anti-c', 20], ['anti-Jk<sup>a</sup>', 23]];
+    const a = shuffle(ab).slice(0, 2), units = pick([2, 3, 4]), f = a[0][1] / 100 * a[1][1] / 100, n = units / f;
+    return { q: 'A patient has ' + a[0][0] + ' and ' + a[1][0] + '. The physician requests ' + units + ' units. About how many units must be screened?',
+      facts: ['Compatible (antigen-negative) donors: ' + plain(a[0][0]).replace('anti-', '') + '-negative ≈ ' + a[0][1] + '%; ' + plain(a[1][0]).replace('anti-', '') + '-negative ≈ ' + a[1][1] + '%'], label: 'Units to screen:', unit: '',
+      answer: n, tol: Math.max(1, n * 0.06), show: 'about ' + Math.round(n) + ' units.',
+      steps: ['Compatible fraction = ' + (a[0][1] / 100) + ' × ' + (a[1][1] / 100) + ' = ' + fmt(f, 3), units + ' ÷ ' + fmt(f, 3) + ' = ' + fmt(n, 1) + ' → about <b>' + Math.round(n) + ' units</b>'] };
+  },
+  cci() {
+    const pre = rnd(5, 15, 1) * 1000, inc = rnd(5, 40, 1) * 1000, post = pre + inc, bsa = rnd(1.5, 2.1, 0.1), dose = rnd(3, 4.5, 0.5), cci = inc * bsa / dose;
+    return { q: 'A patient receives an apheresis platelet unit. Calculate the 1-hour corrected count increment (CCI).',
+      facts: ['Pre-count: ' + pre.toLocaleString('en') + ' /µL', '1-hour post-count: ' + post.toLocaleString('en') + ' /µL', 'Body surface area: ' + fmt(bsa, 1) + ' m²', 'Platelets transfused: ' + fmt(dose, 1) + ' × 10¹¹'],
+      label: 'CCI:', unit: '', answer: cci, tol: Math.max(150, cci * 0.03), show: Math.round(cci).toLocaleString('en') + '.',
+      steps: ['Increment = ' + post.toLocaleString('en') + ' − ' + pre.toLocaleString('en') + ' = ' + inc.toLocaleString('en') + ' /µL', 'CCI = ' + inc.toLocaleString('en') + ' × ' + fmt(bsa, 1) + ' ÷ ' + fmt(dose, 1) + ' = <b>' + Math.round(cci).toLocaleString('en') + '</b>'],
+      note: cci >= 7500 ? 'A 1-hour CCI of 7,500 or more is an adequate response.' : 'Below 7,500: inadequate response. Two consecutive inadequate CCIs define refractoriness.' };
+  },
+  rbcdose() {
+    const kg = rnd(50, 90, 5), init = rnd(0.18, 0.24, 0.01), want = rnd(0.27, 0.32, 0.01), bv = kg * 70, n = bv * (want - init) / 200;
+    return { q: 'How many red cell units are needed to reach the desired hematocrit?',
+      facts: ['Weight: ' + kg + ' kg (blood volume ≈ 70 mL/kg)', 'Initial Hct: ' + fmt(init * 100, 0) + '%', 'Desired Hct: ' + fmt(want * 100, 0) + '%', 'Red cell volume per unit ≈ 200 mL'],
+      label: 'Units:', unit: '', answer: n, tol: 0.25, show: fmt(n, 1) + ' → ' + Math.ceil(n) + ' units.',
+      steps: ['Blood volume = ' + kg + ' × 70 = ' + bv + ' mL', bv + ' × (' + fmt(want, 2) + ' − ' + fmt(init, 2) + ') = ' + fmt(bv * (want - init), 0) + ' mL of red cells', fmt(bv * (want - init), 0) + ' ÷ 200 = <b>' + fmt(n, 1) + '</b>, so about ' + Math.ceil(n) + ' units'] };
+  },
+  indices() {
+    const rbc = rnd(2.8, 5.8, 0.1), mcv = rnd(62, 112, 1), hct = +(rbc * mcv / 10).toFixed(1), mchc = rnd(29, 36, 0.5), hb = +(hct * mchc / 100).toFixed(1);
+    const which = pick(['MCV', 'MCH', 'MCHC']);
+    const val = { MCV: hct / rbc * 10, MCH: hb / rbc * 10, MCHC: hb / hct * 100 }[which];
+    const unit = { MCV: 'fL', MCH: 'pg', MCHC: 'g/dL' }[which];
+    const step = { MCV: 'MCV = Hct ÷ RBC × 10 = ' + hct + ' ÷ ' + rbc + ' × 10', MCH: 'MCH = Hb ÷ RBC × 10 = ' + hb + ' ÷ ' + rbc + ' × 10', MCHC: 'MCHC = Hb ÷ Hct × 100 = ' + hb + ' ÷ ' + hct + ' × 100' }[which];
+    return { q: 'Calculate the <b>' + which + '</b>.', facts: ['RBC: ' + rbc + ' × 10¹²/L', 'Hemoglobin: ' + hb + ' g/dL', 'Hematocrit: ' + hct + '%'], label: which + ':', unit, answer: val, tol: which === 'MCHC' ? 0.3 : 0.6,
+      show: fmt(val, 1) + ' ' + unit + '.', steps: [step + ' = <b>' + fmt(val, 1) + ' ' + unit + '</b>'],
+      note: which === 'MCV' ? (val < 80 ? 'Microcytic.' : val > 100 ? 'Macrocytic.' : 'Normocytic.') : '' };
+  },
+  retic() {
+    const hct = rnd(14, 44, 1), ret = rnd(1, 12, 0.5), cor = ret * hct / 45, mf = hct >= 36 ? 1 : hct >= 26 ? 1.5 : hct >= 16 ? 2 : 2.5, rpi = cor / mf;
+    return { q: 'Calculate the reticulocyte production index (RPI).', facts: ['Reticulocytes: ' + ret + '%', 'Hematocrit: ' + hct + '%', 'Maturation correction: Hct 36–45 → 1.0; 26–35 → 1.5; 16–25 → 2.0; ≤ 15 → 2.5'],
+      label: 'RPI:', unit: '', answer: rpi, tol: 0.15, show: fmt(rpi, 1) + '.',
+      steps: ['Corrected retic = ' + ret + ' × ' + hct + ' ÷ 45 = ' + fmt(cor, 2) + '%', 'Maturation correction for Hct ' + hct + '% = ' + mf, 'RPI = ' + fmt(cor, 2) + ' ÷ ' + mf + ' = <b>' + fmt(rpi, 1) + '</b>'],
+      note: rpi >= 3 ? 'RPI ≥ 3: adequate marrow response (e.g. hemolysis or bleeding).' : rpi < 2 ? 'RPI < 2: inadequate response (hypoproliferative or ineffective erythropoiesis).' : 'Borderline response.' };
+  },
+  nrbc() {
+    const wbc = rnd(6, 30, 0.5), n = rnd(5, 60, 1), cor = wbc * 100 / (100 + n);
+    return { q: 'The analyzer counts nucleated red cells as white cells. Correct the WBC count.', facts: ['WBC (uncorrected): ' + wbc + ' × 10⁹/L', 'NRBC on the smear: ' + n + ' per 100 WBCs'],
+      label: 'Corrected WBC:', unit: '× 10⁹/L', answer: cor, tol: 0.15, show: fmt(cor, 1) + ' × 10⁹/L.', steps: ['Corrected WBC = ' + wbc + ' × 100 ÷ (100 + ' + n + ') = <b>' + fmt(cor, 1) + '</b>'] };
+  },
+  abs() {
+    const wbc = rnd(2, 25, 0.5), cell = pick([['neutrophils', 40, 85], ['lymphocytes', 15, 70], ['eosinophils', 2, 25], ['monocytes', 3, 15]]), pct = rnd(cell[1], cell[2], 1), a = wbc * pct / 100;
+    return { q: 'Calculate the absolute ' + cell[0] + ' count.', facts: ['WBC: ' + wbc + ' × 10⁹/L', cell[0][0].toUpperCase() + cell[0].slice(1) + ': ' + pct + '%'], label: 'Absolute count:', unit: '× 10⁹/L',
+      answer: a, tol: 0.06, show: fmt(a, 2) + ' × 10⁹/L.', steps: ['Absolute count = WBC × % = ' + wbc + ' × ' + (pct / 100) + ' = <b>' + fmt(a, 2) + '</b>'] };
+  },
+  mentzer() {
+    const thal = Math.random() < 0.5, rbc = thal ? rnd(5.2, 6.6, 0.1) : rnd(3.2, 4.4, 0.1), mcv = thal ? rnd(58, 70, 1) : rnd(66, 78, 1), idx = mcv / rbc;
+    return { q: 'A patient has a microcytic anemia. Calculate the Mentzer index.', facts: ['MCV: ' + mcv + ' fL', 'RBC: ' + rbc + ' × 10¹²/L'], label: 'Mentzer index:', unit: '',
+      answer: idx, tol: 0.15, show: fmt(idx, 1) + '.', steps: ['Mentzer index = MCV ÷ RBC = ' + mcv + ' ÷ ' + rbc + ' = <b>' + fmt(idx, 1) + '</b>'],
+      note: idx < 13 ? 'Below 13: favors β-thalassemia trait. Confirm with Hb A<sub>2</sub> (> 3.5%).' : 'Above 13: favors iron deficiency. Confirm with ferritin.' };
+  },
+  inr() {
+    const mn = rnd(11.5, 13, 0.5), pt = rnd(14, 40, 0.5), isi = pick([1.0, 1.1, 1.2, 1.3]), inr = Math.pow(pt / mn, isi);
+    return { q: 'A patient on warfarin (vitamin K antagonist) has the following results. Calculate the INR.', facts: ['Patient PT: ' + pt + ' s', 'Mean normal PT: ' + mn + ' s', 'ISI of the reagent: ' + fmt(isi, 1)],
+      label: 'INR:', unit: '', answer: inr, tol: 0.06, show: fmt(inr, 1) + '.', steps: ['Ratio = ' + pt + ' ÷ ' + mn + ' = ' + fmt(pt / mn, 2), 'INR = ' + fmt(pt / mn, 2) + '<sup>' + fmt(isi, 1) + '</sup> = <b>' + fmt(inr, 1) + '</b>'] };
+  }
+};
+
+home();
+</script>
+<script data-goatcounter="https://drtarekfaour.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

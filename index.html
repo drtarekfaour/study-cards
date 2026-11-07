@@ -8,16 +8,16 @@
 /* Layout: a short title block and three book cards, each in its book cover colour. */
 :root {
   --bg: #F3F6F6; --surface: #FFFFFF; --ink: #15282C; --muted: #5A6E72; --line: #D5E0E1;
-  --sero: #0F5C6B; --hem: #1F3864; --clin: #9B1B30; --abid: #5B3A8C;
+  --sero: #0F5C6B; --hem: #1F3864; --clin: #9B1B30; --abid: #5B3A8C; --morph: #7A2E5C;
   --f-display: "Segoe UI Variable Display", "SF Pro Display", -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
   --f-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
-  --sero: #5FB7C6; --hem: #8FA8E0; --clin: #F07A8C; --abid: #B9A0E6; color-scheme: dark } }
+  --sero: #5FB7C6; --hem: #8FA8E0; --clin: #F07A8C; --abid: #B9A0E6; --morph: #E59AC4; color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #0E1A1C; --surface: #15262A; --ink: #E6EFF0; --muted: #9BB0B3; --line: #2A4045;
-  --sero: #5FB7C6; --hem: #8FA8E0; --clin: #F07A8C; --abid: #B9A0E6; color-scheme: dark }
+  --sero: #5FB7C6; --hem: #8FA8E0; --clin: #F07A8C; --abid: #B9A0E6; --morph: #E59AC4; color-scheme: dark }
 * { box-sizing: border-box }
 html { -webkit-text-size-adjust: 100% }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--f-body);
@@ -39,13 +39,14 @@ footer { color: var(--muted); font-size: 13px }
 <div class="wrap">
   <header>
     <h1>MLT Study Cards</h1>
-    <p class="sub">Interactive study cards for the three course books, plus an antibody identification workshop. Pick a set, then a chapter. Your progress is saved on this device.</p>
+    <p class="sub">Interactive study cards for the three course books, plus an antibody identification workshop and a blood and bone marrow morphology atlas. Pick a set, then a chapter. Your progress is saved on this device.</p>
   </header>
   <nav class="books">
     <a class="book" href="hematology/" style="--c: var(--hem)"><b>Hematology</b><span>Blood cells, analyzers, hematopoiesis, anemias, hemolytic anemias, white cell and platelet disorders · 301 cards</span></a>
     <a class="book" href="clinical-hematology/" style="--c: var(--clin)"><b>Clinical Hematology &amp; Hemostasis</b><span>Leukemias, flow cytometry, MDS, MPN, CLL, myeloma, hemostasis and coagulation · 221 cards</span></a>
     <a class="book" href="serology/" style="--c: var(--sero)"><b>Serology &amp; Blood Banking</b><span>Blood groups, immunohematology, transfusion, HDFN, immunoassays, infectious and autoimmune serology · 345 cards</span></a>
     <a class="book" href="antibody-id/" style="--c: var(--abid)"><b>Antibody Screening &amp; Identification</b><span>Workshop: six antibody screen cases and a full identification panel with dosage, rule-outs and next steps · 17 cards</span></a>
+    <a class="book" href="morphology/" style="--c: var(--morph)"><b>Blood and Bone Marrow Morphology</b><span>Real microscope photos: normal blood cells, marrow precursors, red cell changes, white cell and platelet abnormalities, leukemias, blood parasites · 97 cards</span></a>
   </nav>
   <footer>Dr. Tarek Faour · Lebanese International University · Based on the course books, revised edition 2027. Anonymous usage statistics are collected (no cookies, no personal data).</footer>
 </div>
